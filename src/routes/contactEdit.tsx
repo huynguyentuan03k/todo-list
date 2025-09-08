@@ -4,10 +4,10 @@ import { useEffect, useState } from "react";
 import { getStudent } from "@/apis/students.api";
 import { Student } from "@/types/students.type";
 import HeaderPage from "@/pages/components/custom/HeaderPage";
-import { Input } from "@/components/ui/input";
-
+import { useForm } from "react-hook-form"
 export default function ContactEdit() {
   const { contactId } = useParams()
+  const { register, handleSubmit, reset, watch, formState: { errors } } = useForm();
 
   const [student, setStudent] = useState<Student>()
 
@@ -30,7 +30,9 @@ export default function ContactEdit() {
       <div>
         <h1>page Edit</h1>
         <Favorite student={student} />
+        <form onSubmit={handleSubmit(onsubmit)}>
 
+        </form>
         <h1>Id: {student?.id}</h1>
         <h1>First Name: {student?.first_name}</h1>
         <h1>Last Name: {student?.last_name}</h1>
