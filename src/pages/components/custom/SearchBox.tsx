@@ -1,5 +1,6 @@
 import { Search } from "lucide-react";
 import { Form } from "react-router-dom"
+import { RegisterDialog } from "./RegisterUserDialog";
 export default function SearchBox() {
   return (
     <Form method="post" className="flex items-center">
@@ -14,12 +15,7 @@ export default function SearchBox() {
           className="w-full rounded-md border border-gray-300 pl-8 pr-2 py-2 focus:ring focus:ring-blue-200 focus:outline-none"
         />
       </div>
-      <button
-        type="submit"
-        className="ml-2 px-3 py-2 rounded-md bg-white text-blue-700 hover:bg-white font-bold"
-      >
-        New
-      </button>
+      <RegisterDialog />
     </Form>
   );
 }
