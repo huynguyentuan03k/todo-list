@@ -6,8 +6,8 @@ import Root from './routes/root'
 import Home from './pages/Home'
 import About from './pages/About'
 import ErrorPage from './pages/error-page'
-import Contact from './routes/contact'
-import ContactEdit from './routes/contactEdit'
+import PublishersOverview from './pages/publishers/publisher-overview'
+
 
 const router = createBrowserRouter([
   {
@@ -15,14 +15,7 @@ const router = createBrowserRouter([
     element: <Root />,
     errorElement: <ErrorPage />,
     children: [
-      {
-        path: "contacts/:contactId",
-        element: <Contact />
-      },
-      {
-        path: "contacts/:contactId/edit",
-        element: <ContactEdit />
-      }
+
     ]
   },
   {
@@ -32,6 +25,10 @@ const router = createBrowserRouter([
   {
     path: '/about',
     element: <About />
+  },
+  {
+    path: '/portal/publishers',
+    element: <PublishersOverview />
   }
 ])
 ReactDOM.createRoot(document.getElementById('root')!).render(
