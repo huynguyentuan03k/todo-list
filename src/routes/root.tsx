@@ -1,17 +1,7 @@
 import SearchBox from "@/pages/components/custom/SearchBox"
 import { Link, Outlet } from "react-router-dom"
-import { useEffect, useState } from "react"
-import { getUsers } from "@/apis/users.api"
-import { Users } from "@/types/users.type"
 
 export default function Root() {
-  const [users, setUsers] = useState<Users | []>([])
-
-  useEffect(() => {
-    getUsers(1, 100)
-      .then((data) => data)
-      .then((response) => setUsers(response.data))
-  }, [])
 
   return (
     <div className="h-screen grid grid-cols-[350px_1fr]">
@@ -50,26 +40,6 @@ export default function Root() {
               </Link>
             </li>
           </ul>
-
-          {/* Users (contacts) */}
-          {users && users.length > 0 ? (
-            <ul className="mt-4 space-y-1 px-4">
-              {users.map((student) => (
-                <li key={student.id}>
-                  <Link
-                    to={`/contacts/${student.id}`}
-                    className="block rounded-md px-2 py-1 hover:bg-blue-100 text-blue-700 font-medium"
-                  >
-                    {student.email}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <p className="px-4">
-              <i>No Contacts</i>
-            </p>
-          )}
         </nav>
 
         <h1 className="text-lg font-semibold px-4 py-3 border-t">
