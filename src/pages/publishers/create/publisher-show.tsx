@@ -13,8 +13,8 @@ export default function PublisherCreate() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Show Publisher</CardTitle>
-        <CardDescription>description Publisher</CardDescription>
+        <CardTitle>Create Publisher</CardTitle>
+        <CardDescription>description Create Publisher</CardDescription>
         <Button onClick={() => navigate(-1)}>Back</Button>
         <CardContent>
           <div className="grid grid-cols-3 gap-4">

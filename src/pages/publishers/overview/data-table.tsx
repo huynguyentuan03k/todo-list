@@ -103,7 +103,7 @@ export function DataTable({ data, columns }: props) {
               })}
           </DropdownMenuContent>
         </DropdownMenu> */}
-        <Button variant="default" className="ml-auto" onClick={navigate(`/portal/publishers/create`)}>Create</Button>
+        <Button variant="default" className="ml-auto" onClick={() => navigate(`/portal/publishers/create`)}>Create</Button>
       </div>
       <div className="overflow-hidden rounded-md border">
         <Table>
