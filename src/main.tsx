@@ -8,6 +8,7 @@ import Home from './pages/Home'
 import About from './pages/About'
 import ErrorPage from './pages/error-page'
 import PublishersOverview from './pages/publishers/publisher-overview'
+import PublisherShow from './pages/publishers/publisher-show'
 
 
 const router = createBrowserRouter([
@@ -33,7 +34,7 @@ const router = createBrowserRouter([
           },
           {
             path: ':id', // get /portal/publishers/id (show)
-            element: <PublishersOverview />
+            element: <PublisherShow />
           },
           {
             path: ':id/edit', // put /portal/publishers/3/edit

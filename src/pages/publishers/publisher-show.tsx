@@ -1,25 +1,44 @@
-import { DataTable } from "@/components/data-table/data-table"
-import { columns } from "@/components/data-table/columns"
+
 import { Publisher } from "@/types/publisher.type"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
 
-const data: Publisher[] = [
-  {
-    id: 1,
-    name: "PodcastVN",
-    address: "Hà Nội",
-    email: "contact@podcastvn.com",
-    website: "https://podcastvn.com",
-    phone: "0123456789",
-    established_year: 2020,
-    created_at: new Date().toISOString(),
-    updated_at: new Date().toISOString(),
-  },
-]
 
-export default function PublishersOverview() {
+export default function PublisherShow() {
   return (
-    <div className="container mx-auto py-10">
-      <DataTable columns={columns} data={data} />
-    </div>
+    <Card>
+      <CardHeader>
+        <CardTitle>Show Publisher</CardTitle>
+        <CardDescription>description Publisher</CardDescription>
+        <CardContent>
+          <Label htmlFor="name" >Name</Label>
+          <Input id="name" placeholder="Name of your publisher" />
+
+          <Label htmlFor="address" >Address</Label>
+          <Input id="address" placeholder="address of your" />
+
+
+          <Label htmlFor="email" >Email</Label>
+          <Input id="email" placeholder="email of your" />
+
+          <Label htmlFor="website" >Website</Label>
+          <Input id="website" placeholder="website of your" />
+
+          <Label htmlFor="phone" >Phone</Label>
+          <Input id="phone" placeholder="phone of your" />
+
+          <Label htmlFor="phone" >Phone</Label>
+          <Input id="phone" placeholder="phone of your" />
+
+          <Label htmlFor="established_year" >Established Year</Label>
+          <Input id="established_year" placeholder="established_year of your" />
+
+          <Input />
+          <Input />
+        </CardContent>
+      </CardHeader>
+    </Card>
+
   )
 }
