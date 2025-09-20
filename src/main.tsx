@@ -2,15 +2,15 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import './index.css'
-
 import Root from './routes/root'
 import Home from './pages/Home'
 import About from './pages/About'
 import ErrorPage from './pages/error-page'
-import PublishersOverview from './pages/publishers/publisher-overview'
-import PublisherShow from './pages/publishers/publisher-show'
-
-
+import PublishersOverview from './pages/publishers/overview/publisher-overview'
+import PublisherShow from './pages/publishers/show/publisher-show'
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import PublisherCreate from './pages/publishers/create/publisher-show'
+const queryClient = new QueryClient();
 const router = createBrowserRouter([
   {
     path: '/',
@@ -33,6 +33,10 @@ const router = createBrowserRouter([
             element: <PublishersOverview />
           },
           {
+            path: 'create', // get /portal/publishers/create (create)
+            element: <PublisherCreate />
+          },
+          {
             path: ':id', // get /portal/publishers/id (show)
             element: <PublisherShow />
           },
@@ -50,8 +54,10 @@ const router = createBrowserRouter([
   },
 ])
 
-ReactDOM.createRoot(document.getElementById('root')!).render(
+ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <QueryClientProvider client={queryClient}>
+      <RouterProvider router={router} />
+    </QueryClientProvider>
   </React.StrictMode>
-)
+);

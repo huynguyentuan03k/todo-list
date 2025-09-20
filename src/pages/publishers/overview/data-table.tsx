@@ -13,8 +13,7 @@ import {
 } from "@tanstack/react-table"
 import { ChevronDown } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { columns } from './columns'
-import { Publisher } from "./shema"
+import { Publisher } from "@/types/publisher.type"
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -30,13 +29,16 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
+import { Publishers } from "../shema"
+import { useNavigate } from "react-router-dom"
 
 
 type props = {
-  data: Publisher[]
+  data: Publishers
   columns: ColumnDef<Publisher>[]
 }
-export function DataTable({ data }: props) {
+export function DataTable({ data, columns }: props) {
+  const navigate = useNavigate()
   const [sorting, setSorting] = React.useState<SortingState>([])
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
@@ -75,7 +77,7 @@ export function DataTable({ data }: props) {
           }
           className="max-w-sm"
         />
-        <DropdownMenu>
+        {/* <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" className="ml-auto">
               Columns <ChevronDown />
@@ -100,13 +102,15 @@ export function DataTable({ data }: props) {
                 )
               })}
           </DropdownMenuContent>
-        </DropdownMenu>
+        </DropdownMenu> */}
+        <Button variant="default" className="ml-auto" onClick={navigate(`/portal/publishers/create`)}>Create</Button>
       </div>
       <div className="overflow-hidden rounded-md border">
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
-              <TableRow key={headerGroup.id}>
+              <TableRow key={headerGroup.id} onClick={() => console.log("onclick ")}>
+
                 {headerGroup.headers.map((header) => {
                   return (
                     <TableHead key={header.id}>
@@ -128,6 +132,7 @@ export function DataTable({ data }: props) {
                 <TableRow
                   key={row.id}
                   data-state={row.getIsSelected() && "selected"}
+                  onClick={() => navigate(`/portal/publishers/${row.id}`)}
                 >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>

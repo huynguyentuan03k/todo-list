@@ -1,9 +1,5 @@
-import { Publisher } from "../../types/publisher.type"
-import { Checkbox } from "@/components/ui/checkbox"
-import {
-  ColumnDef,
-
-} from "@tanstack/react-table"
+import { Publisher } from "@/types/publisher.type"
+import { ColumnDef } from "@tanstack/react-table"
 import { ArrowUpDown, MoreHorizontal } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
@@ -18,33 +14,47 @@ import {
 } from "@/components/ui/dropdown-menu"
 
 export const columns: ColumnDef<Publisher>[] = [
+  // {
+  //   id: "select",
+  //   header: ({ table }) => (
+  //     <Checkbox
+  //       checked={
+  //         table.getIsAllPageRowsSelected() ||
+  //         (table.getIsSomePageRowsSelected() && "indeterminate")
+  //       }
+  //       onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
+  //       aria-label="Select all"
+  //     />
+  //   ),
+  //   cell: ({ row }) => (
+  //     <Checkbox
+  //       checked={row.getIsSelected()}
+  //       onCheckedChange={(value) => row.toggleSelected(!!value)}
+  //       aria-label="Select row"
+  //     />
+  //   ),
+  //   enableSorting: false,
+  //   enableHiding: false,
+  // },
   {
-    id: "select",
-    header: ({ table }) => (
-      <Checkbox
-        checked={
-          table.getIsAllPageRowsSelected() ||
-          (table.getIsSomePageRowsSelected() && "indeterminate")
-        }
-        onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-        aria-label="Select all"
-      />
-    ),
+    accessorKey: "id",
+    header: "Id",
     cell: ({ row }) => (
-      <Checkbox
-        checked={row.getIsSelected()}
-        onCheckedChange={(value) => row.toggleSelected(!!value)}
-        aria-label="Select row"
-      />
+      <div className="capitalize">{row.getValue("id")}</div>
     ),
-    enableSorting: false,
-    enableHiding: false,
   },
   {
-    accessorKey: "status",
-    header: "Status",
+    accessorKey: "name",
+    header: "Name",
     cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("status")}</div>
+      <div className="capitalize">{row.getValue("name")}</div>
+    ),
+  },
+  {
+    accessorKey: "address",
+    header: "Address",
+    cell: ({ row }) => (
+      <div className="capitalize">{row.getValue("address")}</div>
     ),
   },
   {
@@ -63,21 +73,29 @@ export const columns: ColumnDef<Publisher>[] = [
     cell: ({ row }) => <div className="lowercase">{row.getValue("email")}</div>,
   },
   {
-    accessorKey: "amount",
-    header: () => <div className="text-right">Amount</div>,
-    cell: ({ row }) => {
-      const amount = parseFloat(row.getValue("amount"))
-
-      // Format the amount as a dollar amount
-      const formatted = new Intl.NumberFormat("en-US", {
-        style: "currency",
-        currency: "USD",
-      }).format(amount)
-
-      return <div className="text-right font-medium">{formatted}</div>
-    },
+    accessorKey: "website",
+    header: "Website",
+    cell: ({ row }) => (
+      <div className="capitalize">{row.getValue("website")}</div>
+    ),
   },
   {
+    accessorKey: "phone",
+    header: "Phone",
+    cell: ({ row }) => (
+      <div className="capitalize">{row.getValue("phone")}</div>
+    ),
+  },
+  {
+    accessorKey: "established_year",
+    header: "Established Year",
+    cell: ({ row }) => (
+      <div className="capitalize">{row.getValue("established_year")}</div>
+    ),
+  },
+
+  {
+    header: "Actions",
     id: "actions",
     enableHiding: false,
     cell: ({ row }) => {

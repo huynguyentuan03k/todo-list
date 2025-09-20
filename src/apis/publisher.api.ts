@@ -1,18 +1,5 @@
-import { Publishers, Publisher } from '../types/publisher.type';
+import { Publisher } from '../types/publisher.type';
 import http from 'utils/http';
-
-export const getPublishers = (
-  page: number | string,
-  limit: number | string,
-  signal?: AbortSignal
-) =>
-  http.get<Publishers>('/publishers', {
-    params: {
-      page,
-      limit,
-    },
-    signal,
-  });
 
 export const getPublisher = (id: number | string) => http.get<Publisher>(`/publishers/${id}`);
 

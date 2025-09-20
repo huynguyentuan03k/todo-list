@@ -3,16 +3,19 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { DatePicker } from "../components/custom/DatePicker"
-import { PhoneInput } from "../components/custom/PhoneInput"
+import { DatePicker } from "../../components/custom/DatePicker"
+import { PhoneInput } from "../../components/custom/PhoneInput"
+import { Button } from "@/components/ui/button"
+import { useNavigate } from "react-router-dom"
 
-
-export default function PublisherShow() {
+export default function PublisherCreate() {
+  const navigate = useNavigate()
   return (
     <Card>
       <CardHeader>
         <CardTitle>Show Publisher</CardTitle>
         <CardDescription>description Publisher</CardDescription>
+        <Button onClick={() => navigate(-1)}>Back</Button>
         <CardContent>
           <div className="grid grid-cols-3 gap-4">
 
