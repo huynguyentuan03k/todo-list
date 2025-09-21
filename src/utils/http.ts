@@ -10,10 +10,10 @@ class Http {
         'Content-Type': 'application/json',
       },
     });
-    this.instance.interceptors.response.use(
-      (response) => response.data, // return body have data
-      async (error) => await Promise.reject(error)
-    );
+    // this.instance.interceptors.response.use(
+    //   (response) => response.data, // return body have data
+    //   async (error) => await Promise.reject(error)
+    // );
   }
 }
 

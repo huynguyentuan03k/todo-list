@@ -9,12 +9,13 @@ function ActionsCell({ publisher }: { publisher: Publisher }) {
   const navigate = useNavigate()
 
   return (
-    <Button onClick={(e) => {
+    <Button className="bg-blue-500 text-white hover:bg-blue-600" onClick={(e) => {
       e.stopPropagation() // prevent table row
       navigate(`/portal/publishers/${publisher.id}/edit`)
     }}>
       <IconEdit />Edit
     </Button>
+
   )
 }
 export const columns: ColumnDef<Publisher>[] = [

@@ -5,7 +5,7 @@ import {
   flexRender,
   getCoreRowModel,
   getFilteredRowModel,
-  getPaginationRowModel,
+  // getPaginationRowModel,
   getSortedRowModel,
   SortingState,
   useReactTable,
@@ -28,9 +28,16 @@ import { useNavigate } from "react-router-dom"
 
 type props = {
   data: Publishers
-  columns: ColumnDef<Publisher>[]
+  columns: ColumnDef<Publisher>[],
+  pagination: {
+    page: number,
+    perPage: number,
+    totalPage: number,
+    lastPage: number,
+    onPageChange: (newPage: number) => void
+  }
 }
-export function DataTable({ data, columns }: props) {
+export function DataTable({ data, columns, pagination }: props) {
   const navigate = useNavigate()
   const [sorting, setSorting] = React.useState<SortingState>([])
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
@@ -46,7 +53,8 @@ export function DataTable({ data, columns }: props) {
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
     getCoreRowModel: getCoreRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
+    // getPaginationRowModel: getPaginationRowModel(),
+    manualPagination: true,
     getSortedRowModel: getSortedRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
     onColumnVisibilityChange: setColumnVisibility,
@@ -124,6 +132,7 @@ export function DataTable({ data, columns }: props) {
           </TableBody>
         </Table>
       </div>
+      {/* section button previous, next pagination number */}
       <div className="flex items-center justify-end space-x-2 py-4">
         <div className="text-muted-foreground flex-1 text-sm">
           {table.getFilteredSelectedRowModel().rows.length} of{" "}
@@ -133,16 +142,19 @@ export function DataTable({ data, columns }: props) {
           <Button
             variant="outline"
             size="sm"
-            onClick={() => table.previousPage()}
-            disabled={!table.getCanPreviousPage()}
+            onClick={() => pagination.onPageChange(pagination.page - 1)}
+            disabled={pagination.page <= 1}
           >
             Previous
           </Button>
+          <span>
+            {pagination.page} of {pagination.lastPage}
+          </span>
           <Button
             variant="outline"
             size="sm"
-            onClick={() => table.nextPage()}
-            disabled={!table.getCanNextPage()}
+            onClick={() => pagination.onPageChange(pagination.page + 1)}
+            disabled={pagination.page >= pagination.lastPage}
           >
             Next
           </Button>
