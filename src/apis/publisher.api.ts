@@ -1,8 +1,6 @@
 import { Publisher } from '../types/publisher.type';
 import http from 'utils/http';
 
-export const getPublisher = (id: number | string) => http.get<Publisher>(`/publishers/${id}`);
-
 export const addPublisher = (publisher: Omit<Publisher, 'id' | 'created_at' | 'updated_at'>) =>
   http.post<Publisher>('/publishers', publisher);
 

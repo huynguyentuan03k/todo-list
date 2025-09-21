@@ -16,7 +16,7 @@ export default function PublishersOverview() {
     queryKey: ['publishers'],
     queryFn: () => getPublishers(1, 10),
   })
-  console.log(data)
+
   if (isLoading) {
     <div className="flex justify-center py-10">
       <Loader2 className="h-6 w-6 animate-spin" />
@@ -28,7 +28,7 @@ export default function PublishersOverview() {
   }
 
 
-  const publishers = PublishersSchema.parse(data?.data?.data ?? [])
+  const publishers = PublishersSchema.parse(data?.data ?? [])
 
   return (
     <div className="container mx-auto py-10">

@@ -10,6 +10,7 @@ import PublishersOverview from './pages/publishers/overview/publisher-overview'
 import PublisherShow from './pages/publishers/show/publisher-show'
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import PublisherCreate from './pages/publishers/create/publisher-show'
+import PublisherEdit from './pages/publishers/edit/publisher-edit'
 const queryClient = new QueryClient();
 const router = createBrowserRouter([
   {
@@ -37,12 +38,12 @@ const router = createBrowserRouter([
             element: <PublisherCreate />
           },
           {
-            path: ':id', // get /portal/publishers/id (show)
-            element: <PublisherShow />
+            path: ':id/edit', // put /portal/publishers/3/edit
+            element: <PublisherEdit />
           },
           {
-            path: ':id/edit', // put /portal/publishers/3/edit
-            element: <PublishersOverview />
+            path: ':id', // get /portal/publishers/id (show)
+            element: <PublisherShow />
           },
           {
             path: ':id/delete', // delete /portal/publishers/4/delete
