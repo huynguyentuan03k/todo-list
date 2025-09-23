@@ -39,6 +39,14 @@ export default function Root() {
                 Publishers
               </Link>
             </li>
+            <li>
+              <Link
+                to="/epub"
+                className="block rounded-md px-2 py-1 hover:bg-blue-100 font-medium"
+              >
+                Epub
+              </Link>
+            </li>
           </ul>
         </nav>
 

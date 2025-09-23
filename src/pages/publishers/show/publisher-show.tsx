@@ -9,63 +9,67 @@ import { SpinnerLoading } from "@/pages/components/custom/SpinnerLoading"
 
 export default function PublisherShow() {
   const navigate = useNavigate()
-  const { id } = useParams<{ id: string }>()
+  const { id } = useParams()
 
-  const getPublisher = (id: number) => http.get<Publisher>(`/publishers/${id}`)
+  const getPublisher = (id: number) => http.get<{ data: Publisher }>(`/publishers/${id}`)
 
   const { data, isLoading } = useQuery({
     queryKey: ['publisher', id],
     queryFn: () => getPublisher(Number(id))
   })
 
-
   if (isLoading) {
     return <SpinnerLoading />
   }
 
-  const publisher = PublisherSchema.parse(data?.data)
+  const publisher = PublisherSchema.parse(data?.data.data)
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Publisher Detail</CardTitle>
-        <CardDescription>Thông tin chi tiết của Publisher</CardDescription>
-        <Button onClick={() => navigate(-1)}>Back</Button>
-      </CardHeader>
+    <div>
+      <div className="flex w-full justify-end">
+        <Button className=" bg-blue-500 text-white hover:bg-blue-600 " onClick={() => navigate(-1)}>Back</Button>
+      </div>
 
-      <CardContent>
-        <div className="grid grid-cols-3 gap-4">
-          <div className="flex flex-col col-span-1">
-            <Label>Name</Label>
-            <p>{publisher.name}</p>
-          </div>
+      <Card>
+        <CardHeader>
+          <CardTitle>Publisher Detail</CardTitle>
+          <CardDescription>Thông tin chi tiết của Publisher</CardDescription>
+        </CardHeader>
 
-          <div className="flex flex-col col-span-1">
-            <Label>Address</Label>
-            <p>{publisher.address}</p>
-          </div>
+        <CardContent>
+          <div className="grid grid-cols-3 gap-4">
+            <div className="flex flex-col col-span-1">
+              <Label>Name</Label>
+              <p>{publisher.name}</p>
+            </div>
 
-          <div className="flex flex-col col-span-1">
-            <Label>Email</Label>
-            <p>{publisher.email}</p>
-          </div>
+            <div className="flex flex-col col-span-1">
+              <Label>Address</Label>
+              <p>{publisher.address}</p>
+            </div>
 
-          <div className="flex flex-col col-span-1">
-            <Label>Website</Label>
-            <p>{publisher.website}</p>
-          </div>
+            <div className="flex flex-col col-span-1">
+              <Label>Email</Label>
+              <p>{publisher.email}</p>
+            </div>
 
-          <div className="flex flex-col col-span-1">
-            <Label>Phone</Label>
-            <p>{publisher.phone}</p>
-          </div>
+            <div className="flex flex-col col-span-1">
+              <Label>Website</Label>
+              <p>{publisher.website}</p>
+            </div>
 
-          <div className="flex flex-col col-span-1">
-            <Label>Established Year</Label>
-            <p>{publisher.established_year}</p>
+            <div className="flex flex-col col-span-1">
+              <Label>Phone</Label>
+              <p>{publisher.phone}</p>
+            </div>
+
+            <div className="flex flex-col col-span-1">
+              <Label>Established Year</Label>
+              <p>{publisher.established_year}</p>
+            </div>
           </div>
-        </div>
-      </CardContent>
-    </Card>
+        </CardContent>
+      </Card>
+    </div>
   )
 }

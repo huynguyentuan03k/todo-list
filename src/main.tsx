@@ -1,6 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import 'regenerator-runtime/runtime';
 import './index.css'
 import Root from './routes/root'
 import Home from './pages/Home'
@@ -11,6 +12,8 @@ import PublisherShow from './pages/publishers/show/publisher-show'
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import PublisherCreate from './pages/publishers/create/publisher-show'
 import PublisherEdit from './pages/publishers/edit/publisher-edit'
+import PageEpub from './pages/components/custom/PageEpub'
+
 const queryClient = new QueryClient();
 const router = createBrowserRouter([
   {
@@ -25,6 +28,10 @@ const router = createBrowserRouter([
       {
         path: '/about',
         element: <About />
+      },
+      {
+        path: '/epub',
+        element: <PageEpub />
       },
       {
         path: '/portal/publishers',
