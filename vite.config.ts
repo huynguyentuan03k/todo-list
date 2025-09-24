@@ -6,6 +6,12 @@ export default defineConfig({
   plugins: [react(), tsconfigPaths()],
   server: {
     open: true,
+    proxy: {
+      '/storage': {
+        target: 'http://localhost:8000',
+        changeOrigin: true,
+      },
+    },
   },
   appType: 'spa',
 
