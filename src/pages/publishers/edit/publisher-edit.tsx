@@ -1,4 +1,3 @@
-
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -6,47 +5,95 @@ import { DatePicker } from "../../components/custom/DatePicker"
 import { PhoneInput } from "../../components/custom/PhoneInput"
 import { Button } from "@/components/ui/button"
 import { useNavigate, useParams } from "react-router-dom"
-import { useQuery } from "@tanstack/react-query"
+import { useMutation, useQuery } from "@tanstack/react-query"
 import http from "@/utils/http"
 import { Publisher, PublisherSchema } from "../shema"
 import { SpinnerLoading } from "@/pages/components/custom/SpinnerLoading"
-import { useForm, } from "react-hook-form"
+import { useForm } from "react-hook-form"
+import { useEffect } from "react"
+import { useToast } from "@/components/ui/hooks/use-toast"
+import { toast } from "@/components/ui/hooks/use-toast"
+
+
+
 
 export default function PublisherEdit() {
   const { id } = useParams()
   const navigate = useNavigate()
+  const { toast } = useToast()
+
+  const updatePublisher = (publisher: Publisher) =>
+    http.put<Publisher>(`/publishers/${id}`, publisher);
+
+
+  // Initialize useForm with empty defaults first
+  const { register, handleSubmit, watch, formState: { errors }, reset } = useForm<Publisher>({
+    defaultValues: {
+      name: '',
+      email: '',
+      address: '',
+      website: '',
+      phone: ''
+    }
+  })
 
   const { data, isLoading } = useQuery({
     queryKey: ['publisher', id],
     queryFn: () => http.get<{ data: Publisher }>(`/publishers/${id}`)
   })
 
-
-  if (isLoading) {
-    <SpinnerLoading />
-  }
-
-  const publisher = PublisherSchema.parse(data?.data.data)
-
-
-  // React Hook Form , register dang ky filed voi form, handleSubmit dung de validation truoc khi goi callback
-  const { register, handleSubmit, setValue, watch, formState: { errors } } = useForm<Publisher>({
-    defaultValues: {
-      name: publisher.name,
-      email: publisher.email,
-      address: publisher.address,
-      website: publisher.website,
-      phone: publisher.phone
+  // Update form values when data is loaded
+  useEffect(() => {
+    if (data?.data?.data) {
+      const publisher = PublisherSchema.parse(data.data.data)
+      reset({
+        name: publisher.name,
+        email: publisher.email,
+        address: publisher.address,
+        website: publisher.website,
+        phone: publisher.phone
+      })
     }
-  })
+  }, [data, reset])
 
-  // const onSubmit: SubmitHandler<Publisher> = (data) => console.log(data)
-  function onSubmit(data: Publisher) {
-    console.log("data ", data)
-  }
 
 
   const newName = watch('name')
+
+
+
+  // useMutation
+
+  const mutation = useMutation({
+    mutationFn: updatePublisher,
+    onSuccess: () => {
+      toast({
+        title: "update publisher successfully",
+        description: "publisher has been store.",
+      })
+
+    },
+    onError: () => {
+      toast({
+        title: "update publisher error",
+        description: "cannot update publisher .",
+      })
+    },
+  })
+
+  function onSubmit(data: Publisher) {
+    mutation.mutate(data)
+  }
+
+  // loading
+  if (isLoading) {
+    return <SpinnerLoading />
+  }
+
+  if (!data) {
+    return <div>No data</div>
+  }
+
   return (
     <div >
       <div className="flex justify-end">
@@ -86,11 +133,6 @@ export default function PublisherEdit() {
                 <Input {...register('website')} id="website" placeholder="website of your" />
               </div>
 
-              <div className="flex flex-col col-span-1">
-                <Label htmlFor="phone" >Phone</Label>
-                <Input {...register('phone')} id="phone" placeholder="phone of your" />
-              </div>
-
               {/* phone */}
               <div className="flex flex-col col-span-1">
                 <Label htmlFor="phone">Phone</Label>
@@ -100,7 +142,7 @@ export default function PublisherEdit() {
               {/* created_at */}
               <div className="flex flex-col col-span-1">
                 <Label htmlFor="created_at" >Created At</Label>
-                <DatePicker value={publisher.created_at} />
+                <DatePicker value={data?.data?.data ? PublisherSchema.parse(data.data.data).created_at : undefined} />
               </div>
 
             </div>
