@@ -10,15 +10,21 @@ import { Publisher } from "../shema"
 import { useToast } from "@/components/ui/hooks/use-toast"
 import { useForm, SubmitHandler, Controller } from "react-hook-form"
 import { YearSelect } from "@/pages/components/custom/YearSelect"
+import { AxiosError } from "axios"
+
+type LaravelValidationError = {
+  message: string;
+  errors: Record<string, string[]>;
+};
 
 async function createPublisher(data: Publisher) {
   return http.post<Publisher>(`/publishers`, data);
 }
 
 export default function PublisherCreate() {
-
   const navigate = useNavigate()
   const { toast } = useToast()
+
   const { control, register, handleSubmit, setValue, formState: { errors } } = useForm<Publisher>()
 
   const onSubmit: SubmitHandler<Publisher> = (data) => {
@@ -31,14 +37,18 @@ export default function PublisherCreate() {
       toast({
         title: "update publisher successfully",
         description: "publisher has been store.",
-      })
+      });
+      navigate('/portal/publishers')
     },
-    onError: () => {
+    onError: (error: AxiosError<LaravelValidationError>) => { // axios faild luon tra ra AxiosError<T>
+      const backendMessage = error?.response?.data?.message || "Something went wrong";
       toast({
-        title: "update publisher error",
-        description: "cannot update publisher .",
-      })
-    },
+        title: "update publisher failed",
+        description: backendMessage,
+        variant: "destructive",
+      });
+    }
+
   })
 
   return (
@@ -117,6 +127,5 @@ export default function PublisherCreate() {
         </form>
       </Card>
     </div >
-
   )
 }
