@@ -48,18 +48,13 @@ export default function PublisherEdit() {
         email: publisher.email,
         address: publisher.address,
         website: publisher.website,
-        phone: publisher.phone
+        phone: publisher.phone,
+        established_year: publisher.established_year
       })
     }
   }, [data, reset])
 
-
-
   const newName = watch('name')
-
-
-
-  // useMutation
 
   const mutation = useMutation({
     mutationFn: updatePublisher,
@@ -81,7 +76,6 @@ export default function PublisherEdit() {
     mutation.mutate(data)
   }
 
-  // loading
   if (isLoading) {
     return <SpinnerLoading />
   }
