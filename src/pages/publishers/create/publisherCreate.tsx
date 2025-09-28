@@ -12,6 +12,24 @@ import { useForm, SubmitHandler, Controller } from "react-hook-form"
 import { YearSelect } from "@/pages/components/custom/YearSelect"
 import { AxiosError } from "axios"
 
+/**
+ * {
+  "message": "The given data was invalid.",
+  "errors": {
+    "email": [
+      "The email has already been taken."
+    ],
+    "name": [
+      "The name field is required."
+    ]
+  }
+}
+Record<string, string[]> la kiểu dựng sẵn (utility type) trong TypeScript.
+- errors là một object
+- Key: tên field (vd: "email", "name") → string
+- Value: mảng chứa các message → string[]
+*/
+
 type LaravelValidationError = {
   message: string;
   errors: Record<string, string[]>;
