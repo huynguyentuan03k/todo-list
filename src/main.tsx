@@ -10,7 +10,7 @@ import ErrorPage from './pages/error-page'
 import PublishersOverview from './pages/publishers/overview/publisher-overview'
 import PublisherShow from './pages/publishers/show/publisher-show'
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import PublisherCreate from './pages/publishers/create/publisher-show'
+import PublisherCreate from './pages/publishers/create/publisherCreate'
 import PublisherEdit from './pages/publishers/edit/publisher-edit'
 import PageEpub from './pages/components/custom/PageEpub'
 import { Toaster } from "@/components/ui/toaster"

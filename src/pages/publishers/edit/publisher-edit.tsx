@@ -68,7 +68,6 @@ export default function PublisherEdit() {
         title: "update publisher successfully",
         description: "publisher has been store.",
       })
-
     },
     onError: () => {
       toast({
