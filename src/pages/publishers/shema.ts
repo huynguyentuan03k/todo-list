@@ -25,7 +25,7 @@ export const PublisherSchema = z.object({
   website: z.string().nullable().optional(),
   phone: z.string().nullable().optional(),
   established_year: z.number().nullable().optional(),
-  created_at: z.union([z.date(), z.string()]).nullable().optional(),
+  created_at: z.union([z.date(), z.string(), z.date()]).nullable().optional(),
   updated_at: z.union([z.date(), z.string()]).nullable().optional(),
 });
 

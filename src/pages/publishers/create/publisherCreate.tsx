@@ -1,9 +1,6 @@
-
-// import { Publisher } from "@/types/publisher.type"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { DatePicker } from "../../components/custom/DatePicker"
 import { PhoneInput } from "../../components/custom/PhoneInput"
 import { Button } from "@/components/ui/button"
 import { useNavigate } from "react-router-dom"
@@ -11,18 +8,25 @@ import { useMutation } from "@tanstack/react-query"
 import http from "@/utils/http"
 import { Publisher } from "../shema"
 import { useToast } from "@/components/ui/hooks/use-toast"
-import { useForm, SubmitHandler } from "react-hook-form"
+import { useForm, SubmitHandler, Controller } from "react-hook-form"
+import { YearSelect } from "@/pages/components/custom/YearSelect"
 
-const getPublisher = async (id: number | string) => http.get<Publisher>(`/publishers/${id}`);
+async function createPublisher(data: Publisher) {
+  return http.post<Publisher>(`/publishers`, data);
+}
 
 export default function PublisherCreate() {
+
   const navigate = useNavigate()
   const { toast } = useToast()
-  const { register, handleSubmit } = useForm<Publisher>()
-  const onSubmit: SubmitHandler<Publisher> = (data) => console.log("data ", data)
+  const { control, register, handleSubmit, setValue, formState: { errors } } = useForm<Publisher>()
+
+  const onSubmit: SubmitHandler<Publisher> = (data) => {
+    mutation.mutate(data)
+  }
 
   const mutation = useMutation({
-    mutationFn: getPublisher,
+    mutationFn: createPublisher,
     onSuccess: () => {
       toast({
         title: "update publisher successfully",
@@ -36,7 +40,6 @@ export default function PublisherCreate() {
       })
     },
   })
-
 
   return (
     <div>
@@ -52,7 +55,8 @@ export default function PublisherCreate() {
 
               <div className="flex flex-col col-span-1 space-y-2 ">
                 <Label htmlFor="name">Name</Label>
-                <Input {...register('name')} id="name" placeholder="Name of your publisher" />
+                <Input {...register('name', { required: true })} id="name" placeholder="Name of your publisher" />
+                {errors.name && <span className="text-xs text-red-500">This field is required</span>}
               </div>
 
               <div className="flex flex-col col-span-1 space-y-2 ">
@@ -72,12 +76,34 @@ export default function PublisherCreate() {
 
               <div className="flex flex-col col-span-1 space-y-2">
                 <Label htmlFor="phone">Phone</Label>
-                <PhoneInput />
+                <PhoneInput
+                  onChange={(value) => setValue('phone', value)}
+                />
               </div>
 
               <div className="flex flex-col col-span-1 space-y-2">
-                <Label htmlFor="established_year" >Established Year</Label>
-                <DatePicker />
+                <Label htmlFor="updated_at" >Established Year</Label>
+                {/*
+                  value: giá trị hiện tại của field
+                  onChange: callback khi field thay đổi
+                  onBlur: callback khi mất focus
+                  1 name: tên field (để form biết đây là field gì)
+                  2 value={field.value}          // giá trị hiện tại
+                  3 onChange={field.onChange}    // gọi khi thay đổi
+                  4 onBlur={field.onBlur}        // khi mất focus
+                  5 ref={field.ref}              // tham chiếu tới input (nếu cần)
+                */}
+                <Controller
+                  name="established_year"
+                  control={control}
+                  render={({ field }) => (
+                    <YearSelect
+                      onChange={(value) => field.onChange(Number(value))}
+                      value={field.value}
+                    // conflict type , cach 1 dung ep kieu as, cach 2 dung doi schema, cach 3 convert
+                    />
+                  )}
+                />
               </div>
 
             </div>
