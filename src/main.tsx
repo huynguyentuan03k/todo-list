@@ -4,8 +4,6 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import 'regenerator-runtime/runtime';
 import './index.css'
 import Root from './routes/root'
-import Home from './pages/Home'
-import About from './pages/About'
 import ErrorPage from './pages/error-page'
 import PublishersOverview from './pages/publishers/overview/publisher-overview'
 import PublisherShow from './pages/publishers/show/PublisherShow'
@@ -26,14 +24,6 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />,
     children: [
       {
-        path: '',
-        element: <Home />
-      },
-      {
-        path: '/about',
-        element: <About />
-      },
-      {
         path: '/epub',
         element: <PageEpub />
       },
@@ -41,23 +31,23 @@ const router = createBrowserRouter([
         path: '/portal/publishers',
         children: [
           {
-            index: true, // get /portal/publishers (overview)
+            index: true,
             element: <PublishersOverview />
           },
           {
-            path: 'create', // get /portal/publishers/create (create)
+            path: 'create',
             element: <PublisherCreate />
           },
           {
-            path: ':id/edit', // put /portal/publishers/3/edit
+            path: ':id/edit',
             element: <PublisherEdit />
           },
           {
-            path: ':id', // get /portal/publishers/id (show)
+            path: ':id',
             element: <PublisherShow />
           },
           {
-            path: ':id/delete', // delete /portal/publishers/4/delete
+            path: ':id/delete',
             element: <PublishersOverview />
           }
         ]
