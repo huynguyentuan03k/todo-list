@@ -7,7 +7,7 @@ import http from "@/utils/http"
 import { Publisher, PublisherSchema } from "../shema"
 import { SpinnerLoading } from "@/pages/components/custom/SpinnerLoading"
 
-export default function PublisherShow() {
+export default function CategoryShow() {
   const navigate = useNavigate()
   const { id } = useParams()
 

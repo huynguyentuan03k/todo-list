@@ -8,12 +8,16 @@ import Home from './pages/Home'
 import About from './pages/About'
 import ErrorPage from './pages/error-page'
 import PublishersOverview from './pages/publishers/overview/publisher-overview'
-import PublisherShow from './pages/publishers/show/publisher-show'
+import PublisherShow from './pages/publishers/show/PublisherShow'
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import PublisherCreate from './pages/publishers/create/publisherCreate'
 import PublisherEdit from './pages/publishers/edit/publisher-edit'
 import PageEpub from './pages/components/custom/PageEpub'
 import { Toaster } from "@/components/ui/toaster"
+import CategoryOverview from './pages/categories/overview/CategoryOverview';
+import CategoryShow from './pages/categories/show/CategoryShow';
+import CategoryCreate from './pages/categories/create/CategoryCreate';
+import CategoryEdit from './pages/categories/edit/CategoryEdit';
 const queryClient = new QueryClient();
 const router = createBrowserRouter([
   {
@@ -55,6 +59,30 @@ const router = createBrowserRouter([
           {
             path: ':id/delete', // delete /portal/publishers/4/delete
             element: <PublishersOverview />
+          }
+        ]
+      },
+      {
+        path: '/portal/categories',
+        children: [
+          {
+            index: true,
+            element: <CategoryOverview />
+          },
+          {
+            path: 'create',
+            element: <CategoryCreate />
+          },
+          {
+            path: ':id/edit',
+            element: <CategoryEdit />
+          },
+          {
+            path: ':id',
+            element: <CategoryShow />
+          },
+          {
+            path: ':id/delete',
           }
         ]
       }

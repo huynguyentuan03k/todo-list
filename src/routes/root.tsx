@@ -20,15 +20,7 @@ export default function Root() {
                 to="/"
                 className="block rounded-md px-2 py-1 hover:bg-blue-100 font-medium"
               >
-                Home
-              </Link>
-            </li>
-            <li>
-              <Link
-                to="/about"
-                className="block rounded-md px-2 py-1 hover:bg-blue-100 font-medium"
-              >
-                About
+                Dashboard
               </Link>
             </li>
             <li>
@@ -37,6 +29,38 @@ export default function Root() {
                 className="block rounded-md px-2 py-1 hover:bg-blue-100 font-medium"
               >
                 Publishers
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/portal/categories"
+                className="block rounded-md px-2 py-1 hover:bg-blue-100 font-medium"
+              >
+                Categories
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/portal/categories"
+                className="block rounded-md px-2 py-1 hover:bg-blue-100 font-medium"
+              >
+                Authors
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/portal/categories"
+                className="block rounded-md px-2 py-1 hover:bg-blue-100 font-medium"
+              >
+                Episodes
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/portal/categories"
+                className="block rounded-md px-2 py-1 hover:bg-blue-100 font-medium"
+              >
+                Podcasts
               </Link>
             </li>
             <li>
