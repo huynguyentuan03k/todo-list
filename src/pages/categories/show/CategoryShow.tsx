@@ -4,25 +4,25 @@ import { Button } from "@/components/ui/button"
 import { useNavigate, useParams } from "react-router-dom"
 import { useQuery } from "@tanstack/react-query"
 import http from "@/utils/http"
-import { Publisher, PublisherSchema } from "../shema"
+import { Categories, Category, CategoriesSchema } from "../shema"
 import { SpinnerLoading } from "@/pages/components/custom/SpinnerLoading"
 
 export default function CategoryShow() {
   const navigate = useNavigate()
   const { id } = useParams()
 
-  const getPublisher = (id: number) => http.get<{ data: Publisher }>(`/publishers/${id}`)
+  const getCategory = (id: number) => http.get<{ data: Category }>(`/categories/${id}`)
 
   const { data, isLoading } = useQuery({
-    queryKey: ['publisher', id],
-    queryFn: () => getPublisher(Number(id))
+    queryKey: ['category', id],
+    queryFn: () => getCategory(Number(id))
   })
 
   if (isLoading) {
     return <SpinnerLoading />
   }
 
-  const publisher = PublisherSchema.parse(data?.data.data)
+  const category = CategoriesSchema.parse(data?.data.data)
 
   return (
     <div>
@@ -32,41 +32,37 @@ export default function CategoryShow() {
 
       <Card>
         <CardHeader>
-          <CardTitle>Publisher Detail</CardTitle>
-          <CardDescription>Thông tin chi tiết của Publisher</CardDescription>
+          <CardTitle>category Detail</CardTitle>
+          <CardDescription>Thông tin chi tiết của category</CardDescription>
         </CardHeader>
 
         <CardContent>
           <div className="grid grid-cols-3 gap-4">
-            <div className="flex flex-col col-span-1">
+            {/* <div className="flex flex-col col-span-1">
               <Label>Name</Label>
-              <p>{publisher.name}</p>
+              <p>{category}</p>
             </div>
 
             <div className="flex flex-col col-span-1">
               <Label>Address</Label>
-              <p>{publisher.address}</p>
+              <p>{category.address}</p>
             </div>
 
             <div className="flex flex-col col-span-1">
               <Label>Email</Label>
-              <p>{publisher.email}</p>
+              <p>{category.email}</p>
             </div>
 
             <div className="flex flex-col col-span-1">
               <Label>Website</Label>
-              <p>{publisher.website}</p>
+              <p>{category.website}</p>
             </div>
 
             <div className="flex flex-col col-span-1">
               <Label>Phone</Label>
-              <p>{publisher.phone}</p>
-            </div>
+              <p>{category.phone}</p>
+            </div> */}
 
-            <div className="flex flex-col col-span-1">
-              <Label>Established Year</Label>
-              <p>{publisher.established_year}</p>
-            </div>
           </div>
         </CardContent>
       </Card>

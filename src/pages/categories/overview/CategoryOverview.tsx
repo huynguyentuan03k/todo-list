@@ -2,14 +2,14 @@ import { DataTable } from "./data-table"
 import { columns } from "./columns"
 import { useQuery } from "@tanstack/react-query"
 import { Loader2 } from "lucide-react"
-import { PublisherResponse, Publishers, PublishersSchema } from "../shema"
+import { CategoryResponse, Categories, CategoriesSchema } from "../shema"
 import http from "@/utils/http"
 import { useNavigate, useSearchParams } from "react-router-dom"
 
 
-const getPublishers = (page: number | string = 1, per_page: number | string = 10) => {
+const getCategories = (page: number | string = 1, per_page: number | string = 10) => {
 
-  const response = http.get<PublisherResponse<Publishers>>("/publishers", {
+  const response = http.get<CategoryResponse<Categories>>("/categories", {
     params: { page, per_page },
     // tuc la khi response luon tra ve kieu nay : type PublisherResponse<Publishers>
   })
@@ -24,8 +24,8 @@ export default function CategoryOverview() {
   const per_page = searchParams.get('per_page') || 10
 
   const { data, isLoading, error } = useQuery({
-    queryKey: ['publishers', page, per_page],
-    queryFn: () => getPublishers(page, per_page),
+    queryKey: ['Categories', page, per_page],
+    queryFn: () => getCategories(page, per_page),
   })
 
   if (isLoading) {
@@ -37,10 +37,10 @@ export default function CategoryOverview() {
   }
 
   if (error) {
-    return <p className="text-red-500">Failed to load publishers</p>
+    return <p className="text-red-500">Failed to load categories</p>
   }
 
-  const publishers = PublishersSchema.parse(data?.data.data ?? [])
+  const Categories = CategoriesSchema.parse(data?.data.data ?? [])
 
   const pagination = {
     page: data?.data.meta.current_page ?? 1,
@@ -57,7 +57,7 @@ export default function CategoryOverview() {
       <DataTable
         pagination={pagination}
         columns={columns}
-        data={publishers}
+        data={Categories}
       />
     </div>
   )

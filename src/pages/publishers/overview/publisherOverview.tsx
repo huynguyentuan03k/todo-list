@@ -5,6 +5,7 @@ import { Loader2 } from "lucide-react"
 import { PublisherResponse, Publishers, PublishersSchema } from "../shema"
 import http from "@/utils/http"
 import { useNavigate, useSearchParams } from "react-router-dom"
+import { BreadcrumbDemo } from "@/pages/components/custom/BreadcrumbDemo"
 
 
 const getPublishers = (page: number | string = 1, per_page: number | string = 10) => {
@@ -54,6 +55,7 @@ export default function PublishersOverview() {
 
   return (
     <div className="container mx-auto py-10">
+      <BreadcrumbDemo />
       <DataTable
         pagination={pagination}
         columns={columns}

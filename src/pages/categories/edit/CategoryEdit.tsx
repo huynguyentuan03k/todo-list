@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button"
 import { useNavigate, useParams } from "react-router-dom"
 import { useMutation, useQuery } from "@tanstack/react-query"
 import http from "@/utils/http"
-import { Publisher, PublisherSchema } from "../shema"
+import { Categories, CategoriesSchema, Category } from "../shema"
 import { SpinnerLoading } from "@/pages/components/custom/SpinnerLoading"
 import { useForm } from "react-hook-form"
 import { useEffect } from "react"
@@ -19,8 +19,8 @@ export default function CategoryEdit() {
   const navigate = useNavigate()
   const { toast } = useToast()
 
-  const updatePublisher = (publisher: Publisher) =>
-    http.put<Publisher>(`/publishers/${id}`, publisher);
+  const updateCategory = (category: Category) =>
+    http.put<Category>(`/categories/${id}`, category);
 
 
   // Initialize useForm with empty defaults first
@@ -57,7 +57,7 @@ export default function CategoryEdit() {
   const newName = watch('name')
 
   const mutation = useMutation({
-    mutationFn: updatePublisher,
+    mutationFn: updateCategory,
     onSuccess: () => {
       toast({
         title: "update publisher successfully",

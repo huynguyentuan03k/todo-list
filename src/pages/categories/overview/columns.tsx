@@ -1,8 +1,5 @@
-import { Publisher } from "@/types/publisher.type"
 import { ColumnDef } from "@tanstack/react-table"
-import { ArrowUpDown } from "lucide-react"
 import { IconEdit, IconTrash } from '@tabler/icons-react';
-import { Button } from "@/components/ui/button"
 import {
   Tooltip,
   TooltipContent,
@@ -25,27 +22,27 @@ import { useNavigate } from "react-router-dom";
 import http from "@/utils/http";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useToast } from "@/components/ui/hooks/use-toast";
+import { Category } from "../shema";
 
-
-function ActionsCell({ publisher }: { publisher: Publisher }) {
+function ActionsCell({ category }: { category: Category }) {
   const navigate = useNavigate()
   const queryClient = useQueryClient()
   const { toast } = useToast()
 
-  function deletePublisher(id: number | string) {
+  function deleteCategory(id: number | string) {
 
-    return http.delete(`/publishers/${id}`)
+    return http.delete(`/categories/${id}`)
   };
 
   const mutation = useMutation({
-    mutationFn: (id: number) => deletePublisher(id),
+    mutationFn: (id: number) => deleteCategory(id),
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ['publishers']
+        queryKey: ['categories']
       });
       toast({
-        title: "update publisher successfully",
-        description: "publisher has been store.",
+        title: "update category successfully",
+        description: "category has been store.",
       })
     },
     onError: (err) => {
@@ -63,7 +60,7 @@ function ActionsCell({ publisher }: { publisher: Publisher }) {
               className="text-blue-500  cursor-pointer"
               onClick={(e) => {
                 e.stopPropagation()
-                navigate(`/portal/publishers/${publisher.id}/edit`)
+                navigate(`/portal/categories/${category.id}/edit`)
               }}
             />
           </TooltipTrigger>
@@ -106,7 +103,7 @@ function ActionsCell({ publisher }: { publisher: Publisher }) {
           <AlertDialogFooter>
             <AlertDialogCancel>Cancel</AlertDialogCancel>
             <AlertDialogAction
-              onClick={() => mutation.mutate(publisher.id)}
+              onClick={() => mutation.mutate(category.id)}
               disabled={mutation.isPending}
             >
               {mutation.isPending ? "Deleting..." : "Continue"}
@@ -121,7 +118,7 @@ function ActionsCell({ publisher }: { publisher: Publisher }) {
   )
 }
 
-export const columns: ColumnDef<Publisher>[] = [
+export const columns: ColumnDef<Category>[] = [
   {
     accessorKey: "id",
     header: "Id",
@@ -137,53 +134,16 @@ export const columns: ColumnDef<Publisher>[] = [
     ),
   },
   {
-    accessorKey: "address",
-    header: "Address",
+    accessorKey: "description",
+    header: "Description",
     cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("address")}</div>
+      <div className="capitalize">{row.getValue("description")}</div>
     ),
   },
-  {
-    accessorKey: "email",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Email
-          <ArrowUpDown />
-        </Button>
-      )
-    },
-    cell: ({ row }) => <div className="lowercase">{row.getValue("email")}</div>,
-  },
-  {
-    accessorKey: "website",
-    header: "Website",
-    cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("website")}</div>
-    ),
-  },
-  {
-    accessorKey: "phone",
-    header: "Phone",
-    cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("phone")}</div>
-    ),
-  },
-  {
-    accessorKey: "established_year",
-    header: "Established Year",
-    cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("established_year")}</div>
-    ),
-  },
-
   {
     header: "Actions",
     id: "actions",
     enableHiding: false,
-    cell: ({ row }) => < ActionsCell publisher={row.original} />
+    cell: ({ row }) => < ActionsCell category={row.original} />
   },
 ]

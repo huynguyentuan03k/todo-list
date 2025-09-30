@@ -56,7 +56,7 @@ export default function PublisherShow() {
 
             <div className="flex flex-col col-span-1">
               <Label>Website</Label>
-              <Link to={publisher.website || null}>
+              <Link to={publisher.website ?? ''}>
                 <p className="text-blue-500">{publisher.website}</p>
               </Link>
             </div>

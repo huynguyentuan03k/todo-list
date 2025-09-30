@@ -12,7 +12,6 @@ import {
   VisibilityState,
 } from "@tanstack/react-table"
 import { Button } from "@/components/ui/button"
-import { Publisher } from "@/types/publisher.type"
 import { Input } from "@/components/ui/input"
 import {
   Table,
@@ -22,13 +21,13 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
-import { Publishers } from "../shema"
+import { Categories } from "../shema"
 import { useNavigate } from "react-router-dom"
 
 
 type props = {
-  data: Publishers
-  columns: ColumnDef<Publisher>[],
+  data: Categories
+  columns: ColumnDef<Categories>[],
   pagination: {
     page: number,
     perPage: number,

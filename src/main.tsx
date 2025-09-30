@@ -5,7 +5,7 @@ import 'regenerator-runtime/runtime';
 import './index.css'
 import Root from './routes/root'
 import ErrorPage from './pages/error-page'
-import PublishersOverview from './pages/publishers/overview/publisher-overview'
+import PublishersOverview from './pages/publishers/overview/publisherOverview'
 import PublisherShow from './pages/publishers/show/PublisherShow'
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import PublisherCreate from './pages/publishers/create/publisherCreate'
