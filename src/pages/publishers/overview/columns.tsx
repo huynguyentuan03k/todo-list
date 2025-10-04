@@ -8,7 +8,8 @@ export const columns: ColumnDef<Publisher>[] = [
   {
     accessorKey: "id",
     header: "Id",
-    cell: ({ row }) => (
+    cell: ({ row, table }) => (
+      
       <div className="capitalize">{row.getValue("id")}</div>
     ),
   },
@@ -63,7 +64,8 @@ export const columns: ColumnDef<Publisher>[] = [
     ),
   },
   {
-    header: "Actions",
+    // header: "Actions",
+    header: () => <div className="text-blue-500">Actions</div>,
     id: "actions",
     enableHiding: false,
     cell: ({ row }) => < ActionsCell publisher={row.original} />

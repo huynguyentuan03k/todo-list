@@ -5,6 +5,7 @@ import {
   useReactTable,
   getFilteredRowModel,
   getSortedRowModel,
+  getPaginationRowModel
 } from "@tanstack/react-table"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -17,6 +18,7 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import { useNavigate } from "react-router-dom"
+import { Pagination } from "./pagination"
 
 interface DataTableProps<TData, Tvalue> {
   columns: ColumnDef<TData, Tvalue>[]
@@ -31,7 +33,8 @@ export function DataTable<TData, TValue>({ data, columns }: DataTableProps<TData
     columns,
     getCoreRowModel: getCoreRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
-    getSortedRowModel: getSortedRowModel()
+    getSortedRowModel: getSortedRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
   })
 
   return (
@@ -99,7 +102,7 @@ export function DataTable<TData, TValue>({ data, columns }: DataTableProps<TData
           </TableBody>
         </Table>
       </div>
-
+      <Pagination table={table} />
     </div >
   )
 }
