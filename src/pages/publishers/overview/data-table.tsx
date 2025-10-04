@@ -1,18 +1,12 @@
-import * as React from "react"
 import {
   ColumnDef,
-  ColumnFiltersState,
   flexRender,
   getCoreRowModel,
-  getFilteredRowModel,
-  // getPaginationRowModel,
-  getSortedRowModel,
-  SortingState,
   useReactTable,
-  VisibilityState,
+  getFilteredRowModel,
+  getSortedRowModel,
 } from "@tanstack/react-table"
 import { Button } from "@/components/ui/button"
-import { Publisher } from "@/types/publisher.type"
 import { Input } from "@/components/ui/input"
 import {
   Table,
@@ -22,49 +16,22 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
-import { Publishers } from "../shema"
 import { useNavigate } from "react-router-dom"
 
-
-type props = {
-  data: Publishers
-  columns: ColumnDef<Publisher>[],
-  pagination: {
-    page: number,
-    perPage: number,
-    totalPage: number,
-    lastPage: number,
-    onPageChange: (newPage: number) => void
-  }
+interface DataTableProps<TData, Tvalue> {
+  columns: ColumnDef<TData, Tvalue>[]
+  data: TData[]
 }
-export function DataTable({ data, columns, pagination }: props) {
+
+export function DataTable<TData, TValue>({ data, columns }: DataTableProps<TData, TValue>) {
   const navigate = useNavigate()
-  const [sorting, setSorting] = React.useState<SortingState>([])
-  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
-    []
-  )
-  const [columnVisibility, setColumnVisibility] =
-    React.useState<VisibilityState>({})
-  const [rowSelection, setRowSelection] = React.useState({})
 
   const table = useReactTable({
     data,
     columns,
-    onSortingChange: setSorting,
-    onColumnFiltersChange: setColumnFilters,
     getCoreRowModel: getCoreRowModel(),
-    // getPaginationRowModel: getPaginationRowModel(),
-    manualPagination: true,
-    getSortedRowModel: getSortedRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
-    onColumnVisibilityChange: setColumnVisibility,
-    onRowSelectionChange: setRowSelection,
-    state: {
-      sorting,
-      columnFilters,
-      columnVisibility,
-      rowSelection,
-    },
+    getSortedRowModel: getSortedRowModel()
   })
 
   return (
@@ -107,7 +74,7 @@ export function DataTable({ data, columns, pagination }: props) {
                 <TableRow
                   key={row.id}
                   data-state={row.getIsSelected() && "selected"}
-                  onClick={() => navigate(`/portal/publishers/${row.original.id}`)}
+                  onClick={() => navigate(`/portal/publishers/${row.original}`)}
                 >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>
@@ -132,34 +99,7 @@ export function DataTable({ data, columns, pagination }: props) {
           </TableBody>
         </Table>
       </div>
-      {/* section button previous, next pagination number */}
-      <div className="flex items-center justify-end space-x-2 py-4">
-        <div className="text-muted-foreground flex-1 text-sm">
-          {table.getFilteredSelectedRowModel().rows.length} of{" "}
-          {table.getFilteredRowModel().rows.length} row(s) selected.
-        </div>
-        <div className="space-x-2">
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => pagination.onPageChange(pagination.page - 1)}
-            disabled={pagination.page <= 1}
-          >
-            Previous
-          </Button>
-          <span>
-            {pagination.page} of {pagination.lastPage}
-          </span>
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => pagination.onPageChange(pagination.page + 1)}
-            disabled={pagination.page >= pagination.lastPage}
-          >
-            Next
-          </Button>
-        </div>
-      </div>
-    </div>
+
+    </div >
   )
 }

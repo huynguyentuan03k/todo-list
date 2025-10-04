@@ -16,17 +16,17 @@ export type Links = {
   next: string | null;
 };
 export const PublisherSchema = z.object({
-  id: z.number().optional(),
-  name: z.string().optional(),
-  description: z.string().nullable().optional(),
-  slug: z.string().nullable().optional(),
-  address: z.string().nullable().optional(),
-  email: z.string().nullable().optional(),
-  website: z.string().nullable().optional(),
-  phone: z.string().nullable().optional(),
-  established_year: z.number().nullable().optional(),
-  created_at: z.union([z.date(), z.string(), z.date()]).nullable().optional(),
-  updated_at: z.union([z.date(), z.string()]).nullable().optional(),
+  id: z.number(),
+  name: z.string().nullable(), // type : string | null
+  description: z.string().nullable(),
+  slug: z.string().nullable(),
+  address: z.string().nullable(),
+  email: z.string().nullable(),
+  website: z.string().nullable(),
+  phone: z.string().nullable(),
+  established_year: z.number().nullable().optional(), // type : string | null | undefinded
+  created_at: z.string().nullable(),
+  updated_at: z.string().nullable(),
 });
 
 export const PublishersSchema = z.array(PublisherSchema);
@@ -39,3 +39,6 @@ export type PublisherResponse<T> = {
   meta: Meta;
   links: Links;
 };
+/***
+ * 1 PublisherSchema la single object, con PublishersSchema la array
+ */
