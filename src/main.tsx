@@ -16,6 +16,7 @@ import CategoryOverview from './pages/categories/overview/CategoryOverview';
 import CategoryShow from './pages/categories/show/CategoryShow';
 import CategoryCreate from './pages/categories/create/CategoryCreate';
 import CategoryEdit from './pages/categories/edit/CategoryEdit';
+import SettingsPage from './pages/settings/SettingsPage';
 const queryClient = new QueryClient();
 const router = createBrowserRouter([
   {
@@ -58,6 +59,30 @@ const router = createBrowserRouter([
           {
             index: true,
             element: <CategoryOverview />
+          },
+          {
+            path: 'create',
+            element: <CategoryCreate />
+          },
+          {
+            path: ':id/edit',
+            element: <CategoryEdit />
+          },
+          {
+            path: ':id',
+            element: <CategoryShow />
+          },
+          {
+            path: ':id/delete',
+          }
+        ]
+      },
+      {
+        path: '/portal/settings',
+        children: [
+          {
+            index: true,
+            element: <SettingsPage />
           },
           {
             path: 'create',

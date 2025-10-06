@@ -71,6 +71,14 @@ export default function Root() {
                 Epub
               </Link>
             </li>
+            <li>
+              <Link
+                to="/portal/settings"
+                className="block rounded-md px-2 py-1 hover:bg-blue-100 font-medium"
+              >
+                Settings
+              </Link>
+            </li>
           </ul>
         </nav>
 
