@@ -23,6 +23,7 @@ import {
 } from "@/components/ui/table"
 import { Categories } from "../shema"
 import { useNavigate } from "react-router-dom"
+import { PaginationClient } from "@/components/ui/pagination/pagination-client"
 
 
 type props = {
@@ -132,33 +133,7 @@ export function DataTable({ data, columns, pagination }: props) {
         </Table>
       </div>
       {/* section button previous, next pagination number */}
-      <div className="flex items-center justify-end space-x-2 py-4">
-        <div className="text-muted-foreground flex-1 text-sm">
-          {table.getFilteredSelectedRowModel().rows.length} of{" "}
-          {table.getFilteredRowModel().rows.length} row(s) selected.
-        </div>
-        <div className="space-x-2">
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => pagination.onPageChange(pagination.page - 1)}
-            disabled={pagination.page <= 1}
-          >
-            Previous
-          </Button>
-          <span>
-            {pagination.page} of {pagination.lastPage}
-          </span>
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => pagination.onPageChange(pagination.page + 1)}
-            disabled={pagination.page >= pagination.lastPage}
-          >
-            Next
-          </Button>
-        </div>
-      </div>
+      <PaginationClient table={table} />
     </div>
   )
 }

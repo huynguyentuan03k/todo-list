@@ -1,4 +1,4 @@
-import { DataTable } from "./data-table"
+import { DataTable } from "@/components/ui/data-table/data-table"
 import { columns } from "./columns"
 import { useQuery } from "@tanstack/react-query"
 import { Loader2 } from "lucide-react"
