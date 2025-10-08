@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import { createBrowserRouter, Navigate, RouterProvider } from 'react-router-dom'
 import 'regenerator-runtime/runtime';
 import './index.css'
 import Root from './routes/root'
@@ -17,6 +17,8 @@ import CategoryShow from './pages/categories/show/CategoryShow';
 import CategoryCreate from './pages/categories/create/CategoryCreate';
 import CategoryEdit from './pages/categories/edit/CategoryEdit';
 import SettingsPage from './pages/settings/SettingsPage';
+import KeywordSuggestions from './pages/settings/keyword-suggestions';
+import SeasonalThemes from './pages/settings/Seasonal-Themes';
 const queryClient = new QueryClient();
 const router = createBrowserRouter([
   {
@@ -78,27 +80,22 @@ const router = createBrowserRouter([
         ]
       },
       {
+        // /portal/settings/keywordsuggestions
         path: '/portal/settings',
+        element: <SettingsPage />,
         children: [
           {
             index: true,
-            element: <SettingsPage />
+            element: <Navigate to="SeasonalThemes" replace />,
           },
           {
-            path: 'create',
-            element: <CategoryCreate />
+            path: 'keywordSuggestions',
+            element: <KeywordSuggestions />
           },
           {
-            path: ':id/edit',
-            element: <CategoryEdit />
+            path: 'SeasonalThemes',
+            element: <SeasonalThemes />
           },
-          {
-            path: ':id',
-            element: <CategoryShow />
-          },
-          {
-            path: ':id/delete',
-          }
         ]
       }
     ]

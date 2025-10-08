@@ -1,66 +1,40 @@
-// src/pages/SettingsPage.tsx
-import { useState } from "react"
+// src/pages/settings/SettingsPage.tsx
 import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
+import { NavLink, Outlet, useLocation } from "react-router-dom"
 
 export default function SettingsPage() {
-  const [active, setActive] = useState("profile")
+  const location = useLocation()
 
   return (
     <div className="flex p-6 gap-6">
       {/* Left vertical nav */}
       <nav className="w-48 flex flex-col space-y-2 border-r pr-4">
-        <Button
-          variant={active === "profile" ? "default" : "ghost"}
-          className="justify-start"
-          onClick={() => setActive("profile")}
-        >
-          Profile
-        </Button>
-        <Button
-          variant={active === "account" ? "default" : "ghost"}
-          className="justify-start"
-          onClick={() => setActive("account")}
-        >
-          Account
-        </Button>
-        <Button
-          variant={active === "notifications" ? "default" : "ghost"}
-          className="justify-start"
-          onClick={() => setActive("notifications")}
-        >
-          Notifications
-        </Button>
+        <NavLink to="SeasonalThemes">
+          {({ isActive }) => (
+            <Button
+              variant={isActive ? "default" : "ghost"}
+              className="justify-start w-full"
+            >
+              Seasonal Themes
+            </Button>
+          )}
+        </NavLink>
+
+        <NavLink to="keywordSuggestions">
+          {({ isActive }) => (
+            <Button
+              variant={isActive ? "default" : "ghost"}
+              className="justify-start w-full"
+            >
+              Keyword Suggestions
+            </Button>
+          )}
+        </NavLink>
       </nav>
 
-      {/* Right content area */}
+      {/* Sub-page content */}
       <div className="flex-1">
-        {active === "profile" && (
-          <Card>
-            <CardContent className="p-4">
-              <h2 className="text-lg font-semibold mb-2">Profile Settings</h2>
-              <p>Manage your profile information here.</p>
-            </CardContent>
-          </Card>
-        )}
-
-        {active === "account" && (
-          <Card>
-            <CardContent className="p-4">
-              <h2 className="text-lg font-semibold mb-2">Account Settings</h2>
-              <p>Update your account details and password.</p>
-            </CardContent>
-          </Card>
-        )}
-
-        {active === "notifications" && (
-          <Card>
-            <CardContent className="p-4">
-              <h2 className="text-lg font-semibold mb-2">Notification Settings</h2>
-              <p>Control how you receive notifications.</p>
-            </CardContent>
-          </Card>
-        )}
+        <Outlet />
       </div>
     </div>
   )
