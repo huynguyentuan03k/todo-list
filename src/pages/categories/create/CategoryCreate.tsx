@@ -92,7 +92,7 @@ export default function CategoryCreate() {
 
               <div className="flex flex-col col-span-2 space-y-2 ">
                 <Label htmlFor="description">Description</Label>
-                <Textarea placeholder="Type your description here." />
+                <Textarea {...register('description')} placeholder="Type your description here." />
               </div>
 
             </div>

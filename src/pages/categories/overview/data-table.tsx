@@ -107,7 +107,7 @@ export function DataTable({ data, columns, pagination }: props) {
                 <TableRow
                   key={row.id}
                   data-state={row.getIsSelected() && "selected"}
-                  onClick={() => navigate(`/portal/publishers/${row.original.id}`)}
+                  onClick={() => navigate(`/portal/categories/${row.original.id}/show`)}
                 >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>

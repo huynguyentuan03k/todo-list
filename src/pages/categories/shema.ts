@@ -17,11 +17,10 @@ export type Links = {
 };
 export const CategorySchema = z.object({
   id: z.number(),
-  name: z.string().optional(),
-  description: z.string().nullable().optional(),
-  established_year: z.number().nullable().optional(),
-  created_at: z.union([z.date(), z.string(), z.date()]).nullable().optional(),
-  updated_at: z.union([z.date(), z.string()]).nullable().optional(),
+  name: z.string().nullable(),
+  description: z.string().nullable(),
+  created_at: z.union([z.date(), z.string(), z.date()]).nullable(),
+  updated_at: z.union([z.date(), z.string()]).nullable(),
 });
 
 export const CategoriesSchema = z.array(CategorySchema);

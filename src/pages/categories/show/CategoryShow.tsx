@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button"
 import { useNavigate, useParams } from "react-router-dom"
 import { useQuery } from "@tanstack/react-query"
 import http from "@/utils/http"
-import { Categories, Category, CategoriesSchema } from "../shema"
+import { Categories, Category, CategoriesSchema, CategorySchema } from "../shema"
 import { SpinnerLoading } from "@/pages/components/custom/SpinnerLoading"
 
 export default function CategoryShow() {
@@ -22,7 +22,7 @@ export default function CategoryShow() {
     return <SpinnerLoading />
   }
 
-  const category = CategoriesSchema.parse(data?.data.data)
+  const category = CategorySchema.parse(data?.data.data)
 
   return (
     <div>
@@ -38,30 +38,15 @@ export default function CategoryShow() {
 
         <CardContent>
           <div className="grid grid-cols-3 gap-4">
-            {/* <div className="flex flex-col col-span-1">
+            <div className="flex flex-col col-span-1">
               <Label>Name</Label>
-              <p>{category}</p>
+              <p>{category.name}</p>
             </div>
 
-            <div className="flex flex-col col-span-1">
-              <Label>Address</Label>
-              <p>{category.address}</p>
+            <div className="flex flex-col col-span-2">
+              <Label>Description</Label>
+              <p>{category.description}</p>
             </div>
-
-            <div className="flex flex-col col-span-1">
-              <Label>Email</Label>
-              <p>{category.email}</p>
-            </div>
-
-            <div className="flex flex-col col-span-1">
-              <Label>Website</Label>
-              <p>{category.website}</p>
-            </div>
-
-            <div className="flex flex-col col-span-1">
-              <Label>Phone</Label>
-              <p>{category.phone}</p>
-            </div> */}
 
           </div>
         </CardContent>

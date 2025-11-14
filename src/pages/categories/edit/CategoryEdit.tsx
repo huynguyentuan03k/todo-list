@@ -1,17 +1,17 @@
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { DatePicker } from "../../components/custom/DatePicker"
-import { PhoneInput } from "../../components/custom/PhoneInput"
 import { Button } from "@/components/ui/button"
 import { useNavigate, useParams } from "react-router-dom"
 import { useMutation, useQuery } from "@tanstack/react-query"
 import http from "@/utils/http"
-import { Categories, CategoriesSchema, Category } from "../shema"
+import { Category, CategorySchema } from "../shema"
 import { SpinnerLoading } from "@/pages/components/custom/SpinnerLoading"
 import { useForm } from "react-hook-form"
 import { useEffect } from "react"
 import { useToast } from "@/components/ui/hooks/use-toast"
+import { Textarea } from "@/components/ui/textarea"
+import Breadcrumbs from "@/pages/components/custom/breadcrumbs"
 
 
 export default function CategoryEdit() {
@@ -22,34 +22,26 @@ export default function CategoryEdit() {
   const updateCategory = (category: Category) =>
     http.put<Category>(`/categories/${id}`, category);
 
-
   // Initialize useForm with empty defaults first
-  const { register, handleSubmit, watch, formState: { errors }, reset } = useForm<Publisher>({
+  const { register, handleSubmit, watch, formState: { errors }, reset } = useForm<Category>({
     defaultValues: {
       name: '',
-      email: '',
-      address: '',
-      website: '',
-      phone: ''
+      description: ''
     }
   })
 
   const { data, isLoading } = useQuery({
-    queryKey: ['publisher', id],
-    queryFn: () => http.get<{ data: Publisher }>(`/publishers/${id}`)
+    queryKey: ['category', id],
+    queryFn: () => http.get<{ data: Category }>(`/categories/${id}`)
   })
-
+  console.log("data fetch ", data?.data)
   // Update form values when data is loaded
   useEffect(() => {
     if (data?.data?.data) {
-      const publisher = PublisherSchema.parse(data.data.data)
+      const category = CategorySchema.parse(data.data.data)
       reset({
-        name: publisher.name,
-        email: publisher.email,
-        address: publisher.address,
-        website: publisher.website,
-        phone: publisher.phone,
-        established_year: publisher.established_year
+        name: category.name,
+        description: category.description,
       })
     }
   }, [data, reset])
@@ -60,19 +52,20 @@ export default function CategoryEdit() {
     mutationFn: updateCategory,
     onSuccess: () => {
       toast({
-        title: "update publisher successfully",
-        description: "publisher has been store.",
-      })
+        title: "update category successfully",
+        description: "category has been store.",
+      });
+      navigate('/portal/categories')
     },
     onError: () => {
       toast({
-        title: "update publisher error",
-        description: "cannot update publisher .",
+        title: "update category error",
+        description: "cannot update category .",
       })
     },
   })
 
-  function onSubmit(data: Publisher) {
+  function onSubmit(data: Category) {
     mutation.mutate(data)
   }
 
@@ -86,13 +79,14 @@ export default function CategoryEdit() {
 
   return (
     <div >
-      <div className="flex justify-end">
-        <Button className="bg-blue-500 text-white hover:bg-blue-600" onClick={() => navigate(-1)}>Back</Button>
+      <div className="flex justify-between">
+        <Breadcrumbs />
+        <Button className="bg-blue-500 text-white hover:bg-blue-600 mb-2" onClick={() => navigate(-1)}>Back</Button>
       </div>
       <Card>
         <CardHeader>
-          <CardTitle>Edit Publisher</CardTitle>
-          <CardDescription>description Edit Publisher</CardDescription>
+          <CardTitle>Edit Category</CardTitle>
+          <CardDescription>description Edit Category</CardDescription>
         </CardHeader>
         <form onSubmit={handleSubmit(data => onSubmit(data))} >
           <CardContent>
@@ -104,35 +98,9 @@ export default function CategoryEdit() {
                 <Input id="name" {...register('name', { required: "ten ko de trong" })} placeholder="Name of your publisher" />
               </div>
 
-              <div className="flex flex-col col-span-1">
-                <Label htmlFor="address" >Address</Label>
-                <Input {...register('address')} id="address" placeholder="address of your" />
-              </div>
-
-              <div className="flex flex-col col-span-1">
-                <Label htmlFor="email" >Email</Label>
-                <Input {...register("email", {
-                  required: "Email là bắt buộc",
-                  pattern: { value: /^\S+@\S+$/i, message: "Email không hợp lệ" }
-                })} />
-                {errors.email && <span>{errors.email.message}</span>}
-              </div>
-
-              <div className="flex flex-col col-span-1">
-                <Label htmlFor="website" >Website</Label>
-                <Input {...register('website')} id="website" placeholder="website of your" />
-              </div>
-
-              {/* phone */}
-              <div className="flex flex-col col-span-1">
-                <Label htmlFor="phone">Phone</Label>
-                <PhoneInput />
-              </div>
-
-              {/* created_at */}
-              <div className="flex flex-col col-span-1">
-                <Label htmlFor="created_at" >Created At</Label>
-                <DatePicker value={data?.data?.data ? PublisherSchema.parse(data.data.data).created_at : undefined} />
+              <div className="flex flex-col col-span-2">
+                <Label htmlFor="description">Description</Label>
+                <Textarea id="description" {...register('description')} placeholder="type description here" />
               </div>
 
             </div>
