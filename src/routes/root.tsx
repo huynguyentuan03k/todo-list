@@ -1,5 +1,5 @@
 import SearchBox from "@/pages/components/custom/SearchBox"
-import { Link, Outlet } from "react-router-dom"
+import { NavLink, Outlet } from "react-router-dom"
 
 export default function Root() {
 
@@ -16,68 +16,84 @@ export default function Root() {
         <nav className="flex-1 overflow-y-auto">
           <ul className="space-y-2 px-4">
             <li>
-              <Link
+              <NavLink
                 to="/"
-                className="block rounded-md px-2 py-1 hover:bg-blue-100 font-medium"
+                className={
+                  ({ isActive }) => ` ${isActive ? 'bg-blue-200 text-blue-700' : ''} block rounded-md px-2 py-1 hover:bg-blue-100 font-medium`
+                }
               >
                 Dashboard
-              </Link>
+              </NavLink>
             </li>
             <li>
-              <Link
+              <NavLink
                 to="/portal/publishers"
-                className="block rounded-md px-2 py-1 hover:bg-blue-100 font-medium"
+                className={
+                  ({ isActive }) => ` ${isActive ? 'bg-blue-200 text-blue-700' : ''} block rounded-md px-2 py-1 hover:bg-blue-100 font-medium`
+                }
               >
                 Publishers
-              </Link>
+              </NavLink>
             </li>
             <li>
-              <Link
+              <NavLink
                 to="/portal/categories"
-                className="block rounded-md px-2 py-1 hover:bg-blue-100 font-medium"
+                className={
+                  ({ isActive }) => ` ${isActive ? 'bg-blue-200 text-blue-700' : ''} block rounded-md px-2 py-1 hover:bg-blue-100 font-medium`
+                }
               >
                 Categories
-              </Link>
+              </NavLink>
             </li>
             <li>
-              <Link
-                to="/portal/categories"
-                className="block rounded-md px-2 py-1 hover:bg-blue-100 font-medium"
+              <NavLink
+                to="/portal/authors"
+                className={
+                  ({ isActive }) => ` ${isActive ? 'bg-blue-200 text-blue-700' : ''} block rounded-md px-2 py-1 hover:bg-blue-100 font-medium`
+                }
               >
                 Authors
-              </Link>
+              </NavLink>
             </li>
             <li>
-              <Link
-                to="/portal/categories"
-                className="block rounded-md px-2 py-1 hover:bg-blue-100 font-medium"
+              <NavLink
+                to="/portal/episodes"
+                className={
+                  ({ isActive }) => ` ${isActive ? 'bg-blue-200 text-blue-700' : ''} block rounded-md px-2 py-1 hover:bg-blue-100 font-medium`
+                }
               >
                 Episodes
-              </Link>
+              </NavLink>
             </li>
             <li>
-              <Link
-                to="/portal/categories"
-                className="block rounded-md px-2 py-1 hover:bg-blue-100 font-medium"
+              <NavLink
+                to="/portal/podcasts"
+                className={
+                  ({ isActive }) => ` ${isActive ? 'bg-blue-200 text-blue-700' : ''} block rounded-md px-2 py-1 hover:bg-blue-100 font-medium`
+                }
               >
                 Podcasts
-              </Link>
+              </NavLink>
             </li>
             <li>
-              <Link
+              <NavLink
                 to="/epub"
-                className="block rounded-md px-2 py-1 hover:bg-blue-100 font-medium"
+                className={
+                  ({ isActive }) => ` ${isActive ? 'bg-blue-200 text-blue-700' : ''} block rounded-md px-2 py-1 hover:bg-blue-100 font-medium`
+                }
               >
                 Epub
-              </Link>
+              </NavLink>
             </li>
             <li>
-              <Link
+              <NavLink
                 to="/portal/settings"
-                className="block rounded-md px-2 py-1 hover:bg-blue-100 font-medium"
+                className={
+                  ({ isActive }) => ` ${isActive ? 'bg-blue-200 text-blue-700' : ''} block rounded-md px-2 py-1 hover:bg-blue-100 font-medium`
+                }
               >
                 Settings
-              </Link>
+              </NavLink>
             </li>
           </ul>
         </nav>
