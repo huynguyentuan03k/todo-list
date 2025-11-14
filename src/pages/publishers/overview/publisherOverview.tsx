@@ -5,9 +5,9 @@ import { Loader2 } from "lucide-react"
 import { PublisherResponse, Publishers, PublishersSchema } from "../shema"
 import http from "@/utils/http"
 import { useSearchParams } from "react-router-dom"
-import { BreadcrumbDemo } from "@/pages/components/custom/BreadcrumbDemo"
 import { Button } from "@/components/ui/button"
 import { Link } from "react-router-dom"
+import Breadcrumbs from "@/pages/components/custom/breadcrumbs"
 
 
 const getPublishers = (page: number | string = 1, per_page: number | string = 10) => {
@@ -42,13 +42,12 @@ export default function PublishersOverview() {
     return <p className="text-red-500">Failed to load publishers</p>
   }
 
-
   const publishers = PublishersSchema.parse(data?.data.data ?? [])
 
   return (
     <div className="container mx-auto py-10">
       <div className="flex justify-between">
-        <BreadcrumbDemo />
+        <Breadcrumbs />
         <Link to={'/portal/publishers/create'}>
           <Button className="ml-2 mb-2 bg-blue-500 text-white hover:bg-blue-600 rounded-lg shadow">
             New

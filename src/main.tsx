@@ -46,7 +46,7 @@ const router = createBrowserRouter([
             element: <PublisherEdit />
           },
           {
-            path: ':id',
+            path: ':id/show',
             element: <PublisherShow />
           },
           {
@@ -71,7 +71,7 @@ const router = createBrowserRouter([
             element: <CategoryEdit />
           },
           {
-            path: ':id',
+            path: ':id/show',
             element: <CategoryShow />
           },
           {

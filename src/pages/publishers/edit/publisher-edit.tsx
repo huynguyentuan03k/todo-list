@@ -12,6 +12,7 @@ import { SpinnerLoading } from "@/pages/components/custom/SpinnerLoading"
 import { useForm } from "react-hook-form"
 import { useEffect } from "react"
 import { useToast } from "@/components/ui/hooks/use-toast"
+import Breadcrumbs from "@/pages/components/custom/breadcrumbs"
 
 
 export default function PublisherEdit() {
@@ -86,8 +87,9 @@ export default function PublisherEdit() {
 
   return (
     <div >
-      <div className="flex justify-end">
-        <Button className="bg-blue-500 text-white hover:bg-blue-600" onClick={() => navigate(-1)}>Back</Button>
+      <div className="flex justify-between">
+        <Breadcrumbs />
+        <Button className="bg-blue-500 text-white hover:bg-blue-600 mb-2" onClick={() => navigate(-1)}>Back</Button>
       </div>
       <Card>
         <CardHeader>

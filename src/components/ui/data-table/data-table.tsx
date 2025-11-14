@@ -10,14 +10,14 @@ import {
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import React from "react"
 import { PaginationClient } from "../pagination/pagination-client"
-
+import { useNavigate } from "react-router-dom"
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
   data: TData[]
 }
 
 export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData, TValue>) {
-
+  const navigate = useNavigate()
   const table = useReactTable({
     data,
     columns,
@@ -53,7 +53,7 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
               table.getRowModel().rows.map(row => (
                 <TableRow key={row.id}>
                   {row.getVisibleCells().map(cell => (
-                    <TableCell key={cell.id}>
+                    <TableCell key={cell.id} className="cursor-pointer" onClick={() => navigate(`${row.original.id}/show`)}>
                       {flexRender(cell.column.columnDef.cell, cell.getContext())}
                     </TableCell>
                   ))}

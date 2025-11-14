@@ -7,6 +7,7 @@ import http from "@/utils/http"
 import { Publisher, PublisherSchema } from "../shema"
 import { SpinnerLoading } from "@/pages/components/custom/SpinnerLoading"
 import { Link } from "react-router-dom"
+import Breadcrumbs from "@/pages/components/custom/breadcrumbs"
 
 export default function PublisherShow() {
   const navigate = useNavigate()
@@ -27,8 +28,9 @@ export default function PublisherShow() {
 
   return (
     <div>
-      <div className="flex w-full justify-end">
-        <Button className=" bg-blue-500 text-white hover:bg-blue-600 " onClick={() => navigate(-1)}>Back</Button>
+      <div className="flex w-full justify-between">
+        <Breadcrumbs />
+        <Button className=" bg-blue-500 text-white hover:bg-blue-600 mb-2" onClick={() => navigate(-1)}>Back</Button>
       </div>
 
       <Card>

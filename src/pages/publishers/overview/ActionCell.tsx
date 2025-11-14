@@ -47,7 +47,6 @@ export function ActionsCell({ publisher }: { publisher: Publisher }) {
       console.error("Delete failed ", err)
     }
   })
-
   return (
     <div className="flex gap-2" onClick={(e) => e.stopPropagation()}>
       <TooltipProvider>
