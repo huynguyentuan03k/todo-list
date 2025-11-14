@@ -78,7 +78,7 @@ export function DataTable({ data, columns, pagination }: props) {
           }
           className="max-w-sm"
         />
-        <Button variant="default" className="ml-auto" onClick={() => navigate(`/portal/publishers/create`)}>Create</Button>
+        <Button variant="default" className="ml-auto bg-blue-500 hover:bg-blue-700" onClick={() => navigate(`/portal/categories/create`)}>New</Button>
       </div>
       <div className="overflow-hidden rounded-md border">
         <Table>
