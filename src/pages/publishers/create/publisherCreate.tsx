@@ -71,7 +71,7 @@ export default function PublisherCreate() {
 
   return (
     <div>
-      <Button className="bg-blue-500 text-white hover:bg-blue-600 rounded-lg" onClick={() => navigate(-1)}>Back</Button>
+      <Button className="bg-blue-500 text-white hover:bg-blue-600 rounded-lg mb-2" onClick={() => navigate(-1)}>Back</Button>
       <Card>
         <CardHeader>
           <CardTitle>Create Publisher</CardTitle>
