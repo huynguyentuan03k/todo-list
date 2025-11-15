@@ -92,15 +92,15 @@ export default function CategoryEdit() {
           <CardContent>
             <div className="grid grid-cols-3 gap-4">
 
-              <div className="flex flex-col col-span-1">
+              <div className="flex flex-col col-span-1 gap-y-2">
                 <Label htmlFor="name" >Name : {newName}</Label>
                 {errors.name && <span>{errors.name.message}</span>}
                 <Input id="name" {...register('name', { required: "ten ko de trong" })} placeholder="Name of your publisher" />
               </div>
 
-              <div className="flex flex-col col-span-2">
+              <div className="flex flex-col col-span-2 gap-y-2">
                 <Label htmlFor="description">Description</Label>
-                <Textarea id="description" {...register('description')} placeholder="type description here" />
+                <Textarea className="h-[200px]" id="description" {...register('description')} placeholder="type description here" />
               </div>
 
             </div>
