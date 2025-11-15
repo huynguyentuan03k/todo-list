@@ -22,7 +22,7 @@ export const columns: ColumnDef<Category>[] = [
     accessorKey: "description",
     header: "Description",
     cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("description")}</div>
+      <div className="capitalize line-clamp-3">{row.getValue("description")}</div>
     ),
   },
   {
