@@ -57,6 +57,7 @@ export default function PublishersOverview() {
       <DataTable
         columns={columns}
         data={publishers}
+        meta={data?.data.meta}
       />
     </div>
   )

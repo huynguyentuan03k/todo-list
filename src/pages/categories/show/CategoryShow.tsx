@@ -6,6 +6,7 @@ import { useQuery } from "@tanstack/react-query"
 import http from "@/utils/http"
 import { Categories, Category, CategoriesSchema, CategorySchema } from "../shema"
 import { SpinnerLoading } from "@/pages/components/custom/SpinnerLoading"
+import Breadcrumbs from "@/pages/components/custom/breadcrumbs"
 
 export default function CategoryShow() {
   const navigate = useNavigate()
@@ -26,8 +27,9 @@ export default function CategoryShow() {
 
   return (
     <div>
-      <div className="flex w-full justify-end">
-        <Button className=" bg-blue-500 text-white hover:bg-blue-600 " onClick={() => navigate(-1)}>Back</Button>
+      <div className="flex w-full justify-between">
+        <Breadcrumbs />
+        <Button className=" bg-blue-500 text-white hover:bg-blue-600 mb-2" onClick={() => navigate(-1)}>Back</Button>
       </div>
 
       <Card>

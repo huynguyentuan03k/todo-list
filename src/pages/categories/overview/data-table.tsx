@@ -21,6 +21,7 @@ import { Categories, Category, Meta } from "../shema"
 import { useNavigate } from "react-router-dom"
 import { PaginationServer } from "@/components/ui/pagination/pagination-server"
 import { useSearchParams } from "react-router-dom"
+import Breadcrumbs from "@/pages/components/custom/breadcrumbs"
 
 type props = {
   data: Categories
@@ -57,7 +58,7 @@ export function DataTable({ data, columns, meta }: props) {
   return (
     <div className="w-full">
       <div className="flex items-center py-4">
-
+        <Breadcrumbs />
         <Button variant="default" className="ml-auto bg-blue-500 hover:bg-blue-700" onClick={() => navigate(`/portal/categories/create`)}>New</Button>
       </div>
       <div className="overflow-hidden rounded-md border">

@@ -4,30 +4,28 @@ import {
   ColumnDef,
   flexRender,
   getCoreRowModel,
-  getPaginationRowModel,
   useReactTable,
 } from "@tanstack/react-table"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import React from "react"
-import { PaginationClient } from "../pagination/pagination-client"
 import { useNavigate } from "react-router-dom"
+import { PaginationServer } from "../pagination/pagination-server"
+import { Meta } from "@/pages/publishers/shema"
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
-  data: TData[]
+  data: TData[],
+  meta?: Meta
 }
 
-export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData, TValue>) {
+export function DataTable<TData, TValue>({ columns, data, meta }: DataTableProps<TData, TValue>) {
   const navigate = useNavigate()
   const table = useReactTable({
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
-    initialState: {
-      pagination: {
-        pageSize: 10
-      }
-    }
+    //
+    manualPagination: true,
+    rowCount: meta?.total,
   })
 
   return (
@@ -70,7 +68,7 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
         </Table>
       </div>
       <div>
-        <PaginationClient table={table} />
+        <PaginationServer table={table} />
       </div>
     </div>
   )
