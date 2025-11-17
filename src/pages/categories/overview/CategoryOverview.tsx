@@ -46,7 +46,7 @@ export default function CategoryOverview() {
       <DataTable
         columns={columns}
         data={Categories}
-        meta={data?.data.meta}
+        meta={data?.data?.meta}
       />
     </div>
   )

@@ -12,10 +12,10 @@ import {
 } from "@/components/ui/popover"
 
 type props = {
-  value?: Date | string | null | undefined,
+  value?: Date | string | undefined,
   onChange?: (date: Date | string | null | undefined) => void
 }
-export function DatePicker({ value, onChange }: props) {
+export function DatePicker({ value }: props) {
   const [date, setDate] = React.useState<Date | undefined>(value)
 
   return (

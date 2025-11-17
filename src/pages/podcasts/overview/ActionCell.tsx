@@ -20,27 +20,27 @@ import { useNavigate } from "react-router-dom";
 import http from "@/utils/http";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useToast } from "@/components/ui/hooks/use-toast";
-import { Publisher } from "../shema";
+import { Podcast } from "../schema";
 import { IconEdit, IconTrash } from "@tabler/icons-react";
-export function ActionsCell({ publisher }: { publisher: Publisher }) {
+export function ActionsCell({ podcast }: { podcast: Podcast }) {
   const navigate = useNavigate()
   const queryClient = useQueryClient()
   const { toast } = useToast()
 
-  function deletePublisher(id: number | string) {
+  function deletePodcast(id: number | string) {
 
-    return http.delete(`/publishers/${id}`)
+    return http.delete(`/podcasts/${id}`)
   };
 
   const mutation = useMutation({
-    mutationFn: (id: number) => deletePublisher(id),
+    mutationFn: (id: number) => deletePodcast(id),
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ['publishers']
+        queryKey: ['podcasts']
       });
       toast({
-        title: "update publisher successfully",
-        description: "publisher has been store.",
+        title: "update podcast successfully",
+        description: "podcast has been store.",
       })
     },
     onError: (err) => {
@@ -57,7 +57,7 @@ export function ActionsCell({ publisher }: { publisher: Publisher }) {
               className="text-blue-500  cursor-pointer"
               onClick={(e) => {
                 e.stopPropagation()
-                navigate(`/portal/publishers/${publisher.id}/edit`)
+                navigate(`/portal/podcasts/${podcast.id}/edit`)
               }}
             />
           </TooltipTrigger>
@@ -100,7 +100,7 @@ export function ActionsCell({ publisher }: { publisher: Publisher }) {
           <AlertDialogFooter>
             <AlertDialogCancel>Cancel</AlertDialogCancel>
             <AlertDialogAction
-              onClick={() => mutation.mutate(publisher.id)}
+              onClick={() => mutation.mutate(podcast.id)}
               disabled={mutation.isPending}
             >
               {mutation.isPending ? "Deleting..." : "Continue"}

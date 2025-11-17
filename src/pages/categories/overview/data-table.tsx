@@ -26,7 +26,7 @@ import Breadcrumbs from "@/pages/components/custom/breadcrumbs"
 type props = {
   data: Categories
   columns: ColumnDef<Category>[],
-  meta: Meta
+  meta?: Meta
 }
 export function DataTable({ data, columns, meta }: props) {
   const navigate = useNavigate()

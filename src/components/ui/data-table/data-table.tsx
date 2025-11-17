@@ -51,7 +51,7 @@ export function DataTable<TData, TValue>({ columns, data, meta }: DataTableProps
               table.getRowModel().rows.map(row => (
                 <TableRow key={row.id}>
                   {row.getVisibleCells().map(cell => (
-                    <TableCell key={cell.id} className="cursor-pointer" onClick={() => navigate(`${row.original.id}/show`)}>
+                    <TableCell key={cell.id} className="cursor-pointer" onClick={() => navigate(`${row?.original?.id}/show`)}>
                       {flexRender(cell.column.columnDef.cell, cell.getContext())}
                     </TableCell>
                   ))}

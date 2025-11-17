@@ -61,6 +61,6 @@ export const columns: ColumnDef<Podcast>[] = [
     header: () => <div className="text-blue-500">Actions</div>,
     id: "actions",
     enableHiding: false,
-    cell: ({ row }) => < ActionsCell publisher={row.original} />
+    cell: ({ row }) => < ActionsCell podcast={row.original} />
   },
 ]
