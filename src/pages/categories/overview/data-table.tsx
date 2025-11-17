@@ -20,7 +20,7 @@ import {
 import { Categories, Category, Meta } from "../shema"
 import { useNavigate } from "react-router-dom"
 import { PaginationServer } from "@/components/ui/pagination/pagination-server"
-
+import { useSearchParams } from "react-router-dom"
 
 type props = {
   data: Categories
@@ -29,9 +29,12 @@ type props = {
 }
 export function DataTable({ data, columns, meta }: props) {
   const navigate = useNavigate()
+  const [searchParams, setSearchParams] = useSearchParams()
+  const page = Number(searchParams.get('page') ?? 1)
+  const per_page = Number(searchParams.get('per_page') ?? 10)
   const [pagination, setPagination] = React.useState<PaginationState>({
-    pageIndex: 0,
-    pageSize: 10
+    pageIndex: page - 1,
+    pageSize: per_page
   })
   const table = useReactTable({
     data,
@@ -42,13 +45,15 @@ export function DataTable({ data, columns, meta }: props) {
     rowCount: meta.total,
     onPaginationChange: setPagination, // updat the pagination state when internal APIs mutate the pagination state
     autoResetPageIndex: false,
+    autoResetAll: false,
     state: {
       pagination
     },
+    //
     getSortedRowModel: getSortedRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
   })
-  console.log("data pagination ", data)
+
   return (
     <div className="w-full">
       <div className="flex items-center py-4">

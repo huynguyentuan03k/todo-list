@@ -7,12 +7,23 @@ import {
 } from "lucide-react"
 import { Select, SelectItem, SelectValue } from "../select"
 import { SelectContent, SelectGroup, SelectLabel, SelectTrigger } from "@radix-ui/react-select"
-
+import { useSearchParams } from "react-router-dom"
+import { useEffect } from "react"
 type PaginationServerProps<TData> = {
   table: Table<TData>
 }
-
 export function PaginationServer<TData>({ table }: PaginationServerProps<TData>) {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const page = table.getState().pagination.pageIndex + 1
+  const per_page = table.getState().pagination.pageSize
+
+  useEffect(() => {
+    setSearchParams({
+      page: page.toString(),
+      per_page: per_page.toString()
+    })
+  }, [page, setSearchParams, per_page])
+
   return (
     <div className="flex justify-end items-center w-full py-3 px-2">
       <div className="flex items-center gap-2">
@@ -28,7 +39,10 @@ export function PaginationServer<TData>({ table }: PaginationServerProps<TData>)
 
         <button
           className="border rounded-md p-1 cursor-pointer"
-          onClick={() => table.previousPage()}
+          onClick={() => {
+            table.previousPage();
+
+          }}
           disabled={!table.getCanPreviousPage()}
           aria-label="Previous page"
         >
@@ -77,6 +91,6 @@ export function PaginationServer<TData>({ table }: PaginationServerProps<TData>)
           </Select>
         </div>
       </div>
-    </div>
+    </div >
   )
 }
