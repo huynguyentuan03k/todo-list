@@ -9,6 +9,8 @@ import { Podcast } from "../schema"
 import { useToast } from "@/components/ui/hooks/use-toast"
 import { useForm, SubmitHandler } from "react-hook-form"
 import { AxiosError } from "axios"
+import UploadFile from "@/pages/components/custom/uploadFile"
+import UploadWithPreviewAndReactHookForm from "@/pages/components/custom/uploadFile"
 
 /**
  * {
@@ -72,8 +74,8 @@ export default function PodcastCreate() {
       <Button className="bg-blue-500 text-white hover:bg-blue-600 rounded-lg mb-2" onClick={() => navigate(-1)}>Back</Button>
       <Card>
         <CardHeader>
-          <CardTitle>Create Publisher</CardTitle>
-          <CardDescription>description Create Publisher</CardDescription>
+          <CardTitle>Create Podcast</CardTitle>
+          <CardDescription>description Create Podcast</CardDescription>
         </CardHeader>
         <form onSubmit={handleSubmit(onSubmit)}>
           <CardContent>
@@ -81,7 +83,7 @@ export default function PodcastCreate() {
 
               <div className="flex flex-col col-span-1 space-y-2 ">
                 <Label htmlFor="name">Title</Label>
-                <Input {...register('title', { required: true })} id="title" placeholder="Title of your publisher" />
+                <Input {...register('title', { required: true })} id="title" placeholder="Title of your podcast" />
                 {errors.title && <span className="text-xs text-red-500">This field is required</span>}
               </div>
 
@@ -97,7 +99,13 @@ export default function PodcastCreate() {
 
               <div className="flex flex-col col-span-1 space-y-2">
                 <Label htmlFor="slug" >slug</Label>
-                <Input  {...register('slug')} id="slug" placeholder="publisher of your" />
+                <Input  {...register('slug')} id="slug" placeholder="slug of your" />
+              </div>
+
+              <div className="flex flex-col col-span-1 space-y-2">
+                <Label htmlFor="slug" >cover Image</Label>
+                {/* <Input  {...register('slug')} id="slug" placeholder="slug of your" /> */}
+                <UploadWithPreviewAndReactHookForm />
               </div>
 
             </div>

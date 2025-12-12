@@ -12,8 +12,8 @@ import {
 } from "@/components/ui/popover"
 
 type props = {
-  value?: Date | string | undefined,
-  onChange?: (date: Date | string | null | undefined) => void
+  value?: Date | undefined,
+  onChange?: (date: Date | null | undefined) => void
 }
 export function DatePicker({ value }: props) {
   const [date, setDate] = React.useState<Date | undefined>(value)

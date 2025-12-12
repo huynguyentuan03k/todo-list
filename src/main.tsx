@@ -21,7 +21,8 @@ import KeywordSuggestions from './pages/settings/keyword-suggestions';
 import SeasonalThemes from './pages/settings/Seasonal-Themes';
 import PodcastsOverview from './pages/podcasts/overview/podcastsOverview';
 import PodcastCreate from './pages/podcasts/create/podcastCreate';
-import PodcastShow from './pages/podcasts/show/PublisherShow';
+import PodcastShow from './pages/podcasts/show/PodcastShow';
+import PodcastEdit from './pages/podcasts/edit/podcast-edit';
 const queryClient = new QueryClient();
 const router = createBrowserRouter([
   {
@@ -95,7 +96,7 @@ const router = createBrowserRouter([
           },
           {
             path: ':id/edit',
-            element: <PublisherEdit />
+            element: <PodcastEdit />
           },
           {
             path: ':id/show',
@@ -108,7 +109,6 @@ const router = createBrowserRouter([
         ]
       },
       {
-        // /portal/settings/keywordsuggestions
         path: '/portal/settings',
         element: <SettingsPage />,
         children: [

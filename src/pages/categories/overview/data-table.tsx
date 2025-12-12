@@ -43,7 +43,7 @@ export function DataTable({ data, columns, meta }: props) {
     getCoreRowModel: getCoreRowModel(),
     // getPaginationRowModel: getPaginationRowModel(), // not needed for server-side pagination
     manualPagination: true,
-    rowCount: meta.total,
+    rowCount: meta?.total,
     onPaginationChange: setPagination, // updat the pagination state when internal APIs mutate the pagination state
     autoResetPageIndex: false,
     autoResetAll: false,

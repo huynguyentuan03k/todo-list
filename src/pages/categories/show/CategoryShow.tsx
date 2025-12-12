@@ -47,7 +47,7 @@ export default function CategoryShow() {
 
             <div className="flex flex-col col-span-2">
               <Label>Description</Label>
-              <p>{category.description}</p>
+              <p className="whitespace-pre-line">{category.description}</p>
             </div>
 
           </div>

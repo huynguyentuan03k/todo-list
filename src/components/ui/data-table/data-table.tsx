@@ -7,14 +7,13 @@ import {
   useReactTable,
 } from "@tanstack/react-table"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
-import React from "react"
 import { useNavigate } from "react-router-dom"
 import { PaginationServer } from "../pagination/pagination-server"
 import { Meta } from "@/pages/publishers/shema"
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
   data: TData[],
-  meta?: Meta
+  meta?: Meta,
 }
 
 export function DataTable<TData, TValue>({ columns, data, meta }: DataTableProps<TData, TValue>) {
@@ -51,7 +50,7 @@ export function DataTable<TData, TValue>({ columns, data, meta }: DataTableProps
               table.getRowModel().rows.map(row => (
                 <TableRow key={row.id}>
                   {row.getVisibleCells().map(cell => (
-                    <TableCell key={cell.id} className="cursor-pointer" onClick={() => navigate(`${row?.original?.id}/show`)}>
+                    <TableCell key={cell.id} className="cursor-pointer" onClick={() => navigate(`${(row.original as any).id}/show`)}>
                       {flexRender(cell.column.columnDef.cell, cell.getContext())}
                     </TableCell>
                   ))}

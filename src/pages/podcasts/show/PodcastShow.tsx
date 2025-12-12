@@ -30,7 +30,10 @@ export default function PodcastShow() {
     <div>
       <div className="flex w-full justify-between">
         <Breadcrumbs />
-        <Button className=" bg-blue-500 text-white hover:bg-blue-600 mb-2" onClick={() => navigate(-1)}>Back</Button>
+        <div className="flex gap-x-3">
+          <Button className=" bg-blue-500 text-white hover:bg-blue-600 mb-2" onClick={() => navigate(-1)}>Create</Button>
+          <Button className=" bg-blue-500 text-white hover:bg-blue-600 mb-2" onClick={() => navigate(-1)}>Back</Button>
+        </div>
       </div>
 
       <Card>
