@@ -131,12 +131,6 @@ export default function PublisherEdit() {
                 <PhoneInput />
               </div>
 
-              {/* created_at */}
-              <div className="flex flex-col col-span-1">
-                <Label htmlFor="created_at" >Created At</Label>
-                <DatePicker value={data?.data?.data ? PublisherSchema.parse(data.data.data).created_at : undefined} />
-              </div>
-
             </div>
           </CardContent>
           <CardFooter className="flex justify-end">
