@@ -34,7 +34,6 @@ export default function CategoryEdit() {
     queryKey: ['category', id],
     queryFn: () => http.get<{ data: Category }>(`/categories/${id}`)
   })
-  console.log("data fetch ", data?.data)
   // Update form values when data is loaded
   useEffect(() => {
     if (data?.data?.data) {

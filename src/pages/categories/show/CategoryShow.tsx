@@ -4,9 +4,10 @@ import { Button } from "@/components/ui/button"
 import { useNavigate, useParams } from "react-router-dom"
 import { useQuery } from "@tanstack/react-query"
 import http from "@/utils/http"
-import { Categories, Category, CategoriesSchema, CategorySchema } from "../shema"
+import { Category, CategorySchema } from "../shema"
 import { SpinnerLoading } from "@/pages/components/custom/SpinnerLoading"
 import Breadcrumbs from "@/pages/components/custom/breadcrumbs"
+import { IconEdit } from "@tabler/icons-react"
 
 export default function CategoryShow() {
   const navigate = useNavigate()
@@ -29,7 +30,22 @@ export default function CategoryShow() {
     <div>
       <div className="flex w-full justify-between">
         <Breadcrumbs />
-        <Button className=" bg-blue-500 text-white hover:bg-blue-600 mb-2" onClick={() => navigate(-1)}>Back</Button>
+        <div className="flex gap-2">
+          <Button
+            className="bg-blue-500 text-white hover:bg-blue-600 mb-2 " onClick={() => navigate(`/portal/categories/${category.id}/edit`)}>
+            <IconEdit
+              color="white"
+              size={20}
+              className="text-blue-500 cursor-pointer"
+              onClick={(e) => {
+                e.stopPropagation()
+                navigate(`/portal/categories/${category.id}/edit`)
+              }}
+            />
+            Edit
+          </Button>
+          <Button className=" bg-blue-500 text-white hover:bg-blue-600 mb-2" onClick={() => navigate(-1)}>Back</Button>
+        </div>
       </div>
 
       <Card>
