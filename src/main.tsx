@@ -23,6 +23,7 @@ import PodcastsOverview from './pages/podcasts/overview/podcastsOverview';
 import PodcastCreate from './pages/podcasts/create/podcastCreate';
 import PodcastShow from './pages/podcasts/show/PodcastShow';
 import PodcastEdit from './pages/podcasts/edit/podcast-edit';
+import AuthorOverview from './pages/authors/overview/CategoryOverview';
 const queryClient = new QueryClient();
 const router = createBrowserRouter([
   {
@@ -65,6 +66,30 @@ const router = createBrowserRouter([
           {
             index: true,
             element: <CategoryOverview />
+          },
+          {
+            path: 'create',
+            element: <CategoryCreate />
+          },
+          {
+            path: ':id/edit',
+            element: <CategoryEdit />
+          },
+          {
+            path: ':id/show',
+            element: <CategoryShow />
+          },
+          {
+            path: ':id/delete',
+          }
+        ]
+      },
+      {
+        path: '/portal/authors',
+        children: [
+          {
+            index: true,
+            element: <AuthorOverview />
           },
           {
             path: 'create',
