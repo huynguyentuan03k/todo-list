@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button"
 import { useNavigate } from "react-router-dom"
 import { useMutation } from "@tanstack/react-query"
 import http from "@/utils/http"
-import { Category } from "../shema"
+import { Author } from "../shema"
 import { useToast } from "@/components/ui/hooks/use-toast"
 import { useForm, SubmitHandler } from "react-hook-form"
 import { AxiosError } from "axios"
@@ -35,33 +35,33 @@ type LaravelValidationError = {
   errors: Record<string, string[]>;
 };
 
-async function createCategory(data: Category) {
-  return http.post<Category>(`/categories`, data);
+async function createAuthor(data: Author) {
+  return http.post<Author>(`/authors`, data);
 }
 
-export default function CategoryCreate() {
+export default function AuthorCreate() {
   const navigate = useNavigate()
   const { toast } = useToast()
 
-  const { register, handleSubmit, formState: { errors } } = useForm<Category>()
+  const { register, handleSubmit, formState: { errors } } = useForm<Author>()
 
-  const onSubmit: SubmitHandler<Category> = (data) => {
+  const onSubmit: SubmitHandler<Author> = (data) => {
     mutation.mutate(data)
   }
 
   const mutation = useMutation({
-    mutationFn: createCategory,
+    mutationFn: createAuthor,
     onSuccess: () => {
       toast({
-        title: "create category successfully",
-        description: "category has been store.",
+        title: "create author successfully",
+        description: "author has been store.",
       });
-      navigate('/portal/categories')
+      navigate('/portal/authors')
     },
     onError: (error: AxiosError<LaravelValidationError>) => { // axios faild luon tra ra AxiosError<T>
       const backendMessage = error?.response?.data?.message || "Something went wrong";
       toast({
-        title: "update category failed",
+        title: "update author failed",
         description: backendMessage,
         variant: "destructive",
       });
@@ -77,8 +77,8 @@ export default function CategoryCreate() {
       </div>
       <Card>
         <CardHeader>
-          <CardTitle>Create Category</CardTitle>
-          <CardDescription>description Create Category</CardDescription>
+          <CardTitle>Create Author</CardTitle>
+          <CardDescription>description Create Author</CardDescription>
         </CardHeader>
         <form onSubmit={handleSubmit(onSubmit)}>
           <CardContent>
@@ -91,8 +91,8 @@ export default function CategoryCreate() {
               </div>
 
               <div className="flex flex-col col-span-2 space-y-2 ">
-                <Label htmlFor="description">Description</Label>
-                <Textarea {...register('description')} placeholder="Type your description here." />
+                <Label htmlFor="name">name</Label>
+                <Textarea {...register('name')} placeholder="Type your name here." />
               </div>
 
             </div>

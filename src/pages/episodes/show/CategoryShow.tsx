@@ -4,27 +4,27 @@ import { Button } from "@/components/ui/button"
 import { useNavigate, useParams } from "react-router-dom"
 import { useQuery } from "@tanstack/react-query"
 import http from "@/utils/http"
-import { Category, CategorySchema } from "../shema"
+import { Episode, EpisodeSchema } from "../shema"
 import { SpinnerLoading } from "@/pages/components/custom/SpinnerLoading"
 import Breadcrumbs from "@/pages/components/custom/breadcrumbs"
 import { IconEdit } from "@tabler/icons-react"
 
-export default function CategoryShow() {
+export default function EpisodeShow() {
   const navigate = useNavigate()
   const { id } = useParams()
 
-  const getCategory = (id: number) => http.get<{ data: Category }>(`/categories/${id}`)
+  const getEpisode = (id: number) => http.get<{ data: Episode }>(`/episodes/${id}`)
 
   const { data, isLoading } = useQuery({
-    queryKey: ['category', id],
-    queryFn: () => getCategory(Number(id))
+    queryKey: ['episode', id],
+    queryFn: () => getEpisode(Number(id))
   })
 
   if (isLoading) {
     return <SpinnerLoading />
   }
 
-  const category = CategorySchema.parse(data?.data.data)
+  const episode = EpisodeSchema.parse(data?.data.data)
 
   return (
     <div>
@@ -32,14 +32,14 @@ export default function CategoryShow() {
         <Breadcrumbs />
         <div className="flex gap-2">
           <Button
-            className="bg-blue-500 text-white hover:bg-blue-600 mb-2 " onClick={() => navigate(`/portal/categories/${category.id}/edit`)}>
+            className="bg-blue-500 text-white hover:bg-blue-600 mb-2 " onClick={() => navigate(`/portal/epidoes/${episode.id}/edit`)}>
             <IconEdit
               color="white"
               size={20}
               className="text-blue-500 cursor-pointer"
               onClick={(e) => {
                 e.stopPropagation()
-                navigate(`/portal/categories/${category.id}/edit`)
+                navigate(`/portal/episodes/${episode.id}/edit`)
               }}
             />
             Edit
@@ -50,20 +50,20 @@ export default function CategoryShow() {
 
       <Card>
         <CardHeader>
-          <CardTitle>category Detail</CardTitle>
-          <CardDescription>Thông tin chi tiết của category</CardDescription>
+          <CardTitle>episode Detail</CardTitle>
+          <CardDescription>Thông tin chi tiết của episode</CardDescription>
         </CardHeader>
 
         <CardContent>
           <div className="grid grid-cols-3 gap-4">
             <div className="flex flex-col col-span-1">
-              <Label>Name</Label>
-              <p>{category.name}</p>
+              <Label>Title</Label>
+              <p>{episode.title}</p>
             </div>
 
             <div className="flex flex-col col-span-2">
               <Label>Description</Label>
-              <p className="whitespace-pre-line">{category.description}</p>
+              <p className="whitespace-pre-line">{episode.description}</p>
             </div>
 
           </div>

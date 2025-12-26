@@ -9,7 +9,7 @@ import { useSearchParams } from "react-router-dom"
 
 const getAuthors = (page: number | string = 1, per_page: number | string = 10) => {
 
-  const response = http.get<AuthorResponse<Authors>>("/Authors", {
+  const response = http.get<AuthorResponse<Authors>>("/authors", {
     params: { page, per_page },
     // tuc la khi response luon tra ve kieu nay : type PublisherResponse<Publishers>
   })

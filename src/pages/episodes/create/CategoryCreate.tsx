@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button"
 import { useNavigate } from "react-router-dom"
 import { useMutation } from "@tanstack/react-query"
 import http from "@/utils/http"
-import { Category } from "../shema"
+import { Episode } from "../shema"
 import { useToast } from "@/components/ui/hooks/use-toast"
 import { useForm, SubmitHandler } from "react-hook-form"
 import { AxiosError } from "axios"
@@ -35,33 +35,33 @@ type LaravelValidationError = {
   errors: Record<string, string[]>;
 };
 
-async function createCategory(data: Category) {
-  return http.post<Category>(`/categories`, data);
+async function createEpisode(data: Episode) {
+  return http.post<Episode>(`/episodes`, data);
 }
 
-export default function CategoryCreate() {
+export default function EpisodeCreate() {
   const navigate = useNavigate()
   const { toast } = useToast()
 
-  const { register, handleSubmit, formState: { errors } } = useForm<Category>()
+  const { register, handleSubmit, formState: { errors } } = useForm<Episode>()
 
-  const onSubmit: SubmitHandler<Category> = (data) => {
+  const onSubmit: SubmitHandler<Episode> = (data) => {
     mutation.mutate(data)
   }
 
   const mutation = useMutation({
-    mutationFn: createCategory,
+    mutationFn: createEpisode,
     onSuccess: () => {
       toast({
-        title: "create category successfully",
-        description: "category has been store.",
+        title: "create episode successfully",
+        description: "episode has been store.",
       });
-      navigate('/portal/categories')
+      navigate('/portal/episode')
     },
     onError: (error: AxiosError<LaravelValidationError>) => { // axios faild luon tra ra AxiosError<T>
       const backendMessage = error?.response?.data?.message || "Something went wrong";
       toast({
-        title: "update category failed",
+        title: "update episode failed",
         description: backendMessage,
         variant: "destructive",
       });
@@ -77,17 +77,17 @@ export default function CategoryCreate() {
       </div>
       <Card>
         <CardHeader>
-          <CardTitle>Create Category</CardTitle>
-          <CardDescription>description Create Category</CardDescription>
+          <CardTitle>Create Episode</CardTitle>
+          <CardDescription>description Create Episode</CardDescription>
         </CardHeader>
         <form onSubmit={handleSubmit(onSubmit)}>
           <CardContent>
             <div className="grid grid-cols-3 gap-x-4 gap-y-6">
 
               <div className="flex flex-col col-span-1 space-y-2 ">
-                <Label htmlFor="name">Name</Label>
-                <Input {...register('name', { required: true })} id="name" placeholder="Name of your Category" />
-                {errors.name && <span className="text-xs text-red-500">This field is required</span>}
+                <Label htmlFor="title">Title</Label>
+                <Input {...register('title', { required: true })} id="title" placeholder="Title of your Episode" />
+                {errors.title && <span className="text-xs text-red-500">This field is required</span>}
               </div>
 
               <div className="flex flex-col col-span-2 space-y-2 ">

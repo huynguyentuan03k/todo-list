@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button"
 import { useNavigate, useParams } from "react-router-dom"
 import { useMutation, useQuery } from "@tanstack/react-query"
 import http from "@/utils/http"
-import { Category, CategorySchema } from "../shema"
+import { Episode, EpisodeSchema } from "../shema"
 import { SpinnerLoading } from "@/pages/components/custom/SpinnerLoading"
 import { useForm } from "react-hook-form"
 import { useEffect } from "react"
@@ -14,57 +14,57 @@ import { Textarea } from "@/components/ui/textarea"
 import Breadcrumbs from "@/pages/components/custom/breadcrumbs"
 
 
-export default function CategoryEdit() {
+export default function EpisodeEdit() {
   const { id } = useParams()
   const navigate = useNavigate()
   const { toast } = useToast()
 
-  const updateCategory = (category: Category) =>
-    http.put<Category>(`/categories/${id}`, category);
+  const updateEpisode = (episode: Episode) =>
+    http.put<Episode>(`/episodes/${id}`, episode);
 
   // Initialize useForm with empty defaults first
-  const { register, handleSubmit, watch, formState: { errors }, reset } = useForm<Category>({
+  const { register, handleSubmit, watch, formState: { errors }, reset } = useForm<Episode>({
     defaultValues: {
-      name: '',
+      title: '',
       description: ''
     }
   })
 
   const { data, isLoading } = useQuery({
-    queryKey: ['category', id],
-    queryFn: () => http.get<{ data: Category }>(`/categories/${id}`)
+    queryKey: ['episode', id],
+    queryFn: () => http.get<{ data: Episode }>(`/episodes/${id}`)
   })
   // Update form values when data is loaded
   useEffect(() => {
     if (data?.data?.data) {
-      const category = CategorySchema.parse(data.data.data)
+      const episode = EpisodeSchema.parse(data.data.data)
       reset({
-        name: category.name,
-        description: category.description,
+        title: episode.title,
+        description: episode.description,
       })
     }
   }, [data, reset])
 
-  const newName = watch('name')
+  const newName = watch('title')
 
   const mutation = useMutation({
-    mutationFn: updateCategory,
+    mutationFn: updateEpisode,
     onSuccess: () => {
       toast({
-        title: "update category successfully",
-        description: "category has been store.",
+        title: "update episode successfully",
+        description: "episode has been store.",
       });
-      navigate('/portal/categories')
+      navigate('/portal/episodes')
     },
     onError: () => {
       toast({
-        title: "update category error",
-        description: "cannot update category .",
+        title: "update episode error",
+        description: "cannot update episode.",
       })
     },
   })
 
-  function onSubmit(data: Category) {
+  function onSubmit(data: Episode) {
     mutation.mutate(data)
   }
 
@@ -84,17 +84,17 @@ export default function CategoryEdit() {
       </div>
       <Card>
         <CardHeader>
-          <CardTitle>Edit Category</CardTitle>
-          <CardDescription>description Edit Category</CardDescription>
+          <CardTitle>Edit Episode</CardTitle>
+          <CardDescription>description Edit Episode</CardDescription>
         </CardHeader>
         <form onSubmit={handleSubmit(data => onSubmit(data))} >
           <CardContent>
             <div className="grid grid-cols-3 gap-4">
 
               <div className="flex flex-col col-span-1 gap-y-2">
-                <Label htmlFor="name" >Name : {newName}</Label>
-                {errors.name && <span>{errors.name.message}</span>}
-                <Input id="name" {...register('name', { required: "ten ko de trong" })} placeholder="Name of your publisher" />
+                <Label htmlFor="title" >Title : {newName}</Label>
+                {errors.title && <span>{errors.title.message}</span>}
+                <Input id="title" {...register('title', { required: "ten ko de trong" })} placeholder="Title of your episode" />
               </div>
 
               <div className="flex flex-col col-span-2 gap-y-2">

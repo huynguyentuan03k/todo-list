@@ -5,42 +5,38 @@ import { Button } from "@/components/ui/button"
 import { useNavigate, useParams } from "react-router-dom"
 import { useMutation, useQuery } from "@tanstack/react-query"
 import http from "@/utils/http"
-import { Category, CategorySchema } from "../shema"
+import { Author, AuthorSchema } from "../shema"
 import { SpinnerLoading } from "@/pages/components/custom/SpinnerLoading"
 import { useForm } from "react-hook-form"
 import { useEffect } from "react"
 import { useToast } from "@/components/ui/hooks/use-toast"
-import { Textarea } from "@/components/ui/textarea"
 import Breadcrumbs from "@/pages/components/custom/breadcrumbs"
 
 
-export default function CategoryEdit() {
+export default function AuthorEdit() {
   const { id } = useParams()
   const navigate = useNavigate()
   const { toast } = useToast()
 
-  const updateCategory = (category: Category) =>
-    http.put<Category>(`/categories/${id}`, category);
-
+  const updateAuthor = (author: Author) =>
+    http.put<Author>(`/authors/${id}`, author);
   // Initialize useForm with empty defaults first
-  const { register, handleSubmit, watch, formState: { errors }, reset } = useForm<Category>({
+  const { register, handleSubmit, watch, formState: { errors }, reset } = useForm<Author>({
     defaultValues: {
       name: '',
-      description: ''
     }
   })
 
   const { data, isLoading } = useQuery({
-    queryKey: ['category', id],
-    queryFn: () => http.get<{ data: Category }>(`/categories/${id}`)
+    queryKey: ['author', id],
+    queryFn: () => http.get<{ data: Author }>(`/authors/${id}`)
   })
   // Update form values when data is loaded
   useEffect(() => {
     if (data?.data?.data) {
-      const category = CategorySchema.parse(data.data.data)
+      const author = AuthorSchema.parse(data.data.data)
       reset({
-        name: category.name,
-        description: category.description,
+        name: author.name,
       })
     }
   }, [data, reset])
@@ -48,13 +44,13 @@ export default function CategoryEdit() {
   const newName = watch('name')
 
   const mutation = useMutation({
-    mutationFn: updateCategory,
+    mutationFn: updateAuthor,
     onSuccess: () => {
       toast({
         title: "update category successfully",
         description: "category has been store.",
       });
-      navigate('/portal/categories')
+      navigate('/portal/authors')
     },
     onError: () => {
       toast({
@@ -64,7 +60,7 @@ export default function CategoryEdit() {
     },
   })
 
-  function onSubmit(data: Category) {
+  function onSubmit(data: Author) {
     mutation.mutate(data)
   }
 
@@ -84,8 +80,8 @@ export default function CategoryEdit() {
       </div>
       <Card>
         <CardHeader>
-          <CardTitle>Edit Category</CardTitle>
-          <CardDescription>description Edit Category</CardDescription>
+          <CardTitle>Edit Author</CardTitle>
+          <CardDescription>description Edit Author</CardDescription>
         </CardHeader>
         <form onSubmit={handleSubmit(data => onSubmit(data))} >
           <CardContent>
@@ -95,11 +91,6 @@ export default function CategoryEdit() {
                 <Label htmlFor="name" >Name : {newName}</Label>
                 {errors.name && <span>{errors.name.message}</span>}
                 <Input id="name" {...register('name', { required: "ten ko de trong" })} placeholder="Name of your publisher" />
-              </div>
-
-              <div className="flex flex-col col-span-2 gap-y-2">
-                <Label htmlFor="description">Description</Label>
-                <Textarea className="h-[200px]" id="description" {...register('description')} placeholder="type description here" />
               </div>
 
             </div>

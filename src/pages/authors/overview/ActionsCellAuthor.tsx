@@ -30,7 +30,7 @@ export default function ActionsCellAuthor({ author }: { author: Author }) {
 
   function deleteAuthor(id: number | string) {
 
-    return http.delete(`/Authors/${id}`)
+    return http.delete(`/authors/${id}`)
   };
 
   const mutation = useMutation({
@@ -59,7 +59,7 @@ export default function ActionsCellAuthor({ author }: { author: Author }) {
               className="text-blue-500  cursor-pointer"
               onClick={(e) => {
                 e.stopPropagation()
-                navigate(`/portal/categories/${author.id}/edit`)
+                navigate(`/portal/authors/${author.id}/edit`)
               }}
             />
           </TooltipTrigger>
