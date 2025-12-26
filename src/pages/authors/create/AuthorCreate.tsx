@@ -86,13 +86,28 @@ export default function AuthorCreate() {
 
               <div className="flex flex-col col-span-1 space-y-2 ">
                 <Label htmlFor="name">Name</Label>
-                <Input {...register('name', { required: true })} id="name" placeholder="Name of your Category" />
+                <Input {...register('name', { required: true })} id="name" placeholder="Name of your Author" />
                 {errors.name && <span className="text-xs text-red-500">This field is required</span>}
               </div>
 
               <div className="flex flex-col col-span-2 space-y-2 ">
-                <Label htmlFor="name">name</Label>
-                <Textarea {...register('name')} placeholder="Type your name here." />
+                <Label htmlFor="bio">bio</Label>
+                <Textarea {...register('bio')} placeholder="Bio your here." />
+              </div>
+
+              <div className="flex flex-col col-span-1 space-y-2 ">
+                <Label htmlFor="avatar">Avatar</Label>
+                <Input {...register('avatar',)} id="avatar" placeholder="Avatar of your" />
+              </div>
+
+              <div className="flex flex-col col-span-1 space-y-2 ">
+                <Label htmlFor="email">Email</Label>
+                <Input {...register('email',)} id="email" placeholder="Email of your" />
+              </div>
+
+              <div className="flex flex-col col-span-1 space-y-2 ">
+                <Label htmlFor="website">Website</Label>
+                <Input {...register('website',)} id="website" placeholder="Website of your" />
               </div>
 
             </div>
