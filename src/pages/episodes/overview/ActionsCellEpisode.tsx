@@ -59,7 +59,7 @@ export default function ActionsCellEpisode({ episode }: { episode: Episode }) {
               className="text-blue-500  cursor-pointer"
               onClick={(e) => {
                 e.stopPropagation()
-                navigate(`/portal/categories/${episode.id}/edit`)
+                navigate(`/portal/episodes/${episode.id}/edit`)
               }}
             />
           </TooltipTrigger>

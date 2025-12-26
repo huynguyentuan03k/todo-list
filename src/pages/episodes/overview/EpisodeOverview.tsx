@@ -36,16 +36,16 @@ export default function EpisodeOverview() {
   }
 
   if (error) {
-    return <p className="text-red-500">Failed to load categories</p>
+    return <p className="text-red-500">Failed to load episode</p>
   }
 
-  const Categories = EpisodesSchema.parse(data?.data.data ?? [])
+  const episodes = EpisodesSchema.parse(data?.data.data ?? [])
 
   return (
     <div className="container mx-auto py-10">
       <DataTable
         columns={columns}
-        data={Categories}
+        data={episodes}
         meta={data?.data?.meta}
       />
     </div>

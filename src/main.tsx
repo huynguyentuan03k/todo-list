@@ -24,10 +24,13 @@ import PodcastCreate from './pages/podcasts/create/podcastCreate';
 import PodcastShow from './pages/podcasts/show/PodcastShow';
 import PodcastEdit from './pages/podcasts/edit/podcast-edit';
 import AuthorOverview from './pages/authors/overview/CategoryOverview';
-import EpisodeOverview from './pages/episodes/overview/CategoryOverview';
+import EpisodeOverview from './pages/episodes/overview/EpisodeOverview';
 import AuthorCreate from './pages/authors/create/AuthorCreate';
 import AuthorEdit from './pages/authors/edit/CategoryEdit';
 import AuthorShow from './pages/authors/show/AuthorShow';
+import EpisodeCreate from './pages/episodes/create/EpisodeCreate';
+import EpisodeEdit from './pages/episodes/edit/CategoryEdit';
+import EpisodeShow from './pages/episodes/show/CategoryShow';
 const queryClient = new QueryClient();
 const router = createBrowserRouter([
   {
@@ -121,15 +124,15 @@ const router = createBrowserRouter([
           },
           {
             path: 'create',
-            element: <CategoryCreate />
+            element: <EpisodeCreate />
           },
           {
             path: ':id/edit',
-            element: <CategoryEdit />
+            element: <EpisodeEdit />
           },
           {
             path: ':id/show',
-            element: <CategoryShow />
+            element: <EpisodeShow />
           },
           {
             path: ':id/delete',

@@ -59,7 +59,7 @@ export function DataTable({ data, columns, meta }: props) {
     <div className="w-full">
       <div className="flex items-center py-4">
         <Breadcrumbs />
-        <Button variant="default" className="ml-auto bg-blue-500 hover:bg-blue-700" onClick={() => navigate(`/portal/categories/create`)}>New</Button>
+        <Button variant="default" className="ml-auto bg-blue-500 hover:bg-blue-700" onClick={() => navigate(`/portal/episodes/create`)}>New</Button>
       </div>
       <div className="overflow-hidden rounded-md border">
         <Table>
@@ -88,7 +88,7 @@ export function DataTable({ data, columns, meta }: props) {
                 <TableRow
                   key={row.id}
                   data-state={row.getIsSelected() && "selected"}
-                  onClick={() => navigate(`/portal/categories/${row.original.id}/show`)}
+                  onClick={() => navigate(`/portal/episodes/${row.original.id}/show`)}
                 >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>
