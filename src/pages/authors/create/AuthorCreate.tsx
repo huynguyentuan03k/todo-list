@@ -82,7 +82,7 @@ export default function AuthorCreate() {
         </CardHeader>
         <form onSubmit={handleSubmit(onSubmit)}>
           <CardContent>
-            <div className="grid grid-cols-3 gap-x-4 gap-y-6">
+            <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-x-4 gap-y-6">
 
               <div className="flex flex-col col-span-1 space-y-2 ">
                 <Label htmlFor="name">Name</Label>
@@ -90,7 +90,7 @@ export default function AuthorCreate() {
                 {errors.name && <span className="text-xs text-red-500">This field is required</span>}
               </div>
 
-              <div className="flex flex-col col-span-2 space-y-2 ">
+              <div className="flex flex-col col-span-1 space-y-2 ">
                 <Label htmlFor="bio">bio</Label>
                 <Textarea {...register('bio')} placeholder="Bio your here." />
               </div>
@@ -100,12 +100,12 @@ export default function AuthorCreate() {
                 <Input {...register('avatar',)} id="avatar" placeholder="Avatar of your" />
               </div>
 
-              <div className="flex flex-col col-span-1 space-y-2 ">
+              <div className="flex flex-col space-y-2 ">
                 <Label htmlFor="email">Email</Label>
                 <Input {...register('email',)} id="email" placeholder="Email of your" />
               </div>
 
-              <div className="flex flex-col col-span-1 space-y-2 ">
+              <div className="flex flex-col space-y-2 ">
                 <Label htmlFor="website">Website</Label>
                 <Input {...register('website',)} id="website" placeholder="Website of your" />
               </div>

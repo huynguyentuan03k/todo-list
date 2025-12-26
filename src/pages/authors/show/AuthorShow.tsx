@@ -8,6 +8,7 @@ import { Author, AuthorSchema } from "../shema"
 import { SpinnerLoading } from "@/pages/components/custom/SpinnerLoading"
 import Breadcrumbs from "@/pages/components/custom/breadcrumbs"
 import { IconEdit } from "@tabler/icons-react"
+import { Link } from "react-router-dom"
 
 export default function AuthorShow() {
   const navigate = useNavigate()
@@ -55,11 +56,36 @@ export default function AuthorShow() {
         </CardHeader>
 
         <CardContent>
-          <div className="grid grid-cols-3 gap-4">
-            <div className="flex flex-col col-span-1">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+            <div className="flex flex-col">
               <Label>Name</Label>
               <p>{author.name}</p>
             </div>
+
+            <div className="flex flex-col ">
+              <Label>Avatar</Label>
+              <p>{author.avatar}</p>
+            </div>
+
+            <div className="flex flex-col ">
+              <Label>Bio</Label>
+              <p>{author.bio}</p>
+            </div>
+
+            <div className="flex flex-col ">
+              <Label>Email</Label>
+              <p>{author.email}</p>
+            </div>
+
+            <div className="flex flex-col ">
+              <Label>Website</Label>
+              <Link to={author.website ?? ''}>
+                <p className="text-blue-500">
+                  {author.website}
+                </p>
+              </Link>
+            </div>
+
           </div>
         </CardContent>
       </Card>
