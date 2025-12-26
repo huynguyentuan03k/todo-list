@@ -56,7 +56,7 @@ export default function EpisodeCreate() {
         title: "create episode successfully",
         description: "episode has been store.",
       });
-      navigate('/portal/episode')
+      navigate('/portal/episodes')
     },
     onError: (error: AxiosError<LaravelValidationError>) => { // axios faild luon tra ra AxiosError<T>
       const backendMessage = error?.response?.data?.message || "Something went wrong";
@@ -93,6 +93,18 @@ export default function EpisodeCreate() {
               <div className="flex flex-col col-span-2 space-y-2 ">
                 <Label htmlFor="description">Description</Label>
                 <Textarea {...register('description')} placeholder="Type your description here." />
+              </div>
+
+              <div className="flex flex-col col-span-1 space-y-2">
+                <Label htmlFor="slug">Slug</Label>
+                <Input {...register('slug', { required: true })} id="slug" placeholder="Slug of your Episode" />
+                {errors.title && <span className="text-xs text-red-500">This field is required</span>}
+              </div>
+
+              <div className="flex flex-col col-span-1 space-y-2">
+                <Label htmlFor="podcast_id ">Podcat Id</Label>
+                <Input {...register('podcast_id', { required: true })} id="podcast_id" placeholder="Id of your Podcast" />
+                {errors.title && <span className="text-xs text-red-500">This field is required</span>}
               </div>
 
             </div>

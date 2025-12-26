@@ -24,13 +24,13 @@ import PodcastCreate from './pages/podcasts/create/podcastCreate';
 import PodcastShow from './pages/podcasts/show/PodcastShow';
 import PodcastEdit from './pages/podcasts/edit/podcast-edit';
 import AuthorOverview from './pages/authors/overview/CategoryOverview';
-import EpisodeOverview from './pages/episodes/overview/EpisodeOverview';
 import AuthorCreate from './pages/authors/create/AuthorCreate';
 import AuthorEdit from './pages/authors/edit/CategoryEdit';
 import AuthorShow from './pages/authors/show/AuthorShow';
+import EpisodeOverview from './pages/episodes/overview/EpisodeOverview';
 import EpisodeCreate from './pages/episodes/create/EpisodeCreate';
-import EpisodeEdit from './pages/episodes/edit/CategoryEdit';
-import EpisodeShow from './pages/episodes/show/CategoryShow';
+import EpisodeEdit from './pages/episodes/edit/EpisodeEdit';
+import EpisodeShow from './pages/episodes/show/EpisodeShow';
 const queryClient = new QueryClient();
 const router = createBrowserRouter([
   {

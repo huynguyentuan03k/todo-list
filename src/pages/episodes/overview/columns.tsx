@@ -12,10 +12,17 @@ export const columns: ColumnDef<Episode>[] = [
     ),
   },
   {
-    accessorKey: "name",
-    header: "Name",
+    accessorKey: "title",
+    header: "Title",
     cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("name")}</div>
+      <div className="capitalize">{row.getValue("title")}</div>
+    ),
+  },
+  {
+    accessorKey: "Cover Image",
+    header: "Cover Image",
+    cell: ({ row }) => (
+      <div>{row.getValue("cover_image")}</div>
     ),
   },
   {
