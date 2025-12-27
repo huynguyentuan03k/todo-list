@@ -5,13 +5,14 @@ import { Button } from "@/components/ui/button"
 import { useNavigate } from "react-router-dom"
 import { useMutation } from "@tanstack/react-query"
 import http from "@/utils/http"
-import { Author } from "../shema"
+import { Author, AuthorForm } from "../shema"
 import { useToast } from "@/components/ui/hooks/use-toast"
 import { useForm, SubmitHandler } from "react-hook-form"
 import { AxiosError } from "axios"
 import { Textarea } from "@/components/ui/textarea"
 import Breadcrumbs from "@/pages/components/custom/breadcrumbs"
-
+import { SingleFile } from "@/pages/components/custom/FormFileDropzone"
+import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 /**
  * {
   "message": "The given data was invalid.",
@@ -35,17 +36,39 @@ type LaravelValidationError = {
   errors: Record<string, string[]>;
 };
 
-async function createAuthor(data: Author) {
-  return http.post<Author>(`/authors`, data);
+async function createAuthor(data: AuthorForm) {
+  const formData = new FormData();
+  if (data.avatar) {
+    formData.append("avatar", data.avatar);
+  }
+
+  formData.append('name', data.name);
+  formData.append('email', data.email);
+  formData.append('website', data.website);
+  formData.append('bio', data.bio);
+
+  return http.post<Author>(`/authors`, formData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
 }
 
 export default function AuthorCreate() {
   const navigate = useNavigate()
   const { toast } = useToast()
 
-  const { register, handleSubmit, formState: { errors } } = useForm<Author>()
+  const form = useForm<AuthorForm>({
+    defaultValues: {
+      name: "",
+      bio: "",
+      email: "",
+      website: "",
+      avatar: undefined,
+    }
+  })
 
-  const onSubmit: SubmitHandler<Author> = (data) => {
+  const onSubmit: SubmitHandler<AuthorForm> = (data) => {
     mutation.mutate(data)
   }
 
@@ -80,44 +103,117 @@ export default function AuthorCreate() {
           <CardTitle>Create Author</CardTitle>
           <CardDescription>description Create Author</CardDescription>
         </CardHeader>
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <CardContent>
-            <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-x-4 gap-y-6">
+        <form onSubmit={form.handleSubmit(onSubmit)}>
 
-              <div className="flex flex-col col-span-1 space-y-2 ">
-                <Label htmlFor="name">Name</Label>
-                <Input {...register('name', { required: true })} id="name" placeholder="Name of your Author" />
-                {errors.name && <span className="text-xs text-red-500">This field is required</span>}
-              </div>
+          <Form {...form}>
+            <CardContent>
+              <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-x-4 gap-y-6">
 
-              <div className="flex flex-col col-span-1 space-y-2 ">
-                <Label htmlFor="bio">bio</Label>
-                <Textarea {...register('bio')} placeholder="Bio your here." />
-              </div>
+                <FormField
+                  control={form.control}
+                  name="name"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Name</FormLabel>
+                      <FormControl>
+                        <Input
+                          placeholder="Name of your Author"
+                          {...field}
+                        />
+                      </FormControl>
+                    </FormItem>
+                  )}
+                />
 
-              <div className="flex flex-col col-span-1 space-y-2 ">
-                <Label htmlFor="avatar">Avatar</Label>
-                <Input {...register('avatar',)} id="avatar" placeholder="Avatar of your" />
-              </div>
+                <FormField
+                  control={form.control}
+                  name="bio"
+                  render={({ field }) => (
+                    <FormItem className="h-15">
+                      <FormLabel>Bio</FormLabel>
+                      <FormControl className="d">
+                        <Textarea
+                          className="min-h-[70px]"
+                          placeholder="Bio your here"
+                          {...field}
+                        />
+                      </FormControl>
+                    </FormItem>
+                  )}
+                />
 
-              <div className="flex flex-col space-y-2 ">
+                <FormField
+                  control={form.control}
+                  name="avatar"
+                  render={({ field }) => (
+                    <FormItem className="row-span-2">
+                      <FormLabel>Avatar</FormLabel>
+                      <div className="flex">
+                        <FormControl className="">
+                          <SingleFile
+                            value={field.value}
+                            onChange={field.onChange}
+                          />
+                        </FormControl>
+                      </div>
+
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="email"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Email</FormLabel>
+                      <FormControl>
+                        <Input
+                          placeholder="Email of your"
+                          {...field}
+                        />
+                      </FormControl>
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="website"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Website</FormLabel>
+                      <FormControl>
+                        <Input
+                          placeholder="Website of your"
+                          {...field}
+                        />
+                      </FormControl>
+                    </FormItem>
+                  )}
+                />
+
+
+                {/* <div className="flex flex-col space-y-2">
                 <Label htmlFor="email">Email</Label>
                 <Input {...register('email',)} id="email" placeholder="Email of your" />
-              </div>
+                </div>
 
-              <div className="flex flex-col space-y-2 ">
+                <div className="flex flex-col space-y-2 ">
                 <Label htmlFor="website">Website</Label>
                 <Input {...register('website',)} id="website" placeholder="Website of your" />
-              </div>
+                </div> */}
 
-            </div>
-          </CardContent>
-          <CardFooter className="flex justify-end">
-            <Button
-              type="submit"
-              className="bg-blue-500 text-white hover:bg-blue-600 rounded-lg"
-            >Save</Button>
-          </CardFooter>
+              </div>
+            </CardContent>
+            <CardFooter className="flex justify-end">
+              <Button
+                type="submit"
+                className="bg-blue-500 text-white hover:bg-blue-600 rounded-lg"
+              >Save</Button>
+            </CardFooter>
+          </Form>
         </form>
       </Card>
     </div >

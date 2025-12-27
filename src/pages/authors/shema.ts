@@ -36,3 +36,11 @@ export type AuthorResponse<T> = {
   meta: Meta;
   links: Links;
 };
+
+export type AuthorForm = {
+  avatar?: File;
+  name: string;
+  bio: string;
+  email: string;
+  website: string;
+};
