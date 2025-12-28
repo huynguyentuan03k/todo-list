@@ -18,7 +18,7 @@ type SingleFileProps = {
 export function SingleFile({ value, onChange }: SingleFileProps) {
   const dropzone = useDropzone({
     onDropFile: async (file: File) => {
-      onChange(file); // 🔥 connect RHF
+      onChange(file);
       return {
         status: "success",
         result: URL.createObjectURL(file),

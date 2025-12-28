@@ -25,7 +25,7 @@ import PodcastShow from './pages/podcasts/show/PodcastShow';
 import PodcastEdit from './pages/podcasts/edit/podcast-edit';
 import AuthorOverview from './pages/authors/overview/CategoryOverview';
 import AuthorCreate from './pages/authors/create/AuthorCreate';
-import AuthorEdit from './pages/authors/edit/CategoryEdit';
+import AuthorEdit from './pages/authors/edit/AuthorEdit';
 import AuthorShow from './pages/authors/show/AuthorShow';
 import EpisodeOverview from './pages/episodes/overview/EpisodeOverview';
 import EpisodeCreate from './pages/episodes/create/EpisodeCreate';

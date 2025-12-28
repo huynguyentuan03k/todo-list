@@ -1,61 +1,46 @@
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
-import { useNavigate } from "react-router-dom"
-import { useMutation } from "@tanstack/react-query"
+import { useNavigate, useParams } from "react-router-dom"
+import { useMutation, useQuery } from "@tanstack/react-query"
 import http from "@/utils/http"
-import { Author, AuthorForm } from "../shema"
-import { useToast } from "@/components/ui/hooks/use-toast"
+import { Author, AuthorForm, AuthorSchema } from "../shema"
+import { SpinnerLoading } from "@/pages/components/custom/SpinnerLoading"
 import { useForm, SubmitHandler } from "react-hook-form"
-import { AxiosError } from "axios"
-import { Textarea } from "@/components/ui/textarea"
+import { useEffect } from "react"
+import { useToast } from "@/components/ui/hooks/use-toast"
 import Breadcrumbs from "@/pages/components/custom/breadcrumbs"
-import { SingleFile } from "@/pages/components/custom/FormFileDropzone"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
-/**
- * {
-  "message": "The given data was invalid.",
-  "errors": {
-    "email": [
-      "The email has already been taken."
-    ],
-    "name": [
-      "The name field is required."
-    ]
-  }
-}
-Record<string, string[]> la kiểu dựng sẵn (utility type) trong TypeScript.
-- errors là một object
-- Key: tên field (vd: "email", "name") → string
-- Value: mảng chứa các message → string[]
-*/
+import { SingleFile } from "@/pages/components/custom/FormFileDropzone"
+import { Textarea } from "@/components/ui/textarea"
 
-type LaravelValidationError = {
-  message: string;
-  errors: Record<string, string[]>;
-};
 
-async function createAuthor(data: AuthorForm) {
-  const formData = new FormData();
-  if (data.avatar) {
-    formData.append("avatar", data.avatar);
-  }
-
-  formData.append('name', data.name);
-  formData.append('email', data.email);
-  formData.append('website', data.website);
-  formData.append('bio', data.bio);
-
-  return http.post<Author>(`/authors`, formData, {
-    headers: {
-      "Content-Type": "multipart/form-data",
-    },
-  });
-}
-
-export default function AuthorCreate() {
+export default function AuthorEdit() {
+  const { id } = useParams()
   const navigate = useNavigate()
   const { toast } = useToast()
+
+  const updateAuthor = async (data: AuthorForm) => {
+    const formData = new FormData();
+
+    formData.append("name", data.name);
+    formData.append("bio", data.bio ?? "");
+    formData.append("email", data.email ?? "");
+    formData.append("website", data.website ?? "");
+
+    if (data.avatar) {
+      formData.append("avatar", data.avatar);
+    }
+
+    formData.append("_method", "POST");
+
+    return http.post<Author>(`/authors/${id}`, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+  };
+
 
   const form = useForm<AuthorForm>({
     defaultValues: {
@@ -67,47 +52,73 @@ export default function AuthorCreate() {
     }
   })
 
+  const { data, isLoading } = useQuery({
+    queryKey: ['author', id],
+    queryFn: () => http.get<{ data: Author }>(`/authors/${id}`)
+  })
+
+  // Update form values when data is loaded
+  useEffect(() => {
+    if (data?.data?.data) {
+      const author = AuthorSchema.parse(data.data.data)
+      form.reset({
+        name: author.name ?? '',
+        bio: author.bio ?? '',
+        email: author.email ?? '',
+        website: author.website ?? '',
+        avatar: undefined,
+
+      })
+    }
+  }, [data, form])
+
+  const mutation = useMutation({
+    mutationFn: updateAuthor,
+    onSuccess: () => {
+      toast({
+        title: "update author successfully",
+        description: "author has been store.",
+        variant: "default",
+      });
+      navigate('/portal/authors')
+    },
+    onError: () => {
+      toast({
+        title: "update author error",
+        description: "cannot update author .",
+        variant: "destructive",
+      })
+    },
+  })
+
   const onSubmit: SubmitHandler<AuthorForm> = (data) => {
     mutation.mutate(data)
   }
 
-  const mutation = useMutation({
-    mutationFn: createAuthor,
-    onSuccess: () => {
-      toast({
-        title: "create author successfully",
-        description: "author has been store.",
-      });
-      navigate('/portal/authors')
-    },
-    onError: (error: AxiosError<LaravelValidationError>) => { // axios faild luon tra ra AxiosError<T>
-      const backendMessage = error?.response?.data?.message || "Something went wrong";
-      toast({
-        title: "update author failed",
-        description: backendMessage,
-        variant: "destructive",
-      });
-    }
+  if (isLoading) {
+    return <SpinnerLoading />
+  }
 
-  })
+  if (!data) {
+    return <div>No data</div>
+  }
 
   return (
-    <div>
+    <div >
       <div className="flex justify-between">
         <Breadcrumbs />
-        <Button className="bg-blue-500 text-white hover:bg-blue-600 rounded-lg mb-2" onClick={() => navigate(-1)}>Back</Button>
+        <Button className="bg-blue-500 text-white hover:bg-blue-600 mb-2" onClick={() => navigate(-1)}>Back</Button>
       </div>
       <Card>
         <CardHeader>
-          <CardTitle>Create Author</CardTitle>
-          <CardDescription>description Create Author</CardDescription>
+          <CardTitle>Edit Author</CardTitle>
+          <CardDescription>description Edit Author</CardDescription>
         </CardHeader>
-        <form onSubmit={form.handleSubmit(onSubmit)}>
+        <form onSubmit={form.handleSubmit(data => onSubmit(data))} >
+          <CardContent>
+            <div className="grid grid-cols-3 gap-4">
 
-          <Form {...form}>
-            <CardContent>
-              <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-x-4 gap-y-6">
-
+              <Form {...form}>
                 <FormField
                   control={form.control}
                   name="name"
@@ -192,29 +203,14 @@ export default function AuthorCreate() {
                     </FormItem>
                   )}
                 />
-
-
-                {/* <div className="flex flex-col space-y-2">
-                <Label htmlFor="email">Email</Label>
-                <Input {...register('email',)} id="email" placeholder="Email of your" />
-                </div>
-
-                <div className="flex flex-col space-y-2 ">
-                <Label htmlFor="website">Website</Label>
-                <Input {...register('website',)} id="website" placeholder="Website of your" />
-                </div> */}
-
-              </div>
-            </CardContent>
-            <CardFooter className="flex justify-end">
-              <Button
-                type="submit"
-                className="bg-blue-500 text-white hover:bg-blue-600 rounded-lg"
-              >Save</Button>
-            </CardFooter>
-          </Form>
+              </Form>
+            </div>
+          </CardContent>
+          <CardFooter className="flex justify-end">
+            <Button type="submit" className="bg-blue-500 text-white hover:bg-blue-600">Save</Button>
+          </CardFooter>
         </form>
       </Card>
-    </div >
+    </div>
   )
 }

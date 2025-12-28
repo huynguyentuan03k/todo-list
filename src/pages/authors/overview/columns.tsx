@@ -1,6 +1,8 @@
 import { ColumnDef } from "@tanstack/react-table"
 import { Author } from "../shema";
 import ActionsCellAuthor from "./ActionsCellAuthor";
+import { Avatar, AvatarImage } from "@/components/ui/avatar";
+import { AvatarFallback } from "@radix-ui/react-avatar";
 
 
 export const columns: ColumnDef<Author>[] = [
@@ -22,7 +24,11 @@ export const columns: ColumnDef<Author>[] = [
     accessorKey: "avatar",
     header: "Avatar",
     cell: ({ row }) => (
-      <div className="capitalize line-clamp-3">{row.getValue("avatar")}</div>
+      <Avatar>
+        <AvatarImage src={row.original.avatar ?? undefined} />
+        <AvatarFallback>CN</AvatarFallback>
+      </Avatar>
+
     ),
   },
   {
