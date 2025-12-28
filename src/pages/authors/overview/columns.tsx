@@ -25,7 +25,7 @@ export const columns: ColumnDef<Author>[] = [
     header: "Avatar",
     cell: ({ row }) => (
       <Avatar>
-        <AvatarImage src={row.original.avatar ?? undefined} />
+        <AvatarImage src={row.original.avatar_url ?? undefined} />
         <AvatarFallback>CN</AvatarFallback>
       </Avatar>
 

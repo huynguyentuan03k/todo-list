@@ -9,6 +9,8 @@ import { SpinnerLoading } from "@/pages/components/custom/SpinnerLoading"
 import Breadcrumbs from "@/pages/components/custom/breadcrumbs"
 import { IconEdit } from "@tabler/icons-react"
 import { Link } from "react-router-dom"
+import { Avatar, AvatarImage } from "@/components/ui/avatar"
+import { AvatarFallback } from "@radix-ui/react-avatar"
 
 export default function AuthorShow() {
   const navigate = useNavigate()
@@ -63,8 +65,12 @@ export default function AuthorShow() {
             </div>
 
             <div className="flex flex-col ">
-              <Label>Avatar</Label>
-              <p>{author.avatar}</p>
+              <Avatar>
+                <AvatarImage src={author.avatar_url ?? undefined} />
+                <AvatarFallback>CN</AvatarFallback>
+              </Avatar>
+              {/* <Label>Avatar</Label>
+              <p>{author.avatar}</p> */}
             </div>
 
             <div className="flex flex-col ">

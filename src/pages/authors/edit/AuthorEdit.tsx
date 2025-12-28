@@ -32,8 +32,6 @@ export default function AuthorEdit() {
       formData.append("avatar", data.avatar);
     }
 
-    formData.append("_method", "POST");
-
     return http.post<Author>(`/authors/${id}`, formData, {
       headers: {
         "Content-Type": "multipart/form-data",

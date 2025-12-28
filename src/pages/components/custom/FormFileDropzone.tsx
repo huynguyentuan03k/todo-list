@@ -50,7 +50,7 @@ export function SingleFile({ value, onChange }: SingleFileProps) {
           <div className="flex flex-col gap-1">
             <p className="text-sm font-semibold">Upload avatar</p>
             <p className="text-xs text-muted-foreground">
-              PNG, JPG — max 10MB
+              PNG, JPG — max 2MB
             </p>
           </div>
         </DropzoneTrigger>
