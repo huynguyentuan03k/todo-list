@@ -10,12 +10,12 @@ import {
 } from "@/components/ui/dropzone";
 import { cn } from "@/lib/utils";
 
-type SingleFileProps = {
-  value?: File;
+type Props = {
+  value?: string;
   onChange: (file?: File) => void;
 };
 
-export function SingleFile({ value, onChange }: SingleFileProps) {
+export function SingleFile({ value, onChange }: Props) {
   const dropzone = useDropzone({
     onDropFile: async (file: File) => {
       onChange(file);
@@ -26,15 +26,15 @@ export function SingleFile({ value, onChange }: SingleFileProps) {
     },
     validation: {
       accept: {
-        "image/*": [".png", ".jpg", ".jpeg"],
+        "image/*": [".png", ".jpg", ".jpeg", ".webp"],
       },
-      maxSize: 10 * 1024 * 1024,
+      maxSize: 2 * 1024 * 1024,
       maxFiles: 1,
     },
     shiftOnMaxFiles: true,
   });
 
-  const avatarSrc = value ? URL.createObjectURL(value) : undefined;
+  const avatarSrc = value ? value : undefined;
   const isPending = dropzone.fileStatuses[0]?.status === "pending";
 
   return (
@@ -50,7 +50,7 @@ export function SingleFile({ value, onChange }: SingleFileProps) {
           <div className="flex flex-col gap-1">
             <p className="text-sm font-semibold">Upload avatar</p>
             <p className="text-xs text-muted-foreground">
-              PNG, JPG — max 2MB
+              PNG, JPG, JPEG, WEBP — max 2MB
             </p>
           </div>
         </DropzoneTrigger>

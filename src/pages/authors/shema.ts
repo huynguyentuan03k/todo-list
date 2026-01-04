@@ -40,6 +40,7 @@ export type AuthorResponse<T> = {
 
 export type AuthorForm = {
   avatar?: File;
+  avatar_url?: string;
   name: string;
   bio: string;
   email: string;

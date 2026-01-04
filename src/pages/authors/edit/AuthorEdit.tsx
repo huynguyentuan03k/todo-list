@@ -47,6 +47,7 @@ export default function AuthorEdit() {
       email: "",
       website: "",
       avatar: undefined,
+      avatar_url: undefined,
     }
   })
 
@@ -65,10 +66,11 @@ export default function AuthorEdit() {
         email: author.email ?? '',
         website: author.website ?? '',
         avatar: undefined,
-
+        avatar_url: author.avatar_url ?? undefined,
       })
     }
   }, [data, form])
+
 
   const mutation = useMutation({
     mutationFn: updateAuthor,
@@ -117,6 +119,7 @@ export default function AuthorEdit() {
             <div className="grid grid-cols-3 gap-4">
 
               <Form {...form}>
+
                 <FormField
                   control={form.control}
                   name="name"
@@ -152,7 +155,7 @@ export default function AuthorEdit() {
 
                 <FormField
                   control={form.control}
-                  name="avatar"
+                  name="avatar_url"
                   render={({ field }) => (
                     <FormItem className="row-span-2">
                       <FormLabel>Avatar</FormLabel>
@@ -160,11 +163,14 @@ export default function AuthorEdit() {
                         <FormControl className="">
                           <SingleFile
                             value={field.value}
-                            onChange={field.onChange}
+                            onChange={(file) => {
+                              if (file) {
+                                form.setValue("avatar", URL.createObjectURL(file) ?? undefined)
+                              }
+                            }}
                           />
                         </FormControl>
                       </div>
-
                       <FormMessage />
                     </FormItem>
                   )}
