@@ -66,7 +66,7 @@ export default function AuthorEdit() {
         email: author.email ?? '',
         website: author.website ?? '',
         avatar: undefined,
-        avatar_url: author.avatar_url ?? undefined,
+        avatar_url: author.avatar_url ?? '',
       })
     }
   }, [data, form])
@@ -165,7 +165,7 @@ export default function AuthorEdit() {
                             value={field.value}
                             onChange={(file) => {
                               if (file) {
-                                form.setValue("avatar", URL.createObjectURL(file) ?? undefined)
+                                form.setValue("avatar", file)
                               }
                             }}
                           />

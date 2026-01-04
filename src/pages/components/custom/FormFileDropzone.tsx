@@ -11,7 +11,7 @@ import {
 import { cn } from "@/lib/utils";
 
 type Props = {
-  value?: string;
+  value?: string | undefined;
   onChange: (file?: File) => void;
 };
 
