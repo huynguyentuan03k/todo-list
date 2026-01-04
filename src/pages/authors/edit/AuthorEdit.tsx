@@ -166,6 +166,7 @@ export default function AuthorEdit() {
                             onChange={(file) => {
                               if (file) {
                                 form.setValue("avatar", file)
+                                form.setValue("avatar_url", URL.createObjectURL(file))
                               }
                             }}
                           />
