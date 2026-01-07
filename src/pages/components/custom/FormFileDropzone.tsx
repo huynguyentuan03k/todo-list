@@ -15,7 +15,7 @@ type Props = {
   onChange: (file?: File) => void;
 };
 
-export function SingleFile({ value, onChange }: Props) {
+export function SingleFile({ value, onChange }: Props) { 
   const dropzone = useDropzone({
     onDropFile: async (file: File) => {
       onChange(file);
