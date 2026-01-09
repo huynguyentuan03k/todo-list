@@ -1,6 +1,5 @@
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
 import { Button } from "@/components/ui/button"
 import { useNavigate } from "react-router-dom"
 import { useMutation } from "@tanstack/react-query"
@@ -9,26 +8,9 @@ import { Podcast } from "../schema"
 import { useToast } from "@/components/ui/hooks/use-toast"
 import { useForm, SubmitHandler } from "react-hook-form"
 import { AxiosError } from "axios"
-import UploadFile from "@/pages/components/custom/uploadFile"
-import UploadWithPreviewAndReactHookForm from "@/pages/components/custom/uploadFile"
-
-/**
- * {
-  "message": "The given data was invalid.",
-  "errors": {
-    "email": [
-      "The email has already been taken."
-    ],
-    "name": [
-      "The name field is required."
-    ]
-  }
-}
-Record<string, string[]> la kiểu dựng sẵn (utility type) trong TypeScript.
-- errors là một object
-- Key: tên field (vd: "email", "name") → string
-- Value: mảng chứa các message → string[]
-*/
+import { Form, FormControl, FormField, FormItem, FormLabel } from "@/components/ui/form"
+import { Textarea } from "@/components/ui/textarea"
+import { ComboboxSelect } from "@/pages/components/custom/ComboboxSelect"
 
 type LaravelValidationError = {
   message: string;
@@ -36,15 +18,42 @@ type LaravelValidationError = {
 };
 
 async function createPodcast(data: Podcast) {
-  return http.post<Podcast>(`/podcasts`, data);
+  const formData = new FormData();
+
+  if (data.cover_image) {
+    formData.append("cover_image", data.cover_image);
+  }
+
+  formData.append("title", data.title);
+  formData.append("description", data.title);
+  formData.append("slug", data.title)
+
+  // trong formdata khong chap nhan number va null
+  // chi chap nhan : string , blob (file, FileList, etc.)
+  formData.append("publisher_id", String(data.publisher_id))
+
+  return http.post<Podcast>(`/podcasts`, data, {
+    headers: {
+      "Content-Type": "Multipart/form-data",
+    }
+  });
 }
 
 export default function PodcastCreate() {
   const navigate = useNavigate()
   const { toast } = useToast()
 
-  const { control, register, handleSubmit, setValue, formState: { errors } } = useForm<Podcast>()
+  const form = useForm<Podcast>({
+    defaultValues: {
+      title: "",
+      description: "",
+      slug: "",
+      publisher_id: undefined,
+      cover_image: "",
+    }
+  })
 
+  // form data ! entity data
   const onSubmit: SubmitHandler<Podcast> = (data) => {
     mutation.mutate(data)
   }
@@ -69,6 +78,25 @@ export default function PodcastCreate() {
 
   })
 
+  const framework = [
+    {
+      label: "java",
+      value: "1",
+    },
+    {
+      label: "javascript",
+      value: "2",
+    },
+    {
+      label: "php",
+      value: "3",
+    },
+    {
+      label: "nodejs",
+      value: "4",
+    },
+  ]
+
   return (
     <div>
       <Button className="bg-blue-500 text-white hover:bg-blue-600 rounded-lg mb-2" onClick={() => navigate(-1)}>Back</Button>
@@ -77,39 +105,88 @@ export default function PodcastCreate() {
           <CardTitle>Create Podcast</CardTitle>
           <CardDescription>description Create Podcast</CardDescription>
         </CardHeader>
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <CardContent>
-            <div className="grid grid-cols-3 gap-x-4 gap-y-6">
+        <form onSubmit={form.handleSubmit(onSubmit)}>
 
-              <div className="flex flex-col col-span-1 space-y-2 ">
-                <Label htmlFor="name">Title</Label>
-                <Input {...register('title', { required: true })} id="title" placeholder="Title of your podcast" />
-                {errors.title && <span className="text-xs text-red-500">This field is required</span>}
+          <Form {...form}>
+            <CardContent>
+              <div className="grid grid-cols-3 gap-x-4 gap-y-6">
+
+                <FormField
+                  control={form.control}
+                  name="title"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Title</FormLabel>
+                      <FormControl>
+                        <Input
+                          // type text luon tra ra string , 'abc', '',
+                          type="text"
+                          placeholder="Title of Podcast"
+                          {...field}
+                        />
+                      </FormControl>
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="description"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Description</FormLabel>
+                      <FormControl>
+                        <Textarea
+                          placeholder="Description about Podcast"
+                          {...field}
+                          value={field.value ?? ""}
+                        />
+                      </FormControl>
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="slug"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Slug</FormLabel>
+                      <FormControl>
+                        <Input
+                          placeholder="Slug about Podcast"
+                          {...field}
+                          value={field.value ?? ""}
+                        />
+                      </FormControl>
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="publisher_id"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Publisher</FormLabel>
+                      <FormControl>
+                        <ComboboxSelect
+                          value={field.value ? String(field.value) : undefined}
+                          onChange={(value) => {
+                            field.onChange(Number(value))
+                          }}
+                          options={framework}
+                        />
+                      </FormControl>
+                    </FormItem>
+                  )}
+                />
+
+
               </div>
+            </CardContent>
+          </Form>
 
-              <div className="flex flex-col col-span-1 space-y-2 ">
-                <Label htmlFor="description" >Description</Label>
-                <Input  {...register('description')} id="description" placeholder="description of your" />
-              </div>
-
-              <div className="flex flex-col col-span-1 space-y-2">
-                <Label htmlFor="publisher_id" >publisher</Label>
-                <Input  {...register('publisher_id')} id="publisher_id" placeholder="publisher of your" />
-              </div>
-
-              <div className="flex flex-col col-span-1 space-y-2">
-                <Label htmlFor="slug" >slug</Label>
-                <Input  {...register('slug')} id="slug" placeholder="slug of your" />
-              </div>
-
-              <div className="flex flex-col col-span-1 space-y-2">
-                <Label htmlFor="slug" >cover Image</Label>
-                {/* <Input  {...register('slug')} id="slug" placeholder="slug of your" /> */}
-                <UploadWithPreviewAndReactHookForm />
-              </div>
-
-            </div>
-          </CardContent>
           <CardFooter className="flex justify-end">
             <Button
               type="submit"

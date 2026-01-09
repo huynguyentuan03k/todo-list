@@ -9,6 +9,7 @@ export type Meta = {
   to: number | null;
   total: number;
 };
+
 export type Links = {
   first: string | null;
   last: string | null;
@@ -18,7 +19,7 @@ export type Links = {
 
 export const PodcastSchema = z.object({
   id: z.number(),
-  title: z.string().nullable(), // type : string | null
+  title: z.string(),
   description: z.string().nullable(),
   slug: z.string().nullable(),
   cover_image: z.string().nullable(),
@@ -35,4 +36,12 @@ export type PodcastResponse<T> = {
   data: T;
   meta: Meta;
   links: Links;
+};
+
+export type PodcastForm = {
+  title: '';
+  description: '';
+  slug: '';
+  cover_image: File | undefined;
+  publisher_id: number | undefined;
 };

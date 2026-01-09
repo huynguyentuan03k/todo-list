@@ -38,6 +38,8 @@ export type AuthorResponse<T> = {
   links: Links;
 };
 
+
+// AuthorForm chi dung de submit du lieu len backend
 export type AuthorForm = {
   avatar?: File | undefined;
   avatar_url?: string | undefined;
