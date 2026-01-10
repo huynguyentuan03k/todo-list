@@ -34,7 +34,7 @@ async function createPodcast(data: Podcast) {
   // chi chap nhan : string , blob (file, FileList, etc.)
   formData.append("publisher_id", String(data.publisher_id))
 
-  return http.post<Podcast>(`/podcasts`, data, {
+  return http.post<Podcast>(`/podcasts`, formData, {
     headers: {
       "Content-Type": "Multipart/form-data",
     }
