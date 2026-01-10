@@ -1,9 +1,8 @@
 import { ColumnDef } from "@tanstack/react-table"
-import { ArrowUpDown, Image, ImageIcon } from "lucide-react"
+import { ArrowUpDown, ImageIcon } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Podcast } from "../schema";
 import { ActionsCell } from "./ActionCell";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 
 export const columns: ColumnDef<Podcast>[] = [
