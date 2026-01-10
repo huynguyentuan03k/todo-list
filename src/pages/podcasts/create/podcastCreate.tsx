@@ -11,6 +11,8 @@ import { AxiosError } from "axios"
 import { Form, FormControl, FormField, FormItem, FormLabel } from "@/components/ui/form"
 import { Textarea } from "@/components/ui/textarea"
 import { ComboboxSelect } from "@/pages/components/custom/ComboboxSelect"
+import { useQuery } from "@tanstack/react-query"
+import { Publisher } from "@/pages/publishers/shema"
 
 type LaravelValidationError = {
   message: string;
@@ -42,6 +44,23 @@ async function createPodcast(data: Podcast) {
 export default function PodcastCreate() {
   const navigate = useNavigate()
   const { toast } = useToast()
+
+  const { data: PublisherResponse } = useQuery({
+    queryKey: ["publishers"],
+    queryFn: async () => {
+      const res = await http.get<{ data: Publisher[] }>(`/publishers`)
+      return res.data.data
+    }
+  })
+
+  const publisherOptions = PublisherResponse?.map(item => (
+    {
+      label: item.name || "",
+      value: Number(item.id)
+    }
+  )) ?? []
+
+  //
 
   const form = useForm<Podcast>({
     defaultValues: {
@@ -75,27 +94,7 @@ export default function PodcastCreate() {
         variant: "destructive",
       });
     }
-
   })
-
-  const framework = [
-    {
-      label: "java",
-      value: "1",
-    },
-    {
-      label: "javascript",
-      value: "2",
-    },
-    {
-      label: "php",
-      value: "3",
-    },
-    {
-      label: "nodejs",
-      value: "4",
-    },
-  ]
 
   return (
     <div>
@@ -175,7 +174,7 @@ export default function PodcastCreate() {
                           onChange={(value) => {
                             field.onChange(Number(value))
                           }}
-                          options={framework}
+                          options={publisherOptions}
                         />
                       </FormControl>
                     </FormItem>

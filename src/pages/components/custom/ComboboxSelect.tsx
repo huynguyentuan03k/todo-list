@@ -19,7 +19,7 @@ import {
 
 type comboboxOption = {
   label: string,
-  value: string,
+  value: number,
 }
 
 type Props = {
@@ -36,7 +36,7 @@ export function ComboboxSelect({
   placeholder = "Select..."
 }: Props) {
   const [open, setOpen] = React.useState(false)
-  const selectedOption = options.find(item => item.value === value)
+  const selectedOption = options.find(item => Number(item.value) === Number(value))
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
@@ -66,7 +66,7 @@ export function ComboboxSelect({
 
                   // on select co nhiem vu cap nhat lai form
                   onSelect={() => {
-                    onChange(item.value) // cap nhat form
+                    onChange(item.value.toString()) // cap nhat form
                     setOpen(false) // dong dropdown
                   }}
 
@@ -75,7 +75,7 @@ export function ComboboxSelect({
                   <Check
                     className={cn(
                       "ml-auto",
-                      value === item.value ? "opacity-100" : "opacity-0"
+                      Number(value) === Number(item.value) ? "opacity-100" : "opacity-0"
                     )}
                   />
                 </CommandItem>
@@ -84,7 +84,7 @@ export function ComboboxSelect({
           </CommandList>
         </Command>
       </PopoverContent>
-    </Popover>
+    </Popover >
   )
 
 }
