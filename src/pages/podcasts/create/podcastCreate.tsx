@@ -14,6 +14,7 @@ import { ComboboxSelect } from "@/pages/components/custom/ComboboxSelect"
 import { useQuery } from "@tanstack/react-query"
 import { Publisher } from "@/pages/publishers/shema"
 import { SingleFileCover } from "@/pages/components/custom/SingleFileCover"
+import Breadcrumbs from "@/pages/components/custom/breadcrumbs"
 
 type LaravelValidationError = {
   message: string;
@@ -99,7 +100,11 @@ export default function PodcastCreate() {
 
   return (
     <div>
-      <Button className="bg-blue-500 text-white hover:bg-blue-600 rounded-lg mb-2" onClick={() => navigate(-1)}>Back</Button>
+      <div className="flex justify-between">
+        <Breadcrumbs />
+        {/* <Button className="bg-blue-500 text-white hover:bg-blue-600 rounded-lg mb-2" onClick={() => navigate(-1)}>Back</Button> */}
+        <Button className="bg-blue-500 text-white hover:bg-blue-600 rounded-lg mb-2" onClick={() => navigate(-1)}>Back</Button>
+      </div>
       <Card>
         <CardHeader>
           <CardTitle>Create Podcast</CardTitle>

@@ -8,6 +8,7 @@ import { Podcast, PodcastSchema } from "../schema"
 import { SpinnerLoading } from "@/pages/components/custom/SpinnerLoading"
 import { Link } from "react-router-dom"
 import Breadcrumbs from "@/pages/components/custom/breadcrumbs"
+import { IconEdit } from "@tabler/icons-react"
 
 export default function PodcastShow() {
   const navigate = useNavigate()
@@ -31,7 +32,15 @@ export default function PodcastShow() {
       <div className="flex w-full justify-between">
         <Breadcrumbs />
         <div className="flex gap-x-3">
-          <Button className=" bg-blue-500 text-white hover:bg-blue-600 mb-2" onClick={() => navigate(-1)}>Create</Button>
+          <Button
+
+            className=" bg-blue-500 text-white hover:bg-blue-600 mb-2"
+            onClick={
+              () => navigate(`/portal/podcasts/${data?.data.data.id}/edit`)
+            }>
+            <IconEdit />
+            Edit
+          </Button>
           <Button className=" bg-blue-500 text-white hover:bg-blue-600 mb-2" onClick={() => navigate(-1)}>Back</Button>
         </div>
       </div>
@@ -73,6 +82,6 @@ export default function PodcastShow() {
           </div>
         </CardContent>
       </Card>
-    </div>
+    </div >
   )
 }
