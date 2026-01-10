@@ -39,10 +39,10 @@ export type PodcastResponse<T> = {
 };
 
 export type PodcastForm = {
-  title: '';
-  description: '';
-  slug: '';
-  cover_url: string;
+  title: string;
+  description: string;
+  slug: string;
+  cover_url?: string;
   cover_image: File | undefined;
   publisher_id: number | undefined;
 };

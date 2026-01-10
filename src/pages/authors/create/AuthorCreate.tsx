@@ -194,17 +194,6 @@ export default function AuthorCreate() {
                   )}
                 />
 
-
-                {/* <div className="flex flex-col space-y-2">
-                <Label htmlFor="email">Email</Label>
-                <Input {...register('email',)} id="email" placeholder="Email of your" />
-                </div>
-
-                <div className="flex flex-col space-y-2 ">
-                <Label htmlFor="website">Website</Label>
-                <Input {...register('website',)} id="website" placeholder="Website of your" />
-                </div> */}
-
               </div>
             </CardContent>
             <CardFooter className="flex justify-end">

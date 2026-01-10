@@ -24,7 +24,7 @@ type comboboxOption = {
 
 type Props = {
   value?: string,
-  onChange: (value: string) => void
+  onChange: (value?: comboboxOption) => void
   options: comboboxOption[]
   placeholder?: string
 }
@@ -66,7 +66,7 @@ export function ComboboxSelect({
 
                   // on select co nhiem vu cap nhat lai form
                   onSelect={() => {
-                    onChange(item.value.toString()) // cap nhat form
+                    onChange(item) // cap nhat form
                     setOpen(false) // dong dropdown
                   }}
 
