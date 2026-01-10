@@ -11,7 +11,7 @@ import { useEffect } from "react"
 import { useToast } from "@/components/ui/hooks/use-toast"
 import Breadcrumbs from "@/pages/components/custom/breadcrumbs"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
-import { SingleFile } from "@/pages/components/custom/FormFileDropzone"
+import { SingleFileAvatar } from "@/pages/components/custom/SingleFileAvatar"
 import { Textarea } from "@/components/ui/textarea"
 
 
@@ -161,7 +161,7 @@ export default function AuthorEdit() {
                       <FormLabel>Avatar</FormLabel>
                       <div className="flex">
                         <FormControl className="">
-                          <SingleFile
+                          <SingleFileAvatar
                             value={field.value}
                             onChange={(file) => {
                               if (file) {

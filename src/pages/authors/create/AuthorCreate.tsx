@@ -10,7 +10,7 @@ import { useForm, SubmitHandler } from "react-hook-form"
 import { AxiosError } from "axios"
 import { Textarea } from "@/components/ui/textarea"
 import Breadcrumbs from "@/pages/components/custom/breadcrumbs"
-import { SingleFile } from "@/pages/components/custom/FormFileDropzone"
+import { SingleFileAvatar } from "@/pages/components/custom/SingleFileAvatar"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 /**
  * {
@@ -150,7 +150,7 @@ export default function AuthorCreate() {
                       <FormLabel>Avatar</FormLabel>
                       <div className="flex">
                         <FormControl className="">
-                          <SingleFile
+                          <SingleFileAvatar
                             value={form.watch('avatar_url')}
                             onChange={field.onChange}
                           />

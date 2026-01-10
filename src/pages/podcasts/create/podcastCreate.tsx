@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button"
 import { useNavigate } from "react-router-dom"
 import { useMutation } from "@tanstack/react-query"
 import http from "@/utils/http"
-import { Podcast } from "../schema"
+import { PodcastForm } from "../schema"
 import { useToast } from "@/components/ui/hooks/use-toast"
 import { useForm, SubmitHandler } from "react-hook-form"
 import { AxiosError } from "axios"
@@ -13,13 +13,14 @@ import { Textarea } from "@/components/ui/textarea"
 import { ComboboxSelect } from "@/pages/components/custom/ComboboxSelect"
 import { useQuery } from "@tanstack/react-query"
 import { Publisher } from "@/pages/publishers/shema"
+import { SingleFileCover } from "@/pages/components/custom/SingleFileCover"
 
 type LaravelValidationError = {
   message: string;
   errors: Record<string, string[]>;
 };
 
-async function createPodcast(data: Podcast) {
+async function createPodcast(data: PodcastForm) {
   const formData = new FormData();
 
   if (data.cover_image) {
@@ -34,7 +35,7 @@ async function createPodcast(data: Podcast) {
   // chi chap nhan : string , blob (file, FileList, etc.)
   formData.append("publisher_id", String(data.publisher_id))
 
-  return http.post<Podcast>(`/podcasts`, formData, {
+  return http.post<PodcastForm>(`/podcasts`, formData, {
     headers: {
       "Content-Type": "Multipart/form-data",
     }
@@ -62,18 +63,18 @@ export default function PodcastCreate() {
 
   //
 
-  const form = useForm<Podcast>({
+  const form = useForm<PodcastForm>({
     defaultValues: {
       title: "",
       description: "",
       slug: "",
       publisher_id: undefined,
-      cover_image: "",
+      cover_url: "",
     }
   })
 
   // form data ! entity data
-  const onSubmit: SubmitHandler<Podcast> = (data) => {
+  const onSubmit: SubmitHandler<PodcastForm> = (data) => {
     mutation.mutate(data)
   }
 
@@ -181,6 +182,29 @@ export default function PodcastCreate() {
                   )}
                 />
 
+                <FormField
+                  control={form.control}
+                  name="cover_image"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Cover</FormLabel>
+                      <FormControl>
+                        <SingleFileCover
+                          value={form.watch("cover_url")}
+                          onChange={(file) => {
+                            field.onChange(file)
+                            if (file) {
+                              const preview = URL.createObjectURL(file);
+                              form.setValue('cover_url', preview)
+                              form.setValue('cover_image', file)
+                            }
+                          }}
+                          ratio={3 / 4}
+                        />
+                      </FormControl>
+                    </FormItem>
+                  )}
+                />
 
               </div>
             </CardContent>

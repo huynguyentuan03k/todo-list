@@ -1,5 +1,3 @@
-"use client";
-
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   Dropzone,
@@ -11,11 +9,11 @@ import {
 import { cn } from "@/lib/utils";
 
 type Props = {
-  value?: string | undefined;
+  value?: string;
   onChange: (file?: File) => void;
 };
 
-export function SingleFile({ value, onChange }: Props) { 
+export function SingleFileAvatar({ value, onChange }: Props) {
   const dropzone = useDropzone({
     onDropFile: async (file: File) => {
       onChange(file);

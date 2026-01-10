@@ -42,6 +42,7 @@ export type PodcastForm = {
   title: '';
   description: '';
   slug: '';
+  cover_url: string;
   cover_image: File | undefined;
   publisher_id: number | undefined;
 };
