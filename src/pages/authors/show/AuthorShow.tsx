@@ -65,12 +65,10 @@ export default function AuthorShow() {
             </div>
 
             <div className="flex flex-col ">
-              <Avatar>
+              <Avatar className="h-16 w-16">
                 <AvatarImage src={author.avatar_url ?? undefined} />
                 <AvatarFallback>CN</AvatarFallback>
               </Avatar>
-              {/* <Label>Avatar</Label>
-              <p>{author.avatar}</p> */}
             </div>
 
             <div className="flex flex-col ">

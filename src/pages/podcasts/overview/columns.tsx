@@ -47,7 +47,7 @@ export const columns: ColumnDef<Podcast>[] = [
     accessorKey: "cover_image",
     header: "Cover Image",
     cell: ({ row }) => (
-      <AspectRatio ratio={1 / 1.4} className="bg-muted rounded-none">
+      <AspectRatio ratio={1.1 / 1.5} className="bg-muted rounded-none">
         {
           row.original.cover_image ?
             <img

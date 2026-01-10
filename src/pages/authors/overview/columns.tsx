@@ -24,7 +24,7 @@ export const columns: ColumnDef<Author>[] = [
     accessorKey: "avatar",
     header: "Avatar",
     cell: ({ row }) => (
-      <Avatar>
+      <Avatar className="h-16 w-16">
         <AvatarImage src={row.original.avatar_url ?? undefined} />
         <AvatarFallback>CN</AvatarFallback>
       </Avatar>

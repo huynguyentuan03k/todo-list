@@ -9,6 +9,8 @@ import { SpinnerLoading } from "@/pages/components/custom/SpinnerLoading"
 import { Link } from "react-router-dom"
 import Breadcrumbs from "@/pages/components/custom/breadcrumbs"
 import { IconEdit } from "@tabler/icons-react"
+import { AspectRatio } from "@/components/ui/aspect-ratio"
+import { ImageIcon } from "lucide-react"
 
 export default function PodcastShow() {
   const navigate = useNavigate()
@@ -65,7 +67,18 @@ export default function PodcastShow() {
 
             <div className="flex flex-col col-span-1">
               <Label>Cover Image</Label>
-              <p>{podcast.cover_image}</p>
+              <AspectRatio ratio={1.2 / 1}>
+                {
+                  podcast.cover_image ?
+                    <img
+                      src={podcast.cover_image ?? undefined}
+                      alt="https://placehold.co/600x400"
+                    /> : <ImageIcon
+                      className="w-full h-full object-fill"
+                    />
+                }
+              </AspectRatio>
+
             </div>
 
             <div className="flex flex-col col-span-1">
