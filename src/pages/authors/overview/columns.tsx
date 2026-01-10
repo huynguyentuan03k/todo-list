@@ -28,7 +28,6 @@ export const columns: ColumnDef<Author>[] = [
         <AvatarImage src={row.original.avatar_url ?? undefined} />
         <AvatarFallback>CN</AvatarFallback>
       </Avatar>
-
     ),
   },
   {

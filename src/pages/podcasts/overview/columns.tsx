@@ -1,8 +1,10 @@
 import { ColumnDef } from "@tanstack/react-table"
-import { ArrowUpDown } from "lucide-react"
+import { ArrowUpDown, Image, ImageIcon } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Podcast } from "../schema";
 import { ActionsCell } from "./ActionCell";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { AspectRatio } from "@/components/ui/aspect-ratio";
 
 export const columns: ColumnDef<Podcast>[] = [
   {
@@ -46,7 +48,19 @@ export const columns: ColumnDef<Podcast>[] = [
     accessorKey: "cover_image",
     header: "Cover Image",
     cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("cover_image")}</div>
+      <AspectRatio ratio={1 / 1.4} className="bg-muted rounded-none">
+        {
+          row.original.cover_image ?
+            <img
+              src={row.original.cover_image ?? undefined}
+              alt="https://placehold.co/600x400"
+              className="h-full w-full object-cover"
+            /> : <ImageIcon
+              className="h-full w-full object-cover"
+            />
+        }
+
+      </AspectRatio>
     ),
   },
   {
