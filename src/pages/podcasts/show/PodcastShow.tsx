@@ -69,9 +69,9 @@ export default function PodcastShow() {
               <Label>Cover Image</Label>
               <AspectRatio ratio={1.2 / 1}>
                 {
-                  podcast.cover_image ?
+                  podcast.cover_url ?
                     <img
-                      src={podcast.cover_image ?? undefined}
+                      src={podcast.cover_url ?? undefined}
                       alt="https://placehold.co/600x400"
                     /> : <ImageIcon
                       className="w-full h-full object-fill"

@@ -24,6 +24,7 @@ export const PodcastSchema = z.object({
   description: z.string().nullable(),
   slug: z.string().nullable(),
   cover_image: z.string().nullable(),
+  cover_url: z.string().nullable(),
   publisher: PublisherSchema.nullable(),
   created_at: z.string().nullable(),
   updated_at: z.string().nullable(),

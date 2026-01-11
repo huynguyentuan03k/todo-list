@@ -15,14 +15,14 @@ export const columns: ColumnDef<Podcast>[] = [
     ),
   },
   {
-    accessorKey: "cover_image",
+    accessorKey: "cover_url",
     header: "Cover Image",
     cell: ({ row }) => (
       <AspectRatio ratio={1.1 / 1.5} className="bg-muted rounded-none">
         {
-          row.original.cover_image ?
+          row.original.cover_url ?
             <img
-              src={row.original.cover_image ?? undefined}
+              src={row.original.cover_url ?? undefined}
               alt="https://placehold.co/600x400"
               className="h-full w-full object-cover"
             /> : <ImageIcon
