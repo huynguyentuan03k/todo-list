@@ -178,7 +178,7 @@ export default function PodcastCreate() {
                         <ComboboxSelect
                           value={field.value ? String(field.value) : undefined}
                           onChange={(value) => {
-                            field.onChange(Number(value))
+                            field.onChange(Number(value?.value))
                           }}
                           options={publisherOptions}
                         />
