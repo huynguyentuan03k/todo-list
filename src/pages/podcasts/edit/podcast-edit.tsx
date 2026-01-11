@@ -50,11 +50,11 @@ export default function PodcastEdit() {
 
   const form = useForm<PodcastForm>({
     defaultValues: {
-      title: "",
-      description: "",
-      slug: "",
+      title: data?.data.data.title,
+      description: data?.data.data.description ?? undefined,
+      slug: data?.data.data.slug ?? undefined,
       cover_image: undefined,
-      cover_url: data?.data.data.cover_image ?? undefined,
+      cover_url: data?.data.data.cover_url ?? undefined,
       publisher_id: data?.data.data.publisher?.id ?? undefined,
     }
   })
@@ -71,7 +71,7 @@ export default function PodcastEdit() {
         title: podcast.title,
         description: podcast.description ?? undefined,
         slug: podcast.slug ?? undefined,
-        cover_url: podcast.cover_image ?? undefined,
+        cover_url: podcast.cover_url ?? undefined,
         publisher_id: podcast.publisher?.id ?? undefined,
         cover_image: undefined,
       })
