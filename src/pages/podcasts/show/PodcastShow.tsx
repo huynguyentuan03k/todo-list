@@ -78,20 +78,15 @@ export default function PodcastShow() {
                     />
                 }
               </AspectRatio>
-
             </div>
 
             <div className="flex flex-col col-span-1">
               <Label>Publisher</Label>
               <Link to={`/portal/publishers/${podcast.publisher?.id}/show`}>
-                <p className="text-blue-500">{podcast.publisher?.id}</p>
+                <p className="text-blue-500">{podcast.publisher?.name} - ID: {podcast.publisher?.id}</p>
               </Link>
             </div>
 
-            <div className="flex flex-col col-span-1">
-              <Label>Publisher</Label>
-              <p>{podcast.publisher?.id}</p>
-            </div>
           </div>
         </CardContent>
       </Card>
