@@ -12,7 +12,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel } from "@/components/
 import { Textarea } from "@/components/ui/textarea"
 import { ComboboxSelect } from "@/pages/components/custom/ComboboxSelect"
 import { useQuery } from "@tanstack/react-query"
-import { Publisher, Publishers } from "@/pages/publishers/shema"
+import { Publishers } from "@/pages/publishers/shema"
 import { SingleFileCover } from "@/pages/components/custom/SingleFileCover"
 import Breadcrumbs from "@/pages/components/custom/breadcrumbs"
 

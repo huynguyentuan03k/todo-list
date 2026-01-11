@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { PublisherSchema } from '../publishers/shema';
 
 export type Meta = {
   current_page: number;
@@ -23,7 +24,7 @@ export const PodcastSchema = z.object({
   description: z.string().nullable(),
   slug: z.string().nullable(),
   cover_image: z.string().nullable(),
-  publisher_id: z.number().nullable(),
+  publisher: PublisherSchema.nullable(),
   created_at: z.string().nullable(),
   updated_at: z.string().nullable(),
 });

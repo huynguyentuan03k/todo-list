@@ -15,6 +15,25 @@ export const columns: ColumnDef<Podcast>[] = [
     ),
   },
   {
+    accessorKey: "cover_image",
+    header: "Cover Image",
+    cell: ({ row }) => (
+      <AspectRatio ratio={1.1 / 1.5} className="bg-muted rounded-none">
+        {
+          row.original.cover_image ?
+            <img
+              src={row.original.cover_image ?? undefined}
+              alt="https://placehold.co/600x400"
+              className="h-full w-full object-cover"
+            /> : <ImageIcon
+              className="h-full w-full object-cover"
+            />
+        }
+
+      </AspectRatio>
+    ),
+  },
+  {
     accessorKey: "title",
     header: "Title",
     cell: ({ row }) => (
@@ -44,29 +63,10 @@ export const columns: ColumnDef<Podcast>[] = [
     cell: ({ row }) => <div className="lowercase">{row.getValue("slug")}</div>,
   },
   {
-    accessorKey: "cover_image",
-    header: "Cover Image",
-    cell: ({ row }) => (
-      <AspectRatio ratio={1.1 / 1.5} className="bg-muted rounded-none">
-        {
-          row.original.cover_image ?
-            <img
-              src={row.original.cover_image ?? undefined}
-              alt="https://placehold.co/600x400"
-              className="h-full w-full object-cover"
-            /> : <ImageIcon
-              className="h-full w-full object-cover"
-            />
-        }
-
-      </AspectRatio>
-    ),
-  },
-  {
     accessorKey: "publisher",
-    header: "Publisher",
+    header: "publisher",
     cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("publisher")}</div>
+      <div className="capitalize">{row.original.publisher?.name}</div>
     ),
   },
   {

@@ -55,7 +55,7 @@ export default function PodcastEdit() {
       slug: "",
       cover_image: undefined,
       cover_url: data?.data.data.cover_image ?? undefined,
-      publisher_id: data?.data.data.publisher_id ?? undefined,
+      publisher_id: data?.data.data.publisher?.id ?? undefined,
     }
   })
 
@@ -72,7 +72,7 @@ export default function PodcastEdit() {
         description: podcast.description ?? undefined,
         slug: podcast.slug ?? undefined,
         cover_url: podcast.cover_image ?? undefined,
-        publisher_id: podcast.publisher_id ?? undefined,
+        publisher_id: podcast.publisher?.id ?? undefined,
         cover_image: undefined,
       })
     }
