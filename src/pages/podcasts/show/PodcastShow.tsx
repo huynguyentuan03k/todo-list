@@ -28,7 +28,7 @@ export default function PodcastShow() {
   }
 
   const podcast = PodcastSchema.parse(data?.data.data)
-
+  console.log("podcast ", data)
   return (
     <div>
       <div className="flex w-full justify-between">

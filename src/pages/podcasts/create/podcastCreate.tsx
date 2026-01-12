@@ -15,6 +15,8 @@ import { useQuery } from "@tanstack/react-query"
 import { Publishers } from "@/pages/publishers/shema"
 import { SingleFileCover } from "@/pages/components/custom/SingleFileCover"
 import Breadcrumbs from "@/pages/components/custom/breadcrumbs"
+import MultiSelectCustom from "@/pages/components/custom/MultiSelectCustom"
+import { Categories } from "@/pages/categories/shema"
 
 type LaravelValidationError = {
   message: string;
@@ -63,7 +65,6 @@ export default function PodcastCreate() {
   )) ?? []
 
   //
-
   const form = useForm<PodcastForm>({
     defaultValues: {
       title: "",
@@ -71,6 +72,7 @@ export default function PodcastCreate() {
       slug: "",
       publisher_id: undefined,
       cover_url: "",
+      category_ids: [],
     }
   })
 
@@ -97,6 +99,21 @@ export default function PodcastCreate() {
       });
     }
   })
+
+  const { data, isLoading } = useQuery({
+    queryKey: ['categories'],
+    queryFn: async () => {
+      const res = await http.get<{ data: Categories }>('/categories')
+      return res.data
+    }
+  })
+
+  const categoriesOptions = data?.data.map(item => (
+    {
+      label: item.name,
+      value: item.id
+    }
+  )) ?? []
 
   return (
     <div>
@@ -181,6 +198,23 @@ export default function PodcastCreate() {
                             field.onChange(Number(value?.value))
                           }}
                           options={publisherOptions}
+                        />
+                      </FormControl>
+                    </FormItem>
+                  )}
+                />
+
+
+                <FormField
+                  control={form.control}
+                  name="category_ids"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Categories</FormLabel>
+                      <FormControl>
+                        <MultiSelectCustom
+                          options={categoriesOptions}
+
                         />
                       </FormControl>
                     </FormItem>
