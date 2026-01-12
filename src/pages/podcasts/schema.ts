@@ -42,11 +42,6 @@ export type PodcastResponse<T> = {
   links: Links;
 };
 
-export type category_ids = {
-  value: number;
-  label: string;
-};
-
 export type PodcastForm = {
   title: string;
   description: string;
@@ -54,5 +49,6 @@ export type PodcastForm = {
   cover_url?: string;
   cover_image: File | undefined;
   publisher_id: number | undefined;
-  category_ids: category_ids[];
+  category_ids: string[];
+  author_ids: string[];
 };

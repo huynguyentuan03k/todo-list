@@ -7,7 +7,7 @@ import {
   MultiSelectValue,
 } from "@/components/ui/multi-select"
 
-type MultiSeclectOptions = {
+export type MultiSeclectOptions = {
   value: number,
   label: string,
 }
@@ -17,6 +17,8 @@ type Props = {
   options: MultiSeclectOptions[],
   onChange: (value: string[]) => void
   value: string[],
+  singleSelect?: boolean,
+  contentDisplay?: (value: MultiSeclectOptions) => string
 }
 
 export default function MultiSelectCustom({
@@ -24,22 +26,28 @@ export default function MultiSelectCustom({
   options,
   onChange,
   value,
+  singleSelect = false,
+  contentDisplay = (item) => (item.label)
 }: Props) {
   return (
     <>
       <MultiSelect
         onValuesChange={onChange}
         values={value}
+        single={singleSelect}
       >
         <MultiSelectTrigger className="w-full max-w-[400px]">
           <MultiSelectValue placeholder="Select frameworks..." overflowBehavior={overflowBehavior} />
         </MultiSelectTrigger>
         <MultiSelectContent>
           <MultiSelectGroup>
-            onChange
             {
               options?.map(item => (
-                <MultiSelectItem key={item.value} value={item.label}>{item.label}</MultiSelectItem>
+                <MultiSelectItem key={item.value} value={item.label}>
+                  {
+                    contentDisplay(item)
+                  }
+                </MultiSelectItem>
               )) ?? []
             }
           </MultiSelectGroup>

@@ -15,8 +15,9 @@ import { useQuery } from "@tanstack/react-query"
 import { Publishers } from "@/pages/publishers/shema"
 import { SingleFileCover } from "@/pages/components/custom/SingleFileCover"
 import Breadcrumbs from "@/pages/components/custom/breadcrumbs"
-import MultiSelectCustom from "@/pages/components/custom/MultiSelectCustom"
 import { Categories } from "@/pages/categories/shema"
+import { Authors } from "@/pages/authors/shema"
+import MultiSelectCustom, { MultiSeclectOptions } from "@/pages/components/custom/MultiSelectCustom"
 
 type LaravelValidationError = {
   message: string;
@@ -49,20 +50,37 @@ export default function PodcastCreate() {
   const navigate = useNavigate()
   const { toast } = useToast()
 
-  const { data: PublisherResponse } = useQuery({
+
+  const { data: publisherOptions = [] } = useQuery<MultiSeclectOptions[] | undefined>({
     queryKey: ["publishers"],
     queryFn: async () => {
       const res = await http.get<{ data: Publishers }>(`/publishers`)
-      return res.data.data
+      return res.data.data.map(item => ({ value: item.id, label: item.name ?? "Unkown" })) ?? []
     }
   })
 
-  const publisherOptions = PublisherResponse?.map(item => (
-    {
-      label: item.name || "",
-      value: Number(item.id)
+  // <Categories/>   => res.data la 1 mang
+  // <{ data: Categories}>   => res.data.data la 1 mang
+  // <{ dataCategories: Categories}>   => res.data.dataCategories la 1 mang
+  //<{ dataCategories: Categories }> KHÔNG phải JSX ,
+  // Nó là generic của TypeScript Dùng để nói cho TS biết API trả về object có field dataCategories chứa Categories
+  // const {data : categories } = obj , day la cu phap js destructuring co nghia la : const categories = obj.data
+  /**
+   * res.data => {
+   *  data: Categories,
+   *  meta ,
+   *  links ,
+   * }  bang voi obj , obj.data duoc , nhu ban da thay meta va link ko biet co type gi ?
+   */
+  const { data: CategoriesOptions = [] } = useQuery<MultiSeclectOptions[] | undefined>({
+    // useQuery<MultiSeclectOptions[]> tuc la data bên trong kết quả của useQuery có kiểu là MultiSeclectOptions[] | undefined
+    queryKey: ['categories'],
+    queryFn: async () => {
+      const res = await http.get<{ data: Categories }>('/categories')
+      return res.data.data.map(item => ({ value: item.id, label: item.name ?? "Unkown" })) ?? []
     }
-  )) ?? []
+  })
+
 
   //
   const form = useForm<PodcastForm>({
@@ -73,6 +91,7 @@ export default function PodcastCreate() {
       publisher_id: undefined,
       cover_url: "",
       category_ids: [],
+      author_ids: [],
     }
   })
 
@@ -100,20 +119,15 @@ export default function PodcastCreate() {
     }
   })
 
-  const { data, isLoading } = useQuery({
-    queryKey: ['categories'],
+
+  // lan dau res.data.data thuong xuyen bi undefined nen hay can than
+  const { data: AuthorsOptions = [] } = useQuery<MultiSeclectOptions[] | undefined>({
+    queryKey: ['authors'],
     queryFn: async () => {
-      const res = await http.get<{ data: Categories }>('/categories')
-      return res.data
+      const res = await http.get<{ data: Authors }>("/authors")
+      return res.data.data.map(item => ({ value: item.id, label: item.name ?? "Unkown" })) ?? []
     }
   })
-
-  const categoriesOptions = data?.data.map(item => (
-    {
-      label: item.name,
-      value: item.id
-    }
-  )) ?? []
 
   return (
     <div>
@@ -197,7 +211,7 @@ export default function PodcastCreate() {
                           onChange={(value) => {
                             field.onChange(Number(value?.value))
                           }}
-                          options={publisherOptions}
+                          options={publisherOptions ?? []}
                         />
                       </FormControl>
                     </FormItem>
@@ -213,8 +227,35 @@ export default function PodcastCreate() {
                       <FormLabel>Categories</FormLabel>
                       <FormControl>
                         <MultiSelectCustom
-                          options={categoriesOptions}
-
+                          value={field.value}
+                          onChange={(items: string[]) => {
+                            field.onChange(items)
+                          }}
+                          options={CategoriesOptions ?? []}
+                        />
+                      </FormControl>
+                    </FormItem>
+                  )}
+                />
+                {/*
+                hien tai co 3 layer
+                1 / ui component (MultiSelectCustom)
+                2 / Form State (react-hook-form)
+                3 / API payload
+                */}
+                <FormField
+                  control={form.control}
+                  name="author_ids"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Authors</FormLabel>
+                      <FormControl>
+                        <MultiSelectCustom
+                          value={field.value}
+                          options={AuthorsOptions ?? []}
+                          onChange={(items: string[]) => {
+                            field.onChange(items)
+                          }}
                         />
                       </FormControl>
                     </FormItem>
