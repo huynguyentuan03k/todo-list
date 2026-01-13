@@ -32,16 +32,26 @@ async function createPodcast(data: PodcastForm) {
   }
 
   formData.append("title", data.title);
-  formData.append("description", data.title);
-  formData.append("slug", data.title)
+  formData.append("description", data.description);
+  formData.append("slug", data.slug)
 
-  // trong formdata khong chap nhan number va null
+  // trong formdata khong chap du lieu cua phuong thuc append(name,value), cho value la string or Blob bao gom File
   // chi chap nhan : string , blob (file, FileList, etc.)
-  formData.append("publisher_id", String(data.publisher_id))
+  // muon truyen 1 mang vao formdata phai tao 1 field va append du lieu mang vao field do
 
+  formData.append("publisher_id", String(data.publisher_id))
+  if (data.author_ids.length > 0) {
+    data.author_ids.forEach((item) => formData.append('author_ids[]', item.toString()))
+  }
+
+  if (data.category_ids.length > 0) {
+    data.category_ids.forEach(item => formData.append('category_ids[]', item.toString()))
+  }
+  console.log("formdata ", formData)
   return http.post<PodcastForm>(`/podcasts`, formData, {
     headers: {
       "Content-Type": "Multipart/form-data",
+      "Accept": "application/json"
     }
   });
 }
@@ -227,7 +237,7 @@ export default function PodcastCreate() {
                       <FormLabel>Categories</FormLabel>
                       <FormControl>
                         <MultiSelectCustom
-                          value={field.value}
+                          value={field.value.map(String)}
                           onChange={(items: string[]) => {
                             field.onChange(items)
                           }}
@@ -251,7 +261,7 @@ export default function PodcastCreate() {
                       <FormLabel>Authors</FormLabel>
                       <FormControl>
                         <MultiSelectCustom
-                          value={field.value}
+                          value={field.value.map(String)}
                           options={AuthorsOptions ?? []}
                           onChange={(items: string[]) => {
                             field.onChange(items)

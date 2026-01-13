@@ -49,6 +49,6 @@ export type PodcastForm = {
   cover_url?: string;
   cover_image: File | undefined;
   publisher_id: number | undefined;
-  category_ids: string[];
-  author_ids: string[];
+  category_ids: number[];
+  author_ids: number[];
 };

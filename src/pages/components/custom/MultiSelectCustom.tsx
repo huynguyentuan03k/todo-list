@@ -43,7 +43,13 @@ export default function MultiSelectCustom({
           <MultiSelectGroup>
             {
               options?.map(item => (
-                <MultiSelectItem key={item.value} value={item.label}>
+                /**
+                 * trong react :
+                 * ket : React dùng: Để quản lý danh sách trên DOM
+                 * value: Form dùng: Khi click, mảng (mang nay duoc hien thi ra theo kieu nay   contentDisplay = (item) => (item.label) ) kết quả sẽ thêm số 10
+                 * Người dùng thấy: Chữ "Nguyễn Văn A" hiển thị trên màn hình tron nguyen van a => lay so 10
+                 */
+                <MultiSelectItem key={item.value} value={item.value.toString()}>
                   {
                     contentDisplay(item)
                   }
