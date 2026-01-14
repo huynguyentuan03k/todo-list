@@ -45,7 +45,7 @@ export default function MultiSelectCustom({
           <MultiSelectGroup>
             {
 
-              isLoading == true ? (
+              isLoading == false ? (
 
                 options?.map(item => (
                   /**
