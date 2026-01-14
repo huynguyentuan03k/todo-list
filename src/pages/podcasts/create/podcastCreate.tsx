@@ -82,7 +82,7 @@ export default function PodcastCreate() {
    *  links ,
    * }  bang voi obj , obj.data duoc , nhu ban da thay meta va link ko biet co type gi ?
    */
-  const { data: CategoriesOptions = [] } = useQuery<MultiSeclectOptions[] | undefined>({
+  const { data: CategoriesOptions = [], isLoading } = useQuery<MultiSeclectOptions[] | undefined>({
     // useQuery<MultiSeclectOptions[]> tuc la data bên trong kết quả của useQuery có kiểu là MultiSeclectOptions[] | undefined
     queryKey: ['categories'],
     queryFn: async () => {

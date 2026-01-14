@@ -18,7 +18,8 @@ type Props = {
   onChange: (value: string[]) => void
   value: string[],
   singleSelect?: boolean,
-  contentDisplay?: (value: MultiSeclectOptions) => string
+  contentDisplay?: (value: MultiSeclectOptions) => string,
+  isLoading?: boolean,
 }
 
 export default function MultiSelectCustom({
@@ -27,7 +28,8 @@ export default function MultiSelectCustom({
   onChange,
   value,
   singleSelect = false,
-  contentDisplay = (item) => (item.label)
+  contentDisplay = (item) => (item.label),
+  isLoading,
 }: Props) {
   return (
     <>
@@ -42,19 +44,26 @@ export default function MultiSelectCustom({
         <MultiSelectContent>
           <MultiSelectGroup>
             {
-              options?.map(item => (
-                /**
-                 * trong react :
-                 * ket : React dùng: Để quản lý danh sách trên DOM
-                 * value: Form dùng: Khi click, mảng (mang nay duoc hien thi ra theo kieu nay   contentDisplay = (item) => (item.label) ) kết quả sẽ thêm số 10
-                 * Người dùng thấy: Chữ "Nguyễn Văn A" hiển thị trên màn hình tron nguyen van a => lay so 10
-                 */
-                <MultiSelectItem key={item.value} value={item.value.toString()}>
-                  {
-                    contentDisplay(item)
-                  }
-                </MultiSelectItem>
-              )) ?? []
+
+              isLoading == true ? (
+
+                options?.map(item => (
+                  /**
+                   * trong react :
+                   * ket : React dùng: Để quản lý danh sách trên DOM
+                   * value: Form dùng: Khi click, mảng (mang nay duoc hien thi ra theo kieu nay   contentDisplay = (item) => (item.label) ) kết quả sẽ thêm số 10
+                   * Người dùng thấy: Chữ "Nguyễn Văn A" hiển thị trên màn hình tron nguyen van a => lay so 10
+                   */
+                  <MultiSelectItem key={item.value} value={item.value.toString()}>
+                    {
+                      contentDisplay(item)
+                    }
+                  </MultiSelectItem>
+                )) ?? []
+              ) : (
+                <span>Loading</span>
+              )
+
             }
           </MultiSelectGroup>
         </MultiSelectContent>
