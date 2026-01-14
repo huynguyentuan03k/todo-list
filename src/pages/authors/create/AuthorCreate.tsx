@@ -64,7 +64,6 @@ export default function AuthorCreate() {
       email: "",
       website: "",
       avatar: undefined,
-      avatar_url: "",
     }
   })
 
@@ -151,12 +150,10 @@ export default function AuthorCreate() {
                       <div className="flex">
                         <FormControl className="">
                           <SingleFileAvatar
-                            value={form.watch('avatar_url')}
-                            onChange={field.onChange}
+                            {...field}
                           />
                         </FormControl>
                       </div>
-
                       <FormMessage />
                     </FormItem>
                   )}
