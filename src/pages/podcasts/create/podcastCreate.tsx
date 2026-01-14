@@ -237,6 +237,7 @@ export default function PodcastCreate() {
                       <FormLabel>Categories</FormLabel>
                       <FormControl>
                         <MultiSelectCustom
+                          isLoading={isLoading}
                           value={field.value.map(String)}
                           onChange={(items: string[]) => {
                             field.onChange(items)
