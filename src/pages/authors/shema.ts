@@ -19,7 +19,6 @@ export const AuthorSchema = z.object({
   id: z.number(),
   name: z.string().nullable(),
   bio: z.string().nullable(),
-  avatar: z.string().nullable(),
   avatar_url: z.string().nullable(),
   email: z.string().nullable(),
   website: z.string().nullable(),

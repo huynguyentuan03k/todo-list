@@ -47,7 +47,6 @@ export default function AuthorEdit() {
       email: "",
       website: "",
       avatar: undefined,
-      avatar_url: undefined,
     }
   })
 
@@ -66,7 +65,6 @@ export default function AuthorEdit() {
         email: author.email ?? '',
         website: author.website ?? '',
         avatar: undefined,
-        avatar_url: author.avatar_url ?? '',
       })
     }
   }, [data, form])
@@ -155,20 +153,15 @@ export default function AuthorEdit() {
 
                 <FormField
                   control={form.control}
-                  name="avatar_url"
+                  name="avatar"
                   render={({ field }) => (
                     <FormItem className="row-span-2">
                       <FormLabel>Avatar</FormLabel>
                       <div className="flex">
                         <FormControl className="">
                           <SingleFileAvatar
-                            value={field.value}
-                            onChange={(file) => {
-                              if (file) {
-                                form.setValue("avatar", file)
-                                form.setValue("avatar_url", URL.createObjectURL(file))
-                              }
-                            }}
+                            {...field}
+                            value={data?.data.data.avatar_url ?? undefined}
                           />
                         </FormControl>
                       </div>

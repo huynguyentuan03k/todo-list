@@ -47,7 +47,7 @@ async function createPodcast(data: PodcastForm) {
   if (data.category_ids.length > 0) {
     data.category_ids.forEach(item => formData.append('category_ids[]', item.toString()))
   }
-  console.log("formdata ", formData)
+
   return http.post<PodcastForm>(`/podcasts`, formData, {
     headers: {
       "Content-Type": "Multipart/form-data",
