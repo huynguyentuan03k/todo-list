@@ -22,7 +22,7 @@ type Props = {
 }
 
 export default function MultiSelectCustom({
-  overflowBehavior = "wrap",
+  overflowBehavior = "wrap-when-open",
   options,
   onChange,
   value,
