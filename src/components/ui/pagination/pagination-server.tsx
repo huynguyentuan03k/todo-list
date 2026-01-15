@@ -70,7 +70,12 @@ export function PaginationServer<TData>({ table }: PaginationServerProps<TData>)
         >
           <ChevronsRight size={18} />
         </button>
-        <div>
+
+        {/**
+         *
+         * sm:hidden : ẩn từ sm trở lên (>= 640px : 40rem)
+         */}
+        <div className="hidden sm:block">
           <Select
             value={table.getState().pagination.pageSize.toString()}
             onValueChange={(value) => table.setPageSize(Number(value))}
