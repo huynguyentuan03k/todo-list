@@ -26,7 +26,7 @@ export const columns: ColumnDef<Author>[] = [
     cell: ({ row }) => (
       <Avatar className="h-16 w-16">
         <AvatarImage src={row.original.avatar_url ?? undefined} />
-        <AvatarFallback>CN</AvatarFallback>
+        <AvatarFallback></AvatarFallback>
       </Avatar>
     ),
   },
