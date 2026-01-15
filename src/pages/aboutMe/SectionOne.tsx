@@ -15,7 +15,7 @@ export default function SectionOne() {
             <CardContent className="p-4 flex items-center justify-center">
               <div className="w-full aspect-[16/9]">
                 <img
-                  src="/public/jenkins.png"
+                  src="https://frieren.io.vn/jenkins.png"
                   alt="Jenkins"
                   className="w-full h-full object-contain"
                 />
@@ -33,7 +33,7 @@ export default function SectionOne() {
             <CardContent className="p-4 flex items-center justify-center">
               <div className="w-full aspect-[16/9]">
                 <img
-                  src="/public/swagger.webp"
+                  src="https://frieren.io.vn/swagger.webp"
                   alt="Swagger"
                   className="w-full h-full object-contain"
                 />
@@ -53,7 +53,7 @@ export default function SectionOne() {
             <CardContent className="p-4 flex items-center justify-center">
               <div className="w-full aspect-[16/9]">
                 <img
-                  src="/public/grafana.png"
+                  src="https://frieren.io.vn/grafana.png"
                   alt="Grafana"
                   className="w-full h-full object-contain"
                 />
@@ -69,7 +69,7 @@ export default function SectionOne() {
               <CardContent className="p-3 flex items-center justify-center">
                 <div className="w-full aspect-square">
                   <img
-                    src="/public/facebook.png"
+                    src="https://frieren.io.vn/facebook.png"
                     alt="Facebook"
                     className="w-full h-full object-contain"
                   />
@@ -83,7 +83,7 @@ export default function SectionOne() {
               <CardContent className="p-3 flex items-center justify-center">
                 <div className="w-full aspect-square">
                   <img
-                    src="/public/github.png"
+                    src="https://frieren.io.vn/github.png"
                     alt="Github"
                     className="w-full h-full object-contain"
                   />
