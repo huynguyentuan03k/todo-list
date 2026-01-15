@@ -15,7 +15,8 @@ import {
   List,
   Plus,
   PanelLeftClose,
-  PanelLeft
+  PanelLeft,
+  CircleUserRound
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { ScrollArea } from "@/components/ui/scroll-area"
@@ -27,6 +28,7 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/comp
 
 // Navigation items with icons and optional children
 const NAV_ITEMS = [
+  { path: "/portal/aboutme", label: "About Me", icon: CircleUserRound },
   { path: "/", label: "Dashboard", icon: LayoutDashboard },
   { path: "/portal/publishers", label: "Publishers", icon: Building2 },
   { path: "/portal/categories", label: "Categories", icon: FolderTree },

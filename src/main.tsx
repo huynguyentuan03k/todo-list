@@ -32,6 +32,7 @@ import EpisodeCreate from './pages/episodes/create/EpisodeCreate';
 import EpisodeEdit from './pages/episodes/edit/EpisodeEdit';
 import EpisodeShow from './pages/episodes/show/EpisodeShow';
 import Dashboard from './pages/dashboard/Dashboard';
+import AboutMe from './pages/aboutMe/AboutMe';
 const queryClient = new QueryClient();
 const router = createBrowserRouter([
   {
@@ -47,6 +48,15 @@ const router = createBrowserRouter([
       {
         path: '/epub',
         element: <PageEpub />
+      },
+      {
+        path: '/portal/aboutme',
+        children: [
+          {
+            index: true,
+            element: <AboutMe />
+          }
+        ]
       },
       {
         path: '/portal/publishers',
