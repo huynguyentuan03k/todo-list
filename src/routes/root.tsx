@@ -297,12 +297,12 @@ export default function Root() {
       </div>
 
       {/* Main Content */}
-      <main className="flex-1 overflow-auto">
-        <div className="pt-20 lg:pt-0 h-full">
-          <div className="max-w-7xl mx-auto p-4 lg:p-6 h-full">
-            <Outlet />
-          </div>
-        </div>
+      <main className="flex-1 overflow-auto pt-24 px-4 pb-4 lg:p-4 ">
+        {/**
+         * tu 0 - 1024 > : padding 4
+         * tu 0 - 640 > : padding top 20 va padding left right 4
+         */}
+        <Outlet />
       </main>
     </div>
   )

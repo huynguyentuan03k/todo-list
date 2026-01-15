@@ -31,6 +31,7 @@ import EpisodeOverview from './pages/episodes/overview/EpisodeOverview';
 import EpisodeCreate from './pages/episodes/create/EpisodeCreate';
 import EpisodeEdit from './pages/episodes/edit/EpisodeEdit';
 import EpisodeShow from './pages/episodes/show/EpisodeShow';
+import Dashboard from './pages/dashboard/Dashboard';
 const queryClient = new QueryClient();
 const router = createBrowserRouter([
   {
@@ -38,6 +39,11 @@ const router = createBrowserRouter([
     element: <Root />,
     errorElement: <ErrorPage />,
     children: [
+      {
+        index: true,
+        element: <Dashboard />
+
+      },
       {
         path: '/epub',
         element: <PageEpub />
