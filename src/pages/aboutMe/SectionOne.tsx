@@ -5,7 +5,7 @@ export default function SectionOne() {
   return (
     <div className="w-full">
 
-      <div className="grid grid-cols-3 gap-4">
+      <div className="grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-4">
         {/* ===== JENKINS ===== */}
         <Link
           to="https://jenkins.huynguyen-nginx.io.vn/"
