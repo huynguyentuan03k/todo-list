@@ -1,16 +1,19 @@
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
 import { Button } from "@/components/ui/button"
 import { useNavigate } from "react-router-dom"
-import { useMutation } from "@tanstack/react-query"
+import { useMutation, useQuery } from "@tanstack/react-query"
 import http from "@/utils/http"
-import { Episode } from "../shema"
+import { Episode, episodeForm } from "../shema"
 import { useToast } from "@/components/ui/hooks/use-toast"
 import { useForm, SubmitHandler } from "react-hook-form"
 import { AxiosError } from "axios"
 import { Textarea } from "@/components/ui/textarea"
 import Breadcrumbs from "@/pages/components/custom/breadcrumbs"
+import { Form, FormControl, FormField, FormItem, FormLabel } from "@/components/ui/form"
+import MultiImages from "@/pages/components/custom/MultipleFileAudio"
+import { comboboxOption, ComboboxSelect } from "@/pages/components/custom/ComboboxSelect"
+import { Podcasts } from "@/pages/podcasts/schema"
 
 /**
  * {
@@ -35,19 +38,13 @@ type LaravelValidationError = {
   errors: Record<string, string[]>;
 };
 
-async function createEpisode(data: Episode) {
+async function createEpisode(data: episodeForm) {
   return http.post<Episode>(`/episodes`, data);
 }
 
 export default function EpisodeCreate() {
   const navigate = useNavigate()
   const { toast } = useToast()
-
-  const { register, handleSubmit, formState: { errors } } = useForm<Episode>()
-
-  const onSubmit: SubmitHandler<Episode> = (data) => {
-    mutation.mutate(data)
-  }
 
   const mutation = useMutation({
     mutationFn: createEpisode,
@@ -66,7 +63,32 @@ export default function EpisodeCreate() {
         variant: "destructive",
       });
     }
+  })
 
+  const form = useForm<episodeForm>({
+    defaultValues: {
+      title: "",
+      description: "",
+      audio_path: "",
+      podcast_id: undefined,
+      cover_image: undefined,
+      slug: "",
+    }
+  })
+
+  const onSubmit: SubmitHandler<episodeForm> = (data) => {
+    mutation.mutate(data)
+  }
+
+  const { data: podcastOptions } = useQuery<comboboxOption[] | undefined>({
+    queryKey: ['pocasts'],
+    queryFn: async () => {
+      const res = await http.get<{ data: Podcasts }>('/podcasts');
+      return res.data.data.map(item => ({
+        value: item.id,
+        label: item.title
+      })) ?? []
+    }
   })
 
   return (
@@ -80,42 +102,140 @@ export default function EpisodeCreate() {
           <CardTitle>Create Episode</CardTitle>
           <CardDescription>description Create Episode</CardDescription>
         </CardHeader>
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <CardContent>
-            <div className="grid grid-cols-3 gap-x-4 gap-y-6">
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)}>
+            <CardContent>
+              {/**
+                * sm sẽ là >= 640
+                  md là >= 768
+                  lg là >= 1024
+                  nếu ko ghi gì thì là <640px
+                  tức là: grid-cols-1
+                *
+                */}
+              <div className="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-3 gap-x-4 gap-y-6">
 
-              <div className="flex flex-col col-span-1 space-y-2 ">
-                <Label htmlFor="title">Title</Label>
-                <Input {...register('title', { required: true })} id="title" placeholder="Title of your Episode" />
-                {errors.title && <span className="text-xs text-red-500">This field is required</span>}
+
+                <div className="lg:col-span-1 md:col-span-2 ">
+                  <FormField
+                    control={form.control}
+                    name="title"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Title</FormLabel>
+                        <FormControl>
+                          <Input
+                            // type text luon tra ra string , 'abc', '',
+                            type="text"
+                            placeholder="Title of Podcast"
+                            {...field}
+                          />
+                        </FormControl>
+                      </FormItem>
+                    )}
+                  />
+                </div>
+
+                <div className="lg:col-span-1 md:col-span-2  ">
+
+                  <FormField
+                    control={form.control}
+                    name="description"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Description</FormLabel>
+                        <FormControl>
+                          <Textarea
+                            placeholder=""
+                            {...field}
+                          />
+                        </FormControl>
+                      </FormItem>
+                    )}
+                  />
+                </div>
+
+                <div className="lg:col-span-1 md:col-span-2  ">
+                  <FormField
+                    control={form.control}
+                    name="slug"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Slug</FormLabel>
+                        <FormControl>
+                          <Input
+                            // type text luon tra ra string , 'abc', '',
+                            type="text"
+                            placeholder="Title of Podcast"
+                            {...field}
+                          />
+                        </FormControl>
+                      </FormItem>
+                    )}
+                  />
+                </div>
+
+                <div className="lg:col-span-1 md:col-span-2  ">
+                  <FormField
+                    control={form.control}
+                    name="podcast_id"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>podcast Id</FormLabel>
+                        <FormControl>
+                          <ComboboxSelect
+                            /***
+                            nguyen tac : chi duoc truyen vao 1 number
+                            - muon hien thi gi vao component ma load len
+                            const field = {
+                              value: 3,
+                              onChange: (value: number) => {},
+                              onBlur: () => {},
+                              name: "podcast_id",
+                              ref: () => {}
+                            }
+                              <ComboboxSelect
+                                value={field.value}
+                                onChange={field.onChange}
+                                onBlur={field.onBlur}
+                                name={field.name}
+                                ref={field.ref}
+                              />
+                            */
+                            options={podcastOptions ?? []}
+                            {...field}
+                          />
+                        </FormControl>
+                      </FormItem>
+                    )}
+                  />
+                </div>
+
+                <div className="md:col-span-4 lg:col-span-3">
+                  <FormField
+                    control={form.control}
+                    name="audio_path"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Audio uploads file</FormLabel>
+                        <FormControl>
+                          <MultiImages />
+                        </FormControl>
+                      </FormItem>
+                    )}
+                  />
+                </div>
+
               </div>
-
-              <div className="flex flex-col col-span-2 space-y-2 ">
-                <Label htmlFor="description">Description</Label>
-                <Textarea {...register('description')} placeholder="Type your description here." />
-              </div>
-
-              <div className="flex flex-col col-span-1 space-y-2">
-                <Label htmlFor="slug">Slug</Label>
-                <Input {...register('slug', { required: true })} id="slug" placeholder="Slug of your Episode" />
-                {errors.title && <span className="text-xs text-red-500">This field is required</span>}
-              </div>
-
-              <div className="flex flex-col col-span-1 space-y-2">
-                <Label htmlFor="podcast_id ">Podcat Id</Label>
-                <Input {...register('podcast_id', { required: true })} id="podcast_id" placeholder="Id of your Podcast" />
-                {errors.title && <span className="text-xs text-red-500">This field is required</span>}
-              </div>
-
-            </div>
-          </CardContent>
-          <CardFooter className="flex justify-end">
-            <Button
-              type="submit"
-              className="bg-blue-500 text-white hover:bg-blue-600 rounded-lg"
-            >Save</Button>
-          </CardFooter>
-        </form>
+            </CardContent>
+            <CardFooter className="flex justify-end">
+              <Button
+                type="submit"
+                className="bg-blue-500 text-white hover:bg-blue-600 rounded-lg"
+              >Save</Button>
+            </CardFooter>
+          </form>
+        </Form>
       </Card>
     </div >
   )

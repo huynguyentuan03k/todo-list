@@ -17,14 +17,14 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover"
 
-type comboboxOption = {
+export type comboboxOption = {
   label: string,
   value: number,
 }
 
 type Props = {
-  value?: string,
-  onChange: (value?: comboboxOption) => void
+  value?: number,
+  onChange: (value?: number) => void
   options: comboboxOption[]
   placeholder?: string
 }
@@ -66,7 +66,7 @@ export function ComboboxSelect({
 
                   // on select co nhiem vu cap nhat lai form
                   onSelect={() => {
-                    onChange(item) // cap nhat form
+                    onChange(item.value) // cap nhat form
                     setOpen(false) // dong dropdown
                   }}
 
