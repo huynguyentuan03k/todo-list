@@ -40,35 +40,35 @@ export default function PublisherShow() {
         </CardHeader>
 
         <CardContent>
-          <div className="grid grid-cols-3 gap-4">
-            <div className="flex flex-col col-span-1">
+          <div className="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-3 gap-4">
+            <div className="flex flex-col  sm:col-span-1 md:col-span-2 lg:col-span-1">
               <Label>Name</Label>
               <p>{publisher.name}</p>
             </div>
 
-            <div className="flex flex-col col-span-1">
+            <div className="flex flex-col  sm:col-span-1 md:col-span-2 lg:col-span-1">
               <Label>Address</Label>
               <p>{publisher.address}</p>
             </div>
 
-            <div className="flex flex-col col-span-1">
+            <div className="flex flex-col  sm:col-span-1 md:col-span-2 lg:col-span-1">
               <Label>Email</Label>
               <p>{publisher.email}</p>
             </div>
 
-            <div className="flex flex-col col-span-1">
+            <div className="flex flex-col  sm:col-span-1 md:col-span-2 lg:col-span-1">
               <Label>Website</Label>
               <Link to={publisher.website ?? ''}>
                 <p className="text-blue-500">{publisher.website}</p>
               </Link>
             </div>
 
-            <div className="flex flex-col col-span-1">
+            <div className="flex flex-col  sm:col-span-1 md:col-span-2 lg:col-span-1">
               <Label>Phone</Label>
               <p>{publisher.phone}</p>
             </div>
 
-            <div className="flex flex-col col-span-1">
+            <div className="flex flex-col  sm:col-span-1 md:col-span-2 lg:col-span-1">
               <Label>Established Year</Label>
               <p>{publisher.established_year}</p>
             </div>

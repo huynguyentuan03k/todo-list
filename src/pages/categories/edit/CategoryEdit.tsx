@@ -89,15 +89,15 @@ export default function CategoryEdit() {
         </CardHeader>
         <form onSubmit={handleSubmit(data => onSubmit(data))} >
           <CardContent>
-            <div className="grid grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
 
-              <div className="flex flex-col col-span-1 gap-y-2">
+              <div className="flex flex-col col-span-1 sm:col-span-1 gap-y-2">
                 <Label htmlFor="name" >Name : {newName}</Label>
                 {errors.name && <span>{errors.name.message}</span>}
                 <Input id="name" {...register('name', { required: "ten ko de trong" })} placeholder="Name of your publisher" />
               </div>
 
-              <div className="flex flex-col col-span-2 gap-y-2">
+              <div className="flex flex-col col-span-1 sm:col-span-1 gap-y-2">
                 <Label htmlFor="description">Description</Label>
                 <Textarea className="h-[200px]" id="description" {...register('description')} placeholder="type description here" />
               </div>

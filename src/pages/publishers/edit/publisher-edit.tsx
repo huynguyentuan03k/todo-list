@@ -97,20 +97,20 @@ export default function PublisherEdit() {
         </CardHeader>
         <form onSubmit={handleSubmit(data => onSubmit(data))} >
           <CardContent>
-            <div className="grid grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 lg:grid-cols-3 md:grid-cols-4 sm:grid-cols-1 gap-4">
 
-              <div className="flex flex-col col-span-1">
+              <div className="flex flex-col gap-y-2  lg:col-span-1 md:col-span-2 sm:col-span-2 col-span-1">
                 <Label htmlFor="name" >Name : {newName}</Label>
                 {errors.name && <span>{errors.name.message}</span>}
                 <Input id="name" {...register('name', { required: "ten ko de trong" })} placeholder="Name of your publisher" />
               </div>
 
-              <div className="flex flex-col col-span-1">
+              <div className="flex flex-col gap-y-2  lg:col-span-1 md:col-span-2 sm:col-span-2 col-span-1">
                 <Label htmlFor="address" >Address</Label>
                 <Input {...register('address')} id="address" placeholder="address of your" />
               </div>
 
-              <div className="flex flex-col col-span-1">
+              <div className="flex flex-col gap-y-2  lg:col-span-1 md:col-span-2 sm:col-span-2 col-span-1">
                 <Label htmlFor="email" >Email</Label>
                 <Input {...register("email", {
                   required: "Email là bắt buộc",
@@ -119,13 +119,13 @@ export default function PublisherEdit() {
                 {errors.email && <span>{errors.email.message}</span>}
               </div>
 
-              <div className="flex flex-col col-span-1">
+              <div className="flex flex-col gap-y-2  lg:col-span-1 md:col-span-2 sm:col-span-2 col-span-1">
                 <Label htmlFor="website" >Website</Label>
                 <Input {...register('website')} id="website" placeholder="website of your" />
               </div>
 
               {/* phone */}
-              <div className="flex flex-col col-span-1">
+              <div className="flex flex-col gap-y-2  lg:col-span-1 md:col-span-2 sm:col-span-2 col-span-1">
                 <Label htmlFor="phone">Phone</Label>
                 <PhoneInput />
               </div>

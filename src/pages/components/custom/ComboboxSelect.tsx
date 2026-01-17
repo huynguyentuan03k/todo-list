@@ -49,7 +49,8 @@ export function ComboboxSelect({
           variant="outline"
           role="combobox"
           aria-expanded={open}
-          className="w-[200px] justify-between"
+          // classname tu w-[200px] sang w-full
+          className="w-full justify-between"
         >
           {value
             ? ` ${selectedOption?.label} - ID: ${selectedOption?.value}`
@@ -58,10 +59,12 @@ export function ComboboxSelect({
         </Button>
       </PopoverTrigger>
 
-      <PopoverContent className="w-[200px] p-0">
+
+      {/* content bang voi kich thuoc cua button, khi responsive */}
+      <PopoverContent className="w-[--radix-popover-trigger-width] p-0">
         <Command>
           <CommandInput placeholder="Search..." className="h-9" />
-          <CommandList>
+          <CommandList className="w-full h-full">
             <CommandEmpty>No result found.</CommandEmpty>
             <CommandGroup>
               {options.map((item) => (

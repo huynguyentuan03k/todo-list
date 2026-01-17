@@ -54,21 +54,28 @@ export default function PodcastShow() {
         </CardHeader>
 
         <CardContent>
-          <div className="grid grid-cols-3 gap-4">
-            <div className="flex flex-col col-span-1">
+          <div className="grid grid-cols-1 lg:grid-cols-3 md:grid-cols-4  gap-4">
+
+            <div className="flex flex-col col-span-1 lg:col-span-1 md:col-span-2">
               <Label>Title</Label>
               <p>{podcast.title}</p>
             </div>
 
-            <div className="flex flex-col col-span-1">
+            <div className="flex flex-col col-span-1 lg:col-span-1 md:col-span-2">
               <Label>Description</Label>
               <p>{podcast.description}</p>
             </div>
 
-            <div className="flex flex-col col-span-1">
+            <div className="flex flex-col col-span-1 lg:col-span-1 md:col-span-2">
+              <Label>Publisher</Label>
+              <Link to={`/portal/publishers/${podcast.publisher?.id}/show`}>
+                <p className="text-blue-500">{podcast.publisher?.name} - ID: {podcast.publisher?.id}</p>
+              </Link>
+            </div>
+
+            <div className="flex flex-col col-span-1 lg:col-span-1 md:col-span-2">
               <div className="flex flex-col gap-2">
                 <Label>Cover Image</Label>
-
                 {
                   podcast.cover_url ?
                     <ImagePreview
@@ -78,16 +85,9 @@ export default function PodcastShow() {
                       className="w-full h-full object-cover"
                     />
                 }
-
               </div>
             </div>
 
-            <div className="flex flex-col col-span-1">
-              <Label>Publisher</Label>
-              <Link to={`/portal/publishers/${podcast.publisher?.id}/show`}>
-                <p className="text-blue-500">{podcast.publisher?.name} - ID: {podcast.publisher?.id}</p>
-              </Link>
-            </div>
 
           </div>
         </CardContent>

@@ -132,98 +132,109 @@ export default function PodcastEdit() {
 
         <form onSubmit={form.handleSubmit(data => onSubmit(data))} >
           <CardContent>
-            <div className="grid grid-cols-3 gap-4">
-              <Form {...form}>
+            <Form {...form}>
+              <div className="grid grid-cols-1 lg:grid-cols-3 md:grid-cols-4 gap-4">
 
-                <FormField
-                  control={form.control}
-                  name="title"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Title</FormLabel>
-                      <FormControl>
-                        <Input
-                          placeholder="Title of your Podcast"
-                          {...field}
-                        />
-                      </FormControl>
-                    </FormItem>
-                  )}
-                />
 
-                <FormField
-                  control={form.control}
-                  name="description"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Description</FormLabel>
-                      <FormControl>
-                        <Input
-                          placeholder="Description about podcast"
-                          {...field}
-                        />
-                      </FormControl>
-                    </FormItem>
-                  )}
-                />
+                <div className="col-span-1 lg:col-span-1 md:col-span-2">
+                  <FormField
+                    control={form.control}
+                    name="title"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Title</FormLabel>
+                        <FormControl>
+                          <Input
+                            placeholder="Title of your Podcast"
+                            {...field}
+                          />
+                        </FormControl>
+                      </FormItem>
+                    )}
+                  />
+                </div>
 
-                <FormField
-                  control={form.control}
-                  name="cover_url"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Cover Image</FormLabel>
-                      <FormControl>
-                        <SingleFileCover
-                          value={form.watch('cover_url', field.value)}
-                          onChange={(file) => {
-                            if (file) {
-                              form.setValue('cover_image', file) // dong nay co nghia la luu gia tri vao form
-                              const preview = URL.createObjectURL(file)
-                              form.setValue('cover_url', preview)
-                              field.onChange(preview) // dong nay co nghia la cap nhat field cover_url
-                            }
-                          }}
-                        />
-                      </FormControl>
-                    </FormItem>
-                  )}
-                />
+                <div className="col-span-1 lg:col-span-1 md:col-span-2">
 
-                <FormField
-                  control={form.control}
-                  name="publisher_id"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Publisher</FormLabel>
-                      <FormControl>
-                        <ComboboxSelect
-                          {...field}
-                          options={publisherOptions}
-                        />
-                      </FormControl>
-                    </FormItem>
-                  )}
-                />
+                  <FormField
+                    control={form.control}
+                    name="description"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Description</FormLabel>
+                        <FormControl>
+                          <Input
+                            placeholder="Description about podcast"
+                            {...field}
+                          />
+                        </FormControl>
+                      </FormItem>
+                    )}
+                  />
+                </div>
+                <div className="col-span-1 lg:col-span-1 md:col-span-2">
+                  <FormField
+                    control={form.control}
+                    name="slug"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Slug</FormLabel>
+                        <FormControl>
+                          <Input
+                            placeholder="Slug about podcast"
+                            {...field}
+                          />
+                        </FormControl>
+                      </FormItem>
+                    )}
+                  />
+                </div>
 
-                <FormField
-                  control={form.control}
-                  name="slug"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Slug</FormLabel>
-                      <FormControl>
-                        <Input
-                          placeholder="Slug about podcast"
-                          {...field}
-                        />
-                      </FormControl>
-                    </FormItem>
-                  )}
-                />
+                <div className="col-span-1 lg:col-span-1 md:col-span-2">
+                  <FormField
+                    control={form.control}
+                    name="publisher_id"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Publisher</FormLabel>
+                        <FormControl>
+                          <ComboboxSelect
+                            {...field}
+                            options={publisherOptions}
+                          />
+                        </FormControl>
+                      </FormItem>
+                    )}
+                  />
+                </div>
 
-              </Form>
-            </div>
+                <div className="col-span-1 lg:col-span-1 md:col-span-2">
+                  <FormField
+                    control={form.control}
+                    name="cover_url"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Cover Image</FormLabel>
+                        <FormControl>
+                          <SingleFileCover
+                            value={form.watch('cover_url', field.value)}
+                            onChange={(file) => {
+                              if (file) {
+                                form.setValue('cover_image', file) // dong nay co nghia la luu gia tri vao form
+                                const preview = URL.createObjectURL(file)
+                                form.setValue('cover_url', preview)
+                                field.onChange(preview) // dong nay co nghia la cap nhat field cover_url
+                              }
+                            }}
+                          />
+                        </FormControl>
+                      </FormItem>
+                    )}
+                  />
+                </div>
+
+              </div>
+            </Form>
 
           </CardContent>
           <CardFooter className="flex justify-end">
@@ -231,6 +242,6 @@ export default function PodcastEdit() {
           </CardFooter>
         </form>
       </Card>
-    </div>
+    </div >
   )
 }
