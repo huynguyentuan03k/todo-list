@@ -39,7 +39,7 @@ export type AuthorResponse<T> = {
 
 // AuthorForm chi dung de submit du lieu len backend
 export type AuthorForm = {
-  avatar: File | undefined;
+  avatar: File | undefined | string;
   name: string;
   bio: string;
   email: string;

@@ -64,7 +64,7 @@ export default function AuthorEdit() {
         bio: author.bio ?? '',
         email: author.email ?? '',
         website: author.website ?? '',
-        avatar: undefined,
+        avatar: author.avatar_url ?? '',
       })
     }
   }, [data, form])
@@ -162,7 +162,6 @@ export default function AuthorEdit() {
                         <FormControl className="">
                           <SingleFileAvatar
                             {...field}
-                            value={data?.data.data.avatar_url ?? undefined}
                           />
                         </FormControl>
                       </div>
