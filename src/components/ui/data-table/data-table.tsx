@@ -8,6 +8,9 @@ import {
   // import filter state
   ColumnFiltersState,
   getFilteredRowModel,
+  // import sorting
+  SortingState,
+  getSortedRowModel
 } from "@tanstack/react-table"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { useNavigate } from "react-router-dom"
@@ -27,6 +30,9 @@ export function DataTable<TData, TValue>({ columns, data, meta }: DataTableProps
   // filter
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
 
+  // sorting
+  const [sorting, setSorting] = useState<SortingState>([])
+
   const table = useReactTable({
     data,
     columns,
@@ -38,8 +44,14 @@ export function DataTable<TData, TValue>({ columns, data, meta }: DataTableProps
     onColumnFiltersChange: setColumnFilters,
     getFilteredRowModel: getFilteredRowModel(),
 
+
+    // sorting
+    onSortingChange: setSorting, // SortingState la 1 type cua tanstack , va con 1 cai function nua , cho ca 2 truong hop filter va sort
+    getSortedRowModel: getSortedRowModel(),
+
     //
     state: {
+      sorting,
       columnFilters,
     },
 

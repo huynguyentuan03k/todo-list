@@ -1,5 +1,5 @@
 import { ColumnDef } from "@tanstack/react-table"
-import { ArrowUpDown, ImageIcon } from "lucide-react"
+import { ArrowDown, ArrowUp, ArrowUpDown, ImageIcon } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Podcast } from "../schema";
 import { ActionsCell } from "./ActionCell";
@@ -35,7 +35,25 @@ export const columns: ColumnDef<Podcast>[] = [
   },
   {
     accessorKey: "title",
-    header: "Title",
+    header: (({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Title
+          {
+            column.getIsSorted() === "asc" ? (
+              <ArrowUp />
+            ) : column.getIsSorted() === "desc" ? (
+              <ArrowDown />
+            ) : (
+              <ArrowUpDown />
+            )
+          }
+        </Button>
+      )
+    }),
     cell: ({ row }) => (
       <div className="capitalize">{row.getValue("title")}</div>
     ),
@@ -44,7 +62,7 @@ export const columns: ColumnDef<Podcast>[] = [
     accessorKey: "description",
     header: "Description",
     cell: ({ row }) => (
-      // ko can responsive de max-w la md toan bo , 
+      // ko can responsive de max-w la md toan bo ,
       <div className="capitalize max-w-sm line-clamp-4">{row.getValue("description")}</div>
     ),
   },
