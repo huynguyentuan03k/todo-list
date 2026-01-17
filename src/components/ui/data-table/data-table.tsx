@@ -5,11 +5,16 @@ import {
   flexRender,
   getCoreRowModel,
   useReactTable,
+  // import filter state
+  ColumnFiltersState,
+  getFilteredRowModel,
 } from "@tanstack/react-table"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { useNavigate } from "react-router-dom"
 import { PaginationServer } from "../pagination/pagination-server"
 import { Meta } from "@/pages/publishers/shema"
+import { Input } from "@/components/ui/input"
+import { useState } from "react"
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
   data: TData[],
@@ -18,19 +23,42 @@ interface DataTableProps<TData, TValue> {
 
 export function DataTable<TData, TValue>({ columns, data, meta }: DataTableProps<TData, TValue>) {
   const navigate = useNavigate()
+
+  // filter
+  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
+
   const table = useReactTable({
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
-    //
     manualPagination: true,
     rowCount: meta?.total,
+
+    // filter state
+    onColumnFiltersChange: setColumnFilters,
+    getFilteredRowModel: getFilteredRowModel(),
+
+    //
+    state: {
+      columnFilters,
+    },
+
   })
 
   return (
     <div>
-
+      <div className="mb-3">
+        <Input
+          placeholder="Filter Title..."
+          value={(table.getColumn("title")?.getFilterValue() as string) ?? ""}
+          onChange={(event) =>
+            table.getColumn("title")?.setFilterValue(event.target.value)
+          }
+          className="max-w-sm"
+        />
+      </div>
       <div className="rounded-md border">
+
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map(headerGroup => (
