@@ -60,7 +60,6 @@ export default function PodcastCreate() {
   const navigate = useNavigate()
   const { toast } = useToast()
 
-
   const { data: publisherOptions = [] } = useQuery<MultiSeclectOptions[] | undefined>({
     queryKey: ["publishers"],
     queryFn: async () => {
@@ -68,6 +67,7 @@ export default function PodcastCreate() {
       return res.data.data.map(item => ({ value: item.id, label: item.name ?? "Unkown" })) ?? []
     }
   })
+
 
   // <Categories/>   => res.data la 1 mang
   // <{ data: Categories}>   => res.data.data la 1 mang
@@ -91,6 +91,14 @@ export default function PodcastCreate() {
     }
   })
 
+  // lan dau res.data.data thuong xuyen bi undefined nen hay can than
+  const { data: AuthorsOptions = [], isLoading: isAuthorLoading } = useQuery<MultiSeclectOptions[] | undefined>({
+    queryKey: ['authors'],
+    queryFn: async () => {
+      const res = await http.get<{ data: Authors }>("/authors")
+      return res.data.data.map(item => ({ value: item.id, label: item.name ?? "Unkown" })) ?? []
+    }
+  })
 
   //
   const form = useForm<PodcastForm>({
@@ -126,16 +134,6 @@ export default function PodcastCreate() {
         description: backendMessage,
         variant: "destructive",
       });
-    }
-  })
-
-
-  // lan dau res.data.data thuong xuyen bi undefined nen hay can than
-  const { data: AuthorsOptions = [] } = useQuery<MultiSeclectOptions[] | undefined>({
-    queryKey: ['authors'],
-    queryFn: async () => {
-      const res = await http.get<{ data: Authors }>("/authors")
-      return res.data.data.map(item => ({ value: item.id, label: item.name ?? "Unkown" })) ?? []
     }
   })
 
@@ -259,6 +257,7 @@ export default function PodcastCreate() {
                       <FormLabel>Authors</FormLabel>
                       <FormControl>
                         <MultiSelectCustom
+                          isLoading={isAuthorLoading}
                           value={field.value.map(String)}
                           options={AuthorsOptions ?? []}
                           onChange={(items: string[]) => {

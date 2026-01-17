@@ -6,6 +6,7 @@ import {
   MultiSelectTrigger,
   MultiSelectValue,
 } from "@/components/ui/multi-select"
+import { SpinnerLoading } from "./SpinnerLoading"
 
 export type MultiSeclectOptions = {
   value: number,
@@ -46,7 +47,6 @@ export default function MultiSelectCustom({
             {
 
               isLoading == false ? (
-
                 options?.map(item => (
                   /**
                    * trong react :
@@ -59,9 +59,11 @@ export default function MultiSelectCustom({
                       contentDisplay(item)
                     }
                   </MultiSelectItem>
-                )) ?? []
+                ))
               ) : (
-                <span>Loading</span>
+                <div className="flex justify-center items-center">
+                  <SpinnerLoading />
+                </div>
               )
 
             }
