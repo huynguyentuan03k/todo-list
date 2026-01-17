@@ -2,7 +2,6 @@ import {
   Dropzone,
   DropZoneArea,
   DropzoneTrigger,
-  DropzoneMessage,
   useDropzone,
 } from "@/components/ui/dropzone";
 import { cn } from "@/lib/utils";
@@ -46,8 +45,6 @@ export function SingleFileCover({
 
   return (
     <Dropzone {...dropzone}>
-      <DropzoneMessage />
-
       <DropZoneArea>
         <DropzoneTrigger className="w-full bg-transparent">
           <Card
