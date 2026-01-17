@@ -60,7 +60,12 @@ export function ComboboxSelect({
       </PopoverTrigger>
 
 
-      {/* content bang voi kich thuoc cua button, khi responsive */}
+      {/**
+         * Dropdown rộng bằng đúng nút Combobox :
+         * Radix tự động tạo một CSS variable tên là: --radix-popover-trigger-width
+         * content bang voi kich thuoc cua button, khi responsive
+         */}
+
       <PopoverContent className="w-[--radix-popover-trigger-width] p-0">
         <Command>
           <CommandInput placeholder="Search..." className="h-9" />
