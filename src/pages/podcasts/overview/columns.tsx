@@ -8,7 +8,25 @@ import { AspectRatio } from "@/components/ui/aspect-ratio";
 export const columns: ColumnDef<Podcast>[] = [
   {
     accessorKey: "id",
-    header: "Id",
+    header: (({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Id
+          {
+            column.getIsSorted() === "asc" ? (
+              <ArrowUp />
+            ) : column.getIsSorted() === "desc" ? (
+              <ArrowDown />
+            ) : (
+              <ArrowUpDown />
+            )
+          }
+        </Button>
+      )
+    }),
     cell: ({ row }) => (
 
       <div className="capitalize">{row.getValue("id")}</div>
