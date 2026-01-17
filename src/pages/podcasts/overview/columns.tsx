@@ -44,7 +44,8 @@ export const columns: ColumnDef<Podcast>[] = [
     accessorKey: "description",
     header: "Description",
     cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("description")}</div>
+      // ko can responsive de max-w la md toan bo , 
+      <div className="capitalize max-w-sm line-clamp-4">{row.getValue("description")}</div>
     ),
   },
   {

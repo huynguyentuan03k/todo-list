@@ -14,6 +14,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel } from "@/components/
 import { ComboboxSelect } from "@/pages/components/custom/ComboboxSelect"
 import { Publishers } from "@/pages/publishers/shema"
 import { SingleFileCover } from "@/pages/components/custom/SingleFileCover"
+import { Textarea } from "@/components/ui/textarea"
 
 
 export default function PodcastEdit() {
@@ -155,7 +156,6 @@ export default function PodcastEdit() {
                 </div>
 
                 <div className="col-span-1 lg:col-span-1 md:col-span-2">
-
                   <FormField
                     control={form.control}
                     name="description"
@@ -163,7 +163,7 @@ export default function PodcastEdit() {
                       <FormItem>
                         <FormLabel>Description</FormLabel>
                         <FormControl>
-                          <Input
+                          <Textarea
                             placeholder="Description about podcast"
                             {...field}
                           />
