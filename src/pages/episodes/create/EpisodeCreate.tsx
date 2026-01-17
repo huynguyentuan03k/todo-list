@@ -11,7 +11,6 @@ import { AxiosError } from "axios"
 import { Textarea } from "@/components/ui/textarea"
 import Breadcrumbs from "@/pages/components/custom/breadcrumbs"
 import { Form, FormControl, FormField, FormItem, FormLabel } from "@/components/ui/form"
-import MultiImages from "@/pages/components/custom/MultipleFileAudio"
 import { comboboxOption, ComboboxSelect } from "@/pages/components/custom/ComboboxSelect"
 import { Podcasts } from "@/pages/podcasts/schema"
 
@@ -219,7 +218,7 @@ export default function EpisodeCreate() {
                       <FormItem>
                         <FormLabel>Audio uploads file</FormLabel>
                         <FormControl>
-                          <MultiImages />
+                          {/* <MultiImages /> */}
                         </FormControl>
                       </FormItem>
                     )}
