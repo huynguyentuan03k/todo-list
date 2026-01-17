@@ -232,6 +232,7 @@ export default function PodcastCreate() {
                       <FormLabel>Categories</FormLabel>
                       <FormControl>
                         <MultiSelectCustom
+                          overflowBehavior="wrap"
                           isLoading={isLoading}
                           value={field.value.map(String)}
                           onChange={(items: string[]) => {
@@ -257,6 +258,7 @@ export default function PodcastCreate() {
                       <FormLabel>Authors</FormLabel>
                       <FormControl>
                         <MultiSelectCustom
+                          overflowBehavior="wrap"
                           isLoading={isAuthorLoading}
                           value={field.value.map(String)}
                           options={AuthorsOptions ?? []}
