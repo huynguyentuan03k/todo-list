@@ -198,10 +198,7 @@ export default function PodcastEdit() {
                       <FormLabel>Publisher</FormLabel>
                       <FormControl>
                         <ComboboxSelect
-                          value={field.value?.toString()}
-                          onChange={(item) => {
-                            field.onChange(item?.value)
-                          }}
+                          {...field}
                           options={publisherOptions}
                         />
                       </FormControl>

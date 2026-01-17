@@ -217,10 +217,7 @@ export default function PodcastCreate() {
                       <FormLabel>Publisher</FormLabel>
                       <FormControl>
                         <ComboboxSelect
-                          value={field.value ? String(field.value) : undefined}
-                          onChange={(value) => {
-                            field.onChange(Number(value?.value))
-                          }}
+                          {...field}
                           options={publisherOptions ?? []}
                         />
                       </FormControl>

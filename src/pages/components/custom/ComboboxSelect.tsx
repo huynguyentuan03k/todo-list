@@ -23,7 +23,12 @@ export type comboboxOption = {
 }
 
 type Props = {
-  value?: number,
+
+  /**
+   * 1 / value?: number ,Đây là prop không bắt buộc.
+   * 2 / value: number | undedfined , Đây là bắt buộc phải có prop value, nhưng nó có thể là undefined.
+   */
+  value: number | undefined,
   onChange: (value?: number) => void
   options: comboboxOption[]
   placeholder?: string
