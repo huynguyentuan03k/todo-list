@@ -21,9 +21,11 @@ const getPodcasts = (page: number | string = 1, per_page: number | string = 10) 
 }
 
 export default function PodcastsOverview() {
+  localStorage.setItem('PER_PAGE', '10')
+  const per_page = localStorage.getItem('PER_PAGE') ?? 10
+
   const [searchParams] = useSearchParams()
   const page = searchParams.get('page') || 1
-  const per_page = searchParams.get('per_page') || 10
 
   const { data, isLoading, error } = useQuery({
     queryKey: ['podcasts', page, per_page],
