@@ -18,6 +18,8 @@ import Breadcrumbs from "@/pages/components/custom/breadcrumbs"
 import { Categories } from "@/pages/categories/shema"
 import { Authors } from "@/pages/authors/shema"
 import MultiSelectCustom, { MultiSeclectOptions } from "@/pages/components/custom/MultiSelectCustom"
+import TinyEditor from "@/pages/components/custom/TinyEditor"
+
 
 type LaravelValidationError = {
   message: string;
@@ -270,6 +272,21 @@ export default function PodcastCreate() {
                     </FormItem>
                   )}
                 />
+                <div className="sm:col-span-3">
+                  <FormField
+                    control={form.control}
+                    name="author_ids"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>TinyMce</FormLabel>
+                        <FormControl>
+                          <TinyEditor
+                          />
+                        </FormControl>
+                      </FormItem>
+                    )}
+                  />
+                </div>
 
                 <FormField
                   control={form.control}
@@ -294,6 +311,10 @@ export default function PodcastCreate() {
                     </FormItem>
                   )}
                 />
+
+
+
+
 
               </div>
             </CardContent>
