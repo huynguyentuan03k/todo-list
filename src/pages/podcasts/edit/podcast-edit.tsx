@@ -15,6 +15,7 @@ import { ComboboxSelect } from "@/pages/components/custom/ComboboxSelect"
 import { Publishers } from "@/pages/publishers/shema"
 import { SingleFileCover } from "@/pages/components/custom/SingleFileCover"
 import { Textarea } from "@/components/ui/textarea"
+import TinyEditor from "@/pages/components/custom/TinyEditor"
 
 
 export default function PodcastEdit() {
@@ -34,6 +35,7 @@ export default function PodcastEdit() {
     formData.append('description', podcast.description);
     formData.append('slug', podcast.slug);
     formData.append('title', podcast.title)
+    formData.append('content', podcast.content)
 
     formData.append('publisher_id', podcast.publisher_id?.toString() ?? "")
 
@@ -57,6 +59,7 @@ export default function PodcastEdit() {
       cover_image: undefined,
       cover_url: data?.data.data.cover_url ?? undefined,
       publisher_id: data?.data.data.publisher?.id ?? undefined,
+      content: data?.data.data.content ?? ""
     }
   })
 
@@ -75,6 +78,7 @@ export default function PodcastEdit() {
         cover_url: podcast.cover_url ?? undefined,
         publisher_id: podcast.publisher?.id ?? undefined,
         cover_image: undefined,
+        content: podcast.content ?? ""
       })
     }
   }, [data, form])
@@ -118,7 +122,7 @@ export default function PodcastEdit() {
   if (!data) {
     return <div>No data</div>
   }
-
+  console.log("data ", data.data.data)
   return (
     <div >
       <div className="flex justify-between">
@@ -208,6 +212,24 @@ export default function PodcastEdit() {
                   />
                 </div>
 
+                <div className="sm:col-span-3">
+                  <FormField
+                    control={form.control}
+                    name="content"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>TinyMce</FormLabel>
+                        <FormControl>
+                          <TinyEditor
+                            value={field.value}
+                            onChange={field.onChange}
+                          />
+                        </FormControl>
+                      </FormItem>
+                    )}
+                  />
+
+                </div>
                 <div className="col-span-1 lg:col-span-1 md:col-span-2">
                   <FormField
                     control={form.control}

@@ -36,6 +36,7 @@ async function createPodcast(data: PodcastForm) {
   formData.append("title", data.title);
   formData.append("description", data.description);
   formData.append("slug", data.slug)
+  formData.append("content", data.content)
 
   // trong formdata khong chap du lieu cua phuong thuc append(name,value), cho value la string or Blob bao gom File
   // chi chap nhan : string , blob (file, FileList, etc.)
@@ -275,12 +276,14 @@ export default function PodcastCreate() {
                 <div className="sm:col-span-3">
                   <FormField
                     control={form.control}
-                    name="author_ids"
+                    name="content"
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>TinyMce</FormLabel>
                         <FormControl>
                           <TinyEditor
+                            value={field.value}
+                            onChange={field.onChange}
                           />
                         </FormControl>
                       </FormItem>

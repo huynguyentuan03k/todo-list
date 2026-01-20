@@ -1,13 +1,19 @@
 import { Editor } from "@tinymce/tinymce-react";
 
-export default function TinyEditor() {
+type Props = {
+  value: string,
+  onChange: (value: string) => void
+}
+
+export default function TinyEditor({ value, onChange }: Props) {
   return (
     <Editor
       tinymceScriptSrc="/tinymce/tinymce.min.js"
       licenseKey="gpl"
+      value={value}
+      onEditorChange={(content) => onChange(content)}
       init={{
         height: 600,
-        // menubar: true,
         plugins: [
           'advlist', 'autolink', 'link', 'image', 'lists', 'charmap', 'preview', 'anchor', 'pagebreak',
           'searchreplace', 'wordcount', 'visualblocks', 'visualchars', 'code', 'fullscreen', 'insertdatetime',
@@ -23,6 +29,9 @@ export default function TinyEditor() {
         // language: 'vi',
         // language_url: '/tinymce/langs/vi.js',
         // language_load: true,
+
+        // icons
+        icons: 'material',
 
         valid_elements: "*[*]",
         extended_valid_elements: "script[*],style[*]",

@@ -21,7 +21,8 @@ import http from "@/utils/http";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useToast } from "@/components/ui/hooks/use-toast";
 import { Podcast } from "../schema";
-import { IconEdit, IconTrash } from "@tabler/icons-react";
+import { IconEdit, IconEye, IconTrash } from "@tabler/icons-react";
+
 export function ActionsCell({ podcast }: { podcast: Podcast }) {
   const navigate = useNavigate()
   const queryClient = useQueryClient()
@@ -49,6 +50,54 @@ export function ActionsCell({ podcast }: { podcast: Podcast }) {
   })
   return (
     <div className="flex gap-2" onClick={(e) => e.stopPropagation()}>
+
+      {/* section icon Preview Content */}
+      <AlertDialog>
+
+        {/* this is a show tooltip */}
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <AlertDialogTrigger asChild>
+                <IconEye
+                  size={20}
+                  className="text-green-500 cursor-pointer"
+                  onClick={(e) => {
+                    e.stopPropagation()
+                  }}
+                />
+              </AlertDialogTrigger>
+            </TooltipTrigger>
+            <TooltipContent className="bg-green-400 text-white px-3 py-1 rounded-md text-sm shadow-lg">
+              Preview Content
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
+
+        {/* this is a dialog of icon preview content*/}
+        {/* trong component kich thuoc toi da chi la 512px tuc la 32rem thuoc tinh css la max-w-lg , muon width to hon phai ghi de css  */}
+        <AlertDialogContent
+          className="lg:max-w-7xl"
+        >
+          <AlertDialogHeader>
+            <AlertDialogTitle>Preview Content of : {podcast.title}</AlertDialogTitle>
+          </AlertDialogHeader>
+
+          {/* parse tu text thuan sang html dung dangerouslySetInnerHTML */}
+          <div
+            className="max-h-[80vh] overflow-auto"
+            dangerouslySetInnerHTML={{ __html: podcast.content ?? "" }}
+          >
+          </div>
+
+          <AlertDialogFooter>
+            <AlertDialogCancel>Close</AlertDialogCancel>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+
+
+      {/* section icon edit */}
       <TooltipProvider>
         <Tooltip>
           <TooltipTrigger asChild>
@@ -67,7 +116,9 @@ export function ActionsCell({ podcast }: { podcast: Podcast }) {
         </Tooltip>
       </TooltipProvider>
 
-      {/* tooltip and alertDialog */}
+
+
+      {/* section icon remove */}
       <AlertDialog>
 
         {/* tooltip */}
@@ -108,6 +159,7 @@ export function ActionsCell({ podcast }: { podcast: Podcast }) {
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
+
     </div >
 
   )

@@ -27,6 +27,7 @@ export const PodcastSchema = z.object({
   cover_image: z.string().nullable(),
   cover_url: z.string().nullable(),
   publisher: PublisherSchema.nullable(),
+  content: z.string().nullable(),
   created_at: z.string().nullable(),
   updated_at: z.string().nullable(),
   categories: CategoriesSchema,
@@ -51,4 +52,5 @@ export type PodcastForm = {
   publisher_id: number | undefined;
   category_ids: number[];
   author_ids: number[];
+  content: string;
 };
