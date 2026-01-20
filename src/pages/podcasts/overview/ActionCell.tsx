@@ -21,7 +21,8 @@ import http from "@/utils/http";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useToast } from "@/components/ui/hooks/use-toast";
 import { Podcast } from "../schema";
-import { IconEdit, IconEye, IconTrash } from "@tabler/icons-react";
+import { IconCircleX, IconEdit, IconEye, IconTrash } from "@tabler/icons-react";
+import { Button } from "@/components/ui/button";
 
 export function ActionsCell({ podcast }: { podcast: Podcast }) {
   const navigate = useNavigate()
@@ -91,11 +92,35 @@ export function ActionsCell({ podcast }: { podcast: Podcast }) {
           </div>
 
           <AlertDialogFooter>
-            <AlertDialogCancel>Close</AlertDialogCancel>
+
+            <AlertDialogCancel asChild>
+              <Button
+                className="bg-transparent hover:bg-black hover:text-white text-black font-medium border-none shadow-slate-400"
+              >
+                <IconCircleX />
+                Close
+              </Button>
+            </AlertDialogCancel>
+
+            {/* trong shadcn AlertDialog chỉ cho phép điều khiển bằng Action / Cancel, muon click va thuc hien logic phai asChild, tuc la truyen vao cho 1 element tiep theo va thuoc tinh trong element do  */}
+            <AlertDialogCancel asChild>
+              <Button
+                onClick={(e) => {
+                  e.stopPropagation()
+                  // su dung hash de di chuyen de doan editer, trong component editor phai co id cho the div
+                  navigate(`/portal/podcasts/${podcast.id}/edit#cc`)
+                }}
+                className="bg-white hover:bg-black hover:text-white text-black font-medium border-none shadow-slate-400"
+              >
+                <IconEdit />
+                Edit
+              </Button>
+            </AlertDialogCancel>
+
           </AlertDialogFooter>
+
         </AlertDialogContent>
       </AlertDialog>
-
 
       {/* section icon edit */}
       <TooltipProvider>
