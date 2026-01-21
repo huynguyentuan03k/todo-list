@@ -2,12 +2,12 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { useNavigate, useParams } from "react-router-dom"
-import { useMutation, useQuery } from "@tanstack/react-query"
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import http from "@/utils/http"
 import { Podcast, PodcastForm, PodcastSchema } from "../schema"
 import { SpinnerLoading } from "@/pages/components/custom/SpinnerLoading"
 import { SubmitHandler, useForm } from "react-hook-form"
-import { useEffect } from "react"
+import { useEffect, useRef } from "react"
 import { useToast } from "@/components/ui/hooks/use-toast"
 import Breadcrumbs from "@/pages/components/custom/breadcrumbs"
 import { Form, FormControl, FormField, FormItem, FormLabel } from "@/components/ui/form"
@@ -17,11 +17,15 @@ import { SingleFileCover } from "@/pages/components/custom/SingleFileCover"
 import { Textarea } from "@/components/ui/textarea"
 import TinyEditor from "@/pages/components/custom/TinyEditor"
 
-
 export default function PodcastEdit() {
   const { id } = useParams()
   const navigate = useNavigate()
   const { toast } = useToast()
+
+  // fix bug ,Nội dung vừa gõ biến mất , Ctrl + Z thì nó hiện lại, biến editorRef.current khi mount mặc định đã OnInit rồi nhé nó là 1 instance và có giá trị rồi
+  // cơ bản là khi dùng useRef để chắn trường hợp re-render khi giá trị trong form thay đổi , và chỉ load 1 lần thôi gán cho = true
+  const isInitialized = useRef<boolean>(false)
+  const queryClient = useQueryClient()
 
   const updatePodcast = (podcast: PodcastForm) => {
     // trong formData chi chap nhan , string , Blob
@@ -39,6 +43,7 @@ export default function PodcastEdit() {
 
     formData.append('publisher_id', podcast.publisher_id?.toString() ?? "")
 
+
     return http.post<Podcast>(`/podcasts/${id}`, formData, {
       headers: {
         "Content-Type": "Multipart/form-data",
@@ -50,6 +55,12 @@ export default function PodcastEdit() {
     queryKey: ['podcasts', id],
     queryFn: () => http.get<{ data: Podcast }>(`/podcasts/${id}`)
   })
+
+
+
+  const onSubmit: SubmitHandler<PodcastForm> = (data) => {
+    mutation.mutate(data)
+  }
 
   const form = useForm<PodcastForm>({
     defaultValues: {
@@ -63,13 +74,9 @@ export default function PodcastEdit() {
     }
   })
 
-  const onSubmit: SubmitHandler<PodcastForm> = (data) => {
-    mutation.mutate(data)
-  }
-
   // Update form values when data is loaded
   useEffect(() => {
-    if (data?.data?.data) {
+    if (data?.data?.data && !isInitialized.current) {
       const podcast = PodcastSchema.parse(data.data.data)
       form.reset({
         title: podcast.title,
@@ -80,12 +87,17 @@ export default function PodcastEdit() {
         cover_image: undefined,
         content: podcast.content ?? ""
       })
+      isInitialized.current = true
     }
   }, [data, form])
 
   const mutation = useMutation({
     mutationFn: updatePodcast,
-    onSuccess: () => {
+    onSuccess: (res) => {
+      // invalidate cache của podcast này khi đã thành công update
+      queryClient.invalidateQueries({
+        queryKey: ['podcasts', id]
+      })
       toast({
         title: "update podcast successfully",
         description: "podcast has been store.",
@@ -122,7 +134,7 @@ export default function PodcastEdit() {
   if (!data) {
     return <div>No data</div>
   }
-  console.log("data ", data.data.data)
+
   return (
     <div >
       <div className="flex justify-between">
