@@ -58,6 +58,7 @@ export default function PublishersOverview() {
         columns={columns}
         data={publishers}
         meta={data?.data.meta}
+        fieldTitle="name"
       />
     </div>
   )

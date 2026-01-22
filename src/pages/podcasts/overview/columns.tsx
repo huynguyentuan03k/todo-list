@@ -75,6 +75,7 @@ export const columns: ColumnDef<Podcast>[] = [
     cell: ({ row }) => (
       <div className="capitalize">{row.getValue("title")}</div>
     ),
+    filterFn: "equalsString",
   },
   {
     accessorKey: "description",
@@ -111,6 +112,6 @@ export const columns: ColumnDef<Podcast>[] = [
     header: () => <div className="text-blue-500">Actions</div>,
     id: "actions",
     enableHiding: false,
-    cell: ({ row }) => < ActionsCell podcast={row.original} />
+    cell: ({ row }) => <ActionsCell podcast={row.original} />
   },
 ]

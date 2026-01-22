@@ -8,12 +8,19 @@ import { useSearchParams } from "react-router-dom"
 import { Button } from "@/components/ui/button"
 import { Link } from "react-router-dom"
 import Breadcrumbs from "@/pages/components/custom/breadcrumbs"
+import { Input } from "@/components/ui/input"
+import { useEffect, useMemo, useRef } from "react"
 
-
-const getPodcasts = (page: number | string = 1, per_page: number | string = 10) => {
-
+const getPodcasts = (
+  page: number | string = 1,
+  per_page: number | string = 10,
+  filters: {
+    title?: string,
+    description?: string,
+  },
+) => {
   const response = http.get<PodcastResponse<Podcasts>>("/podcasts", {
-    params: { page, per_page },
+    params: { page, per_page, filter: filters },
     // tuc la khi response luon tra ve kieu nay : type PublisherResponse<Publishers>
   })
 
@@ -21,16 +28,41 @@ const getPodcasts = (page: number | string = 1, per_page: number | string = 10) 
 }
 
 export default function PodcastsOverview() {
-  localStorage.setItem('PER_PAGE', '10')
-  const per_page = localStorage.getItem('PER_PAGE') ?? 10
 
-  const [searchParams] = useSearchParams()
+  const per_page: number = Number(localStorage.getItem('PER_PAGE')) || 10
+
+  const [searchParams, setSearchParams] = useSearchParams()
+  const useRefInput = useRef<HTMLInputElement>(null)
+
+  const sortBy = searchParams.get("sortBy") ?? "sort_by"
+  const title = searchParams.get('title') ?? ""
   const page = searchParams.get('page') || 1
 
   const { data, isLoading, error } = useQuery({
-    queryKey: ['podcasts', page, per_page],
-    queryFn: () => getPodcasts(page, per_page),
+    queryKey: ['podcasts', page, per_page, title, sortBy],
+    queryFn: () => getPodcasts(page, per_page, {
+      title: title || undefined
+    }),
   })
+
+  // useMemo : giúp giữ nguyên địa chỉ cho biến podcasts
+  // useMemo Lần render đầu tiên: data chưa có gì -> useMemo chạy -> trả về mảng rỗng.
+  // useMemo lan 2 data thay đổi -> useMemo thấy sự thay đổi ở dependency [data] -> chạy lại PodcastsSchema.parse -> trả về danh sách podcast mới.
+  // Khi gõ vào ô Input (filter): Component render lại, nhưng data từ API vẫn chưa đổi (vì chưa gọi lại API hoặc API chưa trả kết quả mới)
+  // -> useMemo không chạy lại -> nó trả về ngay kết quả đã parse ở bước trước.
+  const podcasts = useMemo(() => {
+    return PodcastsSchema.parse(data?.data?.data ?? [])
+  }, [data])
+
+  // chi can chay 1 lan khi component re-render
+  // 
+  useEffect(() => {
+    localStorage.setItem('PER_PAGE', '10')
+    if (!isLoading && title && useRefInput.current) {
+      useRefInput.current?.focus()
+    }
+  }, [title, isLoading]) // chỉ chạy khi load trang
+
 
   if (isLoading) {
     return (
@@ -41,10 +73,11 @@ export default function PodcastsOverview() {
   }
 
   if (error) {
-    return <p className="text-red-500">Failed to load podcasts</p>
+    return <div className="flex justify-start py-10 text-red-500">
+      Failed to load podcasts
+    </div>
   }
 
-  const podcasts = PodcastsSchema.parse(data?.data.data ?? [])
 
   return (
     <div className="container mx-auto py-10">
@@ -56,10 +89,43 @@ export default function PodcastsOverview() {
           </Button>
         </Link>
       </div>
+
+      <div className="mb-3">
+        <Input
+          ref={useRefInput}
+          placeholder="Filter title..."
+          className="sm:max-w-sm max-w-sm"
+          value={title}
+          onChange={(e) => {
+
+            // không dùng e.target vì TypeScript không đảm bảo target là HTMLInputElement
+            const value = e.currentTarget.value
+
+            setSearchParams((pre) => {
+              const preNew = new URLSearchParams(pre)
+              if (value) {
+                preNew.set('title', value)
+              } else {
+                preNew.delete('title')
+              }
+              return preNew
+            })
+
+            // sau khi set state value trong thi auto focus vao the input
+            if (useRefInput.current) {
+              useRefInput.current.focus()
+            }
+          }}
+        />
+      </div>
+
       <DataTable
         columns={columns}
         data={podcasts}
         meta={data?.data.meta}
+        fieldTitle="title"
+        pageIndex={0}
+        pageSize={per_page}
       />
     </div>
   )

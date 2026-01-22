@@ -9,18 +9,22 @@ import { Select, SelectItem, SelectValue } from "../select"
 import { SelectContent, SelectGroup, SelectLabel, SelectTrigger } from "@radix-ui/react-select"
 import { useSearchParams } from "react-router-dom"
 import { useEffect } from "react"
+
 type PaginationServerProps<TData> = {
   table: Table<TData>
 }
+
 export function PaginationServer<TData>({ table }: PaginationServerProps<TData>) {
   const [searchParams, setSearchParams] = useSearchParams();
   const page = table.getState().pagination.pageIndex + 1
   const per_page = table.getState().pagination.pageSize
 
   useEffect(() => {
-    setSearchParams({
-      page: page.toString(),
-      per_page: per_page.toString()
+    setSearchParams((prev) => {
+      const params = new URLSearchParams(prev)
+      params.set('page', page.toString())
+      params.set('per_page', per_page.toString())
+      return params
     })
   }, [page, setSearchParams, per_page])
 

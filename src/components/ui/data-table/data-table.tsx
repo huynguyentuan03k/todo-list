@@ -1,5 +1,3 @@
-"use client"
-
 import {
   ColumnDef,
   flexRender,
@@ -11,66 +9,58 @@ import {
   // import sorting
   SortingState,
   getSortedRowModel
+  //pagination server side
+
 } from "@tanstack/react-table"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { useNavigate } from "react-router-dom"
 import { PaginationServer } from "../pagination/pagination-server"
 import { Meta } from "@/pages/publishers/shema"
-import { Input } from "@/components/ui/input"
 import { useState } from "react"
+import { memo } from "react"
+
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
   data: TData[],
   meta?: Meta,
+  fieldTitle: string,
+  onSortChange?: (sorting: SortingState) => void,
+  pageIndex?: number,
+  pageSize?: number,
 }
 
-export function DataTable<TData, TValue>({ columns, data, meta }: DataTableProps<TData, TValue>) {
+function DataTableComponent<TData, TValue>({ columns, data, meta, fieldTitle, onSortChange, pageIndex, pageSize }: DataTableProps<TData, TValue>) {
   const navigate = useNavigate()
-
-  // filter
-  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
-
-  // sorting
   const [sorting, setSorting] = useState<SortingState>([])
+
 
   const table = useReactTable({
     data,
     columns,
+    manualSorting: true,
     getCoreRowModel: getCoreRowModel(),
-    manualPagination: true,
-    rowCount: meta?.total,
 
-    // filter state
-    onColumnFiltersChange: setColumnFilters,
-    getFilteredRowModel: getFilteredRowModel(),
+    // pagination server side
+    manualPagination: true,  // turn off client-side pagination
+    rowCount: meta?.total,  //  Table KHÔNG tự cắt data
+    autoResetPageIndex: false, // Phụ thuộc backend trả total
 
-
-    // sorting
-    onSortingChange: setSorting, // SortingState la 1 type cua tanstack , va con 1 cai function nua , cho ca 2 truong hop filter va sort
-    getSortedRowModel: getSortedRowModel(),
-
-    //
     state: {
       sorting,
-      columnFilters,
     },
+
+    initialState: {
+      pagination: {
+        pageIndex: pageIndex,
+        pageSize: pageSize
+      }
+    }
 
   })
 
   return (
     <div>
-      <div className="mb-3">
-        <Input
-          placeholder="Filter Title..."
-          value={(table.getColumn("title")?.getFilterValue() as string) ?? ""}
-          onChange={(event) =>
-            table.getColumn("title")?.setFilterValue(event.target.value)
-          }
-          className="max-w-sm"
-        />
-      </div>
       <div className="rounded-md border">
-
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map(headerGroup => (
@@ -112,3 +102,5 @@ export function DataTable<TData, TValue>({ columns, data, meta }: DataTableProps
     </div>
   )
 }
+
+export const DataTable = memo(DataTableComponent) as typeof DataTableComponent
