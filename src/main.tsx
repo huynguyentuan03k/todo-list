@@ -33,7 +33,7 @@ import EpisodeEdit from './pages/episodes/edit/EpisodeEdit';
 import EpisodeShow from './pages/episodes/show/EpisodeShow';
 import Dashboard from './pages/dashboard/Dashboard';
 import AboutMe from './pages/aboutMe/AboutMe';
-import { Analytics } from '@vercel/analytics/next';
+import { Analytics } from '@vercel/analytics/react';
 
 
 const queryClient = new QueryClient();
