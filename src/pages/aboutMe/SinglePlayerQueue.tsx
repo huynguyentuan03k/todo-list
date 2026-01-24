@@ -32,7 +32,7 @@ export default function SinglePlayerQueue() {
           id: "1",
           title: "1 lời nói đầu",
           artist: "Tetsuko Kuroyanagi",
-          url: "https://archive.org/details/238659c4abb44b7b9aa65260455d9e6b/1-loi-noi-dau.mp3",
+          url: "https://dn721808.ca.archive.org/0/items/238659c4abb44b7b9aa65260455d9e6b/1-loi-noi-dau.mp3",
         },
         {
           id: '2',
