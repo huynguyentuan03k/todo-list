@@ -47,6 +47,12 @@ export default function SinglePlayerQueue() {
           artist: 'Tetsuko Kuroyanagi',
           url: '/Tottochan (1).mp3',
           images: ['https://th.bing.com/th/id/OIP.ubWDFKah7KyvCLqcQ-VzbwHaMd?w=115&h=180&c=7&r=0&o=7&dpr=1.3&pid=1.7&rm=3'],
+        },
+        {
+          id: '4',
+          title: 'tottochan',
+          artist: 'tetsuko Kuroyanagi',
+          url: 'https://www.youtube.com/watch?v=6LhdTeJSRoA&list=PLcoJXZ1JuKWu2S81s4mejAHKmJvuDTvki',
         }
       ],
       0
