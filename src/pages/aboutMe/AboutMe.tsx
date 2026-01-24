@@ -1,5 +1,6 @@
 
 import SectionOne from "./SectionOne";
+import SinglePlayerQueue from "./SinglePlayerQueue";
 
 
 export default function AboutMe() {
@@ -9,7 +10,7 @@ export default function AboutMe() {
       <SectionOne />
       <div>
 
-
+        <SinglePlayerQueue />
       </div>
     </>
   )
