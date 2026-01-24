@@ -32,8 +32,22 @@ export default function SinglePlayerQueue() {
           id: "1",
           title: "Lạc Trôi",
           artist: "Sơn Tùng",
-          url: "/your_name.mp3", 
+          url: "/your_name.mp3",
         },
+        {
+          id: '2',
+          title: 'kane and abel',
+          artist: 'ajc',
+          url: 'https://dn710605.ca.archive.org/0/items/hai-so-phan.sna/HaiSoPhan-Phan1.webm',
+          images: ['https://th.bing.com/th/id/OIP.60aeV8ovYaWsJlaPLFe7RAHaKi?w=124&h=180&c=7&r=0&o=7&dpr=1.3&pid=1.7&rm=3'],
+        },
+        {
+          id: '3',
+          title: 'tottochan',
+          artist: 'Tetsuko Kuroyanagi',
+          url: '/Tottochan (1).mp3',
+          images: ['https://th.bing.com/th/id/OIP.ubWDFKah7KyvCLqcQ-VzbwHaMd?w=115&h=180&c=7&r=0&o=7&dpr=1.3&pid=1.7&rm=3'],
+        }
       ],
       0
     );
