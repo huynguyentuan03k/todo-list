@@ -30,9 +30,9 @@ export default function SinglePlayerQueue() {
       [
         {
           id: "1",
-          title: "Lạc Trôi",
-          artist: "Sơn Tùng",
-          url: "/your_name.mp3",
+          title: "1 lời nói đầu",
+          artist: "Tetsuko Kuroyanagi",
+          url: "https://archive.org/details/238659c4abb44b7b9aa65260455d9e6b/1-loi-noi-dau.mp3",
         },
         {
           id: '2',
@@ -43,9 +43,9 @@ export default function SinglePlayerQueue() {
         },
         {
           id: '3',
-          title: 'tottochan',
+          title: '2 nhà ga',
           artist: 'Tetsuko Kuroyanagi',
-          url: '/Tottochan (1).mp3',
+          url: 'https://archive.org/details/238659c4abb44b7b9aa65260455d9e6b/2-nha-ga.mp3',
           images: ['https://th.bing.com/th/id/OIP.ubWDFKah7KyvCLqcQ-VzbwHaMd?w=115&h=180&c=7&r=0&o=7&dpr=1.3&pid=1.7&rm=3'],
         },
         {
@@ -77,6 +77,43 @@ export default function SinglePlayerQueue() {
   console.log("demo ", document.querySelector('audio'))
   const audio = document.querySelector('audio')
   console.log(audio?.src, audio?.error)
+
+  if ("mediaSession" in navigator) {
+    navigator.mediaSession.metadata = new MediaMetadata({
+      title: "Những ký ức không phai",
+      artist: "Frieren Podcast",
+      album: "Frieren.io.vn",
+      artwork: [
+        {
+          src: "/cover-512.png",
+          sizes: "512x512",
+          type: "image/png",
+        },
+        {
+          src: "/cover-1024.png",
+          sizes: "1024x1024",
+          type: "image/png",
+        },
+      ],
+    });
+
+    navigator.mediaSession.setActionHandler("play", () => {
+      useAudioStore.getState().play();
+    });
+
+    navigator.mediaSession.setActionHandler("pause", () => {
+      useAudioStore.getState().pause();
+    });
+
+    navigator.mediaSession.setActionHandler("previoustrack", () => {
+      useAudioStore.getState().previous();
+    });
+
+    navigator.mediaSession.setActionHandler("nexttrack", () => {
+      useAudioStore.getState().next();
+    });
+  }
+
 
   return (
     <AudioProvider>
