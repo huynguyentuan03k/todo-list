@@ -33,6 +33,9 @@ import EpisodeEdit from './pages/episodes/edit/EpisodeEdit';
 import EpisodeShow from './pages/episodes/show/EpisodeShow';
 import Dashboard from './pages/dashboard/Dashboard';
 import AboutMe from './pages/aboutMe/AboutMe';
+import { Analytics } from '@vercel/analytics/next';
+
+
 const queryClient = new QueryClient();
 const router = createBrowserRouter([
   {
@@ -207,6 +210,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
     <QueryClientProvider client={queryClient}>
       <RouterProvider router={router} />
       <Toaster />
+      <Analytics />
     </QueryClientProvider>
   </React.StrictMode>
 );
