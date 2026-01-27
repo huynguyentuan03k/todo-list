@@ -2,7 +2,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { useNavigate } from "react-router-dom"
-import { useMutation } from "@tanstack/react-query"
+import { useMutation, useQueryClient } from "@tanstack/react-query"
 import http from "@/utils/http"
 import { Author, AuthorForm } from "../shema"
 import { useToast } from "@/components/ui/hooks/use-toast"
@@ -56,6 +56,7 @@ async function createAuthor(data: AuthorForm) {
 export default function AuthorCreate() {
   const navigate = useNavigate()
   const { toast } = useToast()
+  const queryClient = useQueryClient()
 
   const form = useForm<AuthorForm>({
     defaultValues: {
@@ -78,6 +79,7 @@ export default function AuthorCreate() {
         title: "create author successfully",
         description: "author has been store.",
       });
+      queryClient.invalidateQueries({ queryKey: ['authors'] })
       navigate('/portal/authors')
     },
     onError: (error: AxiosError<LaravelValidationError>) => { // axios faild luon tra ra AxiosError<T>
