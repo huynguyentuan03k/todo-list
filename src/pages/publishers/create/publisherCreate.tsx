@@ -4,7 +4,7 @@ import { Label } from "@/components/ui/label"
 import { PhoneInput } from "../../components/custom/PhoneInput"
 import { Button } from "@/components/ui/button"
 import { useNavigate } from "react-router-dom"
-import { useMutation } from "@tanstack/react-query"
+import { useMutation, useQueryClient } from "@tanstack/react-query"
 import http from "@/utils/http"
 import { Publisher } from "../shema"
 import { useToast } from "@/components/ui/hooks/use-toast"
@@ -42,6 +42,7 @@ async function createPublisher(data: Publisher) {
 export default function PublisherCreate() {
   const navigate = useNavigate()
   const { toast } = useToast()
+  const queryClient = useQueryClient()
 
   const { control, register, handleSubmit, setValue, formState: { errors } } = useForm<Publisher>()
 
@@ -56,6 +57,8 @@ export default function PublisherCreate() {
         title: "update publisher successfully",
         description: "publisher has been store.",
       });
+      // Xóa cache cũ của nhãn['publishers'] để nó tự động fetch lại ở trang podcast create 
+      queryClient.invalidateQueries({ queryKey: ['publishers'] })
       navigate('/portal/publishers')
     },
     onError: (error: AxiosError<LaravelValidationError>) => { // axios faild luon tra ra AxiosError<T>
