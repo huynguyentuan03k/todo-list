@@ -37,10 +37,10 @@ type LaravelValidationError = {
 
 async function createAuthor(data: AuthorForm) {
   const formData = new FormData();
+  formData.append('avatar', "");
   if (data.avatar) {
     formData.append("avatar", data.avatar);
   }
-  formData.append('avatar', "");
   formData.append('name', data.name);
   formData.append('email', data.email);
   formData.append('website', data.website);
