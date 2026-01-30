@@ -13,6 +13,8 @@ import Breadcrumbs from "@/pages/components/custom/breadcrumbs"
 import { Form, FormControl, FormField, FormItem, FormLabel } from "@/components/ui/form"
 import { comboboxOption, ComboboxSelect } from "@/pages/components/custom/ComboboxSelect"
 import { Podcasts } from "@/pages/podcasts/schema"
+import ValidationUrlAudio from "@/pages/components/custom/ValidationUrlAudio"
+import { file } from "zod"
 
 /**
  * {
@@ -210,15 +212,18 @@ export default function EpisodeCreate() {
                   />
                 </div>
 
-                <div className="md:col-span-4 lg:col-span-3">
+                <div className="md:col-span-2 lg:col-span-1">
                   <FormField
                     control={form.control}
                     name="audio_path"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Audio uploads file</FormLabel>
+                        <FormLabel>Audio Url</FormLabel>
                         <FormControl>
-                          {/* <MultiImages /> */}
+                          <ValidationUrlAudio
+                            url={field.value}
+                            onChange={field.onChange}
+                          />
                         </FormControl>
                       </FormItem>
                     )}
