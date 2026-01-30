@@ -11,14 +11,17 @@ export default function ValidationUrlAudio({ url, onChange }: Props) {
   const [status, setStatus] = useState<"idle" | "loading" | "valid" | "invalid">('idle')
 
   const validateUrl = async () => {
-    if (!url) return 'invalid';
-
-    setStatus('loading')
-
     try {
+      if (!url) {
+        setStatus('invalid');
+        return;
+      }
+
+      setStatus('loading')
+
       const delay = new Promise((resolve) => setTimeout(resolve, 1000))
 
-      const fetchPromise = await fetch(url, {
+      const fetchPromise = fetch(url, {
         // dùng head để kiểm tra sự tồn tại của Content-Type
         // head gần giống với get nhưng nó chỉ trả về header của 1  response ko trả về body
         // response là một Response object của Fetch API.
@@ -32,10 +35,11 @@ export default function ValidationUrlAudio({ url, onChange }: Props) {
         const contentType = response.headers.get('content-type') ?? ''
         if (contentType.includes('audio')) {
           setStatus('valid')
+          return;
         }
-      } else {
-        setStatus('invalid')
       }
+      setStatus('invalid')
+
     } catch (error) {
       setStatus('invalid')
     }
