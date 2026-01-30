@@ -8,8 +8,7 @@ export const columns: ColumnDef<Publisher>[] = [
   {
     accessorKey: "id",
     header: "Id",
-    cell: ({ row, table }) => (
-      
+    cell: ({ row }) => (
       <div className="capitalize">{row.getValue("id")}</div>
     ),
   },

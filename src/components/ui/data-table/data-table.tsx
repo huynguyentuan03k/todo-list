@@ -13,10 +13,10 @@ import {
 
 } from "@tanstack/react-table"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
-import { useNavigate } from "react-router-dom"
+import { useNavigate, useSearchParams } from "react-router-dom"
 import { PaginationServer } from "../pagination/pagination-server"
 import { Meta } from "@/pages/publishers/shema"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { memo } from "react"
 
 interface DataTableProps<TData, TValue> {
@@ -25,25 +25,43 @@ interface DataTableProps<TData, TValue> {
   meta?: Meta,
   fieldTitle: string,
   onSortChange?: (sorting: SortingState) => void,
-  pageIndex?: number,
-  pageSize?: number,
+  pageIndex: number,
+  pageSize: number,
 }
+
 
 function DataTableComponent<TData, TValue>({ columns, data, meta, fieldTitle, onSortChange, pageIndex, pageSize }: DataTableProps<TData, TValue>) {
   const navigate = useNavigate()
   const [sorting, setSorting] = useState<SortingState>([])
-
+  const [, setSearchParams] = useSearchParams([])
 
   const table = useReactTable({
     data,
     columns,
-    manualSorting: true,
     getCoreRowModel: getCoreRowModel(),
 
     // pagination server side
     manualPagination: true,  // turn off client-side pagination
     rowCount: meta?.total,  //  Table KHÔNG tự cắt data
     autoResetPageIndex: false, // Phụ thuộc backend trả total
+
+
+    // sort server side,
+    // LƯU Ý ;  updater là 1 type nó sẽ biến thành cái gì ,
+    onSortingChange: (updater) => {
+      if (typeof updater === 'function') {
+        setSorting(updater)
+        setSearchParams((pre) => {
+          const params = new URLSearchParams(pre)
+          const nextSorting = updater(sorting)
+          params.set('sort', nextSorting[0].desc === true ? "-id" : 'id')
+          
+          return params
+        })
+      }
+    },
+
+    manualSorting: true,
 
     state: {
       sorting,

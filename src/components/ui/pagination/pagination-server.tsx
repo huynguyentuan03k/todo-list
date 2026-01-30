@@ -22,8 +22,9 @@ export function PaginationServer<TData>({ table }: PaginationServerProps<TData>)
   useEffect(() => {
     setSearchParams((prev) => {
       const params = new URLSearchParams(prev)
-      params.set('page', page.toString())
-      params.set('per_page', per_page.toString())
+    
+      params.set('page', page?.toString())
+      params.set('per_page', per_page?.toString())
       return params
     })
   }, [page, setSearchParams, per_page])

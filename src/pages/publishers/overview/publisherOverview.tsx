@@ -8,6 +8,7 @@ import { useSearchParams } from "react-router-dom"
 import { Button } from "@/components/ui/button"
 import { Link } from "react-router-dom"
 import Breadcrumbs from "@/pages/components/custom/breadcrumbs"
+import { useEffect } from "react"
 
 
 const getPublishers = (page: number | string = 1, per_page: number | string = 10) => {
@@ -21,9 +22,15 @@ const getPublishers = (page: number | string = 1, per_page: number | string = 10
 }
 
 export default function PublishersOverview() {
+
+  useEffect(() => {
+    localStorage.setItem('PER_PAGE', '10')
+  }, [])
+
+  const per_page = Number(localStorage.getItem('PER_PAGE')) | 10
+
   const [searchParams] = useSearchParams()
   const page = searchParams.get('page') || 1
-  const per_page = searchParams.get('per_page') || 10
 
   const { data, isLoading, error } = useQuery({
     queryKey: ['publishers', page, per_page],
@@ -38,8 +45,13 @@ export default function PublishersOverview() {
     )
   }
 
+
   if (error) {
-    return <p className="text-red-500">Failed to load publishers</p>
+    return (
+      <div className="flex justify-center ">
+        <div className=" text-red-500 py-11">Failed to load publishers</div>
+      </div>
+    )
   }
 
   const publishers = PublishersSchema.parse(data?.data.data ?? [])
@@ -59,6 +71,8 @@ export default function PublishersOverview() {
         data={publishers}
         meta={data?.data.meta}
         fieldTitle="name"
+        pageIndex={0}
+        pageSize={per_page}
       />
     </div>
   )
