@@ -20,6 +20,7 @@ import { useAudioStore } from "@/lib/audio-store";
 import { AudioProvider } from "@/components/audio/provider";
 import { useEffect, useRef } from "react";
 import { useAudio } from "@/hooks/use-audio";
+import ExternalQueueList from "./ExternalQueueList";
 
 export default function SinglePlayerQueue() {
   const unlockedRef = useRef(false);
@@ -74,9 +75,9 @@ export default function SinglePlayerQueue() {
     } catch { }
   };
 
-  console.log("demo ", document.querySelector('audio'))
-  const audio = document.querySelector('audio')
-  console.log(audio?.src, audio?.error)
+  // console.log("demo ", document.querySelector('audio'))
+  // const audio = document.querySelector('audio')
+  // console.log(audio?.src, audio?.error)
 
   if ("mediaSession" in navigator) {
     navigator.mediaSession.metadata = new MediaMetadata({
@@ -120,6 +121,7 @@ export default function SinglePlayerQueue() {
       <TooltipProvider>
         <div onClick={unlockAudio}>
           <AudioPlayer>
+            <ExternalQueueList />
             <AudioPlayerControlBar variant="stacked">
               <AudioPlayerControlGroup>
                 <AudioPlayerTimeDisplay />
@@ -128,6 +130,7 @@ export default function SinglePlayerQueue() {
               </AudioPlayerControlGroup>
 
               <AudioPlayerControlGroup>
+
                 <AudioPlayerControlGroup>
                   <AudioPlayerSkipBack />
                   <AudioPlayerPlay />
@@ -139,7 +142,9 @@ export default function SinglePlayerQueue() {
                 <AudioQueueRepeatMode />
                 <AudioPlayerVolume />
                 <AudioQueue />
+
               </AudioPlayerControlGroup>
+
             </AudioPlayerControlBar>
           </AudioPlayer>
         </div>
