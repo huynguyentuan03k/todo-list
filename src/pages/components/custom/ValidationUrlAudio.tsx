@@ -11,6 +11,8 @@ export default function ValidationUrlAudio({ url, onChange }: Props) {
   const [status, setStatus] = useState<"idle" | "loading" | "valid" | "invalid">('idle')
 
   const validateUrl = async () => {
+    // thể fetch dữ liệu và đợi phẩn hồi đc vì CORS phải dùng thủ thuật này
+    // tạo new Audio sau đó gấn url này vào audio đó Audio thì sẽ không bị CORS nữa
     try {
       if (!url) {
         setStatus('invalid');
@@ -19,26 +21,37 @@ export default function ValidationUrlAudio({ url, onChange }: Props) {
 
       setStatus('loading')
 
-      const delay = new Promise((resolve) => setTimeout(resolve, 100))
+      const checkAudioPromise = new Promise<'valid' | 'invalid'>((resolve) => {
+        const audio = new Audio()
+        audio.src = url
+        console.log('src ', audio.src)
+        audio.preload = 'metadata'
 
-      const fetchPromise = fetch(url, {
-        // dùng head để kiểm tra sự tồn tại của Content-Type
-        // head gần giống với get nhưng nó chỉ trả về header của 1  response ko trả về body
-        // response là một Response object của Fetch API.
-        method: 'head',
+        audio.onloadedmetadata = () => {
+          resolve('valid')
+          audio.src = ''
+        }
+
+        audio.onerror = () => {
+          resolve('invalid')
+          audio.src = ''
+        }
+
       })
 
-      // đợi cả 2, và promise.all trả về 1 mảng, ép kiểu cho giá trị trả về của promise.all
-      const [response] = (await Promise.all([fetchPromise, delay])) as [Response, unknown];
+      // const fetchPromise = fetch(url, {
+      //   // dùng head để kiểm tra sự tồn tại của Content-Type
+      //   // head gần giống với get nhưng nó chỉ trả về header của 1  response ko trả về body
+      //   // response là một Response object của Fetch API.
+      //   method: 'head',
+      // })
 
-      if (response.ok) {
-        const contentType = response.headers.get('content-type') ?? ''
-        if (contentType.includes('audio')) {
-          setStatus('valid')
-          return;
-        }
-      }
-      setStatus('invalid')
+      // đợi cả 2, và promise.all trả về 1 mảng, ép kiểu cho giá trị trả về của promise.all ,
+      // const result = (await Promise.all([checkAudioPromise])) as [Response,unkown]
+      // setStatus(result[0])
+      const [result] = (await Promise.all([checkAudioPromise]));
+
+      setStatus(result)
 
     } catch (error) {
       setStatus('invalid')
