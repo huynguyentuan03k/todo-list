@@ -19,7 +19,7 @@ export default function ValidationUrlAudio({ url, onChange }: Props) {
 
       setStatus('loading')
 
-      const delay = new Promise((resolve) => setTimeout(resolve, 1000))
+      const delay = new Promise((resolve) => setTimeout(resolve, 100))
 
       const fetchPromise = fetch(url, {
         // dùng head để kiểm tra sự tồn tại của Content-Type
