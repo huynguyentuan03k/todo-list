@@ -10,6 +10,8 @@ import { Link } from "react-router-dom"
 import Breadcrumbs from "@/pages/components/custom/breadcrumbs"
 import { Input } from "@/components/ui/input"
 import { useEffect, useMemo, useRef } from "react"
+import { Card, CardTitle } from "@/components/ui/card"
+
 
 const getPodcasts = (
   page: number | string = 1,
@@ -55,13 +57,12 @@ export default function PodcastsOverview() {
   }, [data])
 
   // chi can chay 1 lan khi component re-render
-  // 
   useEffect(() => {
     localStorage.setItem('PER_PAGE', '10')
     if (!isLoading && title && useRefInput.current) {
       useRefInput.current?.focus()
     }
-  }, [title, isLoading]) // chỉ chạy khi load trang
+  }, [title, isLoading])
 
 
   if (isLoading) {
@@ -90,7 +91,7 @@ export default function PodcastsOverview() {
         </Link>
       </div>
 
-      <div className="mb-3">
+      <div className="mb-3 flex">
         <Input
           ref={useRefInput}
           placeholder="Filter title..."
@@ -117,7 +118,11 @@ export default function PodcastsOverview() {
             }
           }}
         />
+        <div className="ml-4">
+          <Button>tottochan</Button>
+        </div>
       </div>
+
 
       <DataTable
         columns={columns}

@@ -12,6 +12,7 @@ import {
 import { AudioPlaybackSpeed } from "@/components/audio/playback-speed";
 import {
   AudioQueue,
+  AudioQueuePreferences,
   AudioQueueRepeatMode,
   AudioQueueShuffle,
 } from "@/components/audio/queue";
@@ -20,7 +21,6 @@ import { useAudioStore } from "@/lib/audio-store";
 import { AudioProvider } from "@/components/audio/provider";
 import { useEffect, useRef } from "react";
 import { useAudio } from "@/hooks/use-audio";
-import ExternalQueueList from "./ExternalQueueList";
 
 export default function SinglePlayerQueue() {
   const unlockedRef = useRef(false);
@@ -121,7 +121,6 @@ export default function SinglePlayerQueue() {
       <TooltipProvider>
         <div onClick={unlockAudio}>
           <AudioPlayer>
-            <ExternalQueueList />
             <AudioPlayerControlBar variant="stacked">
               <AudioPlayerControlGroup>
                 <AudioPlayerTimeDisplay />
@@ -139,7 +138,8 @@ export default function SinglePlayerQueue() {
 
                 <AudioPlaybackSpeed />
                 <AudioQueueShuffle />
-                <AudioQueueRepeatMode />
+                {/* <AudioQueueRepeatMode /> */}
+                <AudioQueuePreferences />
                 <AudioPlayerVolume />
                 <AudioQueue />
 

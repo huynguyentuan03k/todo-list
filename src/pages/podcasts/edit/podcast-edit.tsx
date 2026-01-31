@@ -152,7 +152,6 @@ export default function PodcastEdit() {
             <Form {...form}>
               <div className="grid grid-cols-1 lg:grid-cols-3 md:grid-cols-4 gap-4">
 
-
                 <div className="col-span-1 lg:col-span-1 md:col-span-2">
                   <FormField
                     control={form.control}
@@ -188,6 +187,7 @@ export default function PodcastEdit() {
                     )}
                   />
                 </div>
+
                 <div className="col-span-1 lg:col-span-1 md:col-span-2">
                   <FormField
                     control={form.control}
@@ -223,7 +223,6 @@ export default function PodcastEdit() {
                     )}
                   />
                 </div>
-
 
                 <div className="sm:col-span-3">
                   <FormField
