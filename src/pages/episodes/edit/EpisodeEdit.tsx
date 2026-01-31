@@ -22,7 +22,7 @@ export default function EpisodeEdit() {
   const navigate = useNavigate()
   const { toast } = useToast()
 
-  const updateEpisode = (episode: Episode) => http.put<Episode>(`/episodes/${id}`, episode);
+  const updateEpisode = (episode: episodeForm) => http.put<Episode>(`/episodes/${id}`, episode);
 
   const { data, isLoading } = useQuery({
     queryKey: ['episode', id],
@@ -42,8 +42,6 @@ export default function EpisodeEdit() {
       ))
     }
   })
-
-  console.log(podcastOptions)
 
   const form = useForm<episodeForm>({
     defaultValues: {

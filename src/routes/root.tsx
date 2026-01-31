@@ -26,6 +26,7 @@ import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/component
 import { useState } from "react"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
 import SinglePlayerQueue from "@/pages/aboutMe/SinglePlayerQueue"
+import { AudioProvider as CustomAudioProvider } from "@/Context/AppAudioContext"
 
 // Navigation items with icons and optional children
 const NAV_ITEMS = [
@@ -299,19 +300,22 @@ export default function Root() {
         </div>
       </div>
 
-      {/* Main Content */}
-      <main className="flex-1 overflow-auto pt-24 px-4 pb-4 lg:p-4 mb-10">
-        {/**
+      <CustomAudioProvider>
+
+        {/* Main Content */}
+        <main className="flex-1 overflow-auto pt-24 px-4 pb-4 lg:p-4 mb-10">
+          {/**
          * tu 0 - 1024 > : padding 4
          * tu 0 - 640 > : padding top 20 va padding left right 4
          */}
-        <Outlet />
-      </main>
+          <Outlet />
+        </main>
 
-      {/* audio phải nằm ngoài layour, sử dụng position fixed */}
-      <div className="fixed bottom-0 left-0 right-0 z-50">
-        <SinglePlayerQueue />
-      </div>
+        {/* audio phải nằm ngoài layour, sử dụng position fixed */}
+        <div className="fixed bottom-0 left-0 right-0 z-50">
+          <SinglePlayerQueue />
+        </div>
+      </CustomAudioProvider>
 
     </div>
   )
