@@ -34,6 +34,7 @@ import EpisodeShow from './pages/episodes/show/EpisodeShow';
 import Dashboard from './pages/dashboard/Dashboard';
 import AboutMe from './pages/aboutMe/AboutMe';
 import { Analytics } from '@vercel/analytics/react';
+import { AudioProvider } from './components/audio/provider';
 
 
 const queryClient = new QueryClient();
@@ -208,9 +209,11 @@ const router = createBrowserRouter([
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
-      <RouterProvider router={router} />
-      <Toaster />
-      <Analytics />
+      <AudioProvider>
+        <RouterProvider router={router} />
+        <Toaster />
+        <Analytics />
+      </AudioProvider>
     </QueryClientProvider>
-  </React.StrictMode>
+  </React.StrictMode >
 );

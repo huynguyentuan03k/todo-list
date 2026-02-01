@@ -1,5 +1,5 @@
 import SearchBox from "@/pages/components/custom/SearchBox"
-import { NavLink, Outlet } from "react-router-dom"
+import { NavLink, Outlet, useLocation } from "react-router-dom"
 import { cn } from "@/lib/utils"
 import {
   LayoutDashboard,
@@ -16,7 +16,7 @@ import {
   Plus,
   PanelLeftClose,
   PanelLeft,
-  CircleUserRound
+  CircleUserRound,
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { ScrollArea } from "@/components/ui/scroll-area"
@@ -26,7 +26,7 @@ import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/component
 import { useState } from "react"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
 import SinglePlayerQueue from "@/pages/aboutMe/SinglePlayerQueue"
-import { AudioProvider as CustomAudioProvider } from "@/Context/AppAudioContext"
+import { useAudioStore } from "@/lib/audio-store"
 
 // Navigation items with icons and optional children
 const NAV_ITEMS = [
@@ -216,7 +216,7 @@ function SidebarContent({
       {/* Header with Search */}
       {!isCollapsed && (
         <div className="p-4 border-b">
-          <SearchBox />
+          <SearchBox isOpenAudio />
         </div>
       )}
 
@@ -268,6 +268,13 @@ export default function Root() {
   const [mobileOpen, setMobileOpen] = useState(false)
   const [isCollapsed, setIsCollapsed] = useState(false)
 
+
+  // khi viết như này tức là đang lấy ra hàm tên là showPlayer còn thực thi nó thì đẻ tính sau
+  const showPlayer = useAudioStore(({ showPlayer }) => showPlayer)
+
+  const location = useLocation()
+
+
   return (
     <div className="h-screen flex">
       {/* Desktop Sidebar */}
@@ -281,6 +288,7 @@ export default function Root() {
           isCollapsed={isCollapsed}
           onToggleCollapse={() => setIsCollapsed(!isCollapsed)}
         />
+
       </aside>
 
       {/* Mobile Header + Sheet */}
@@ -300,22 +308,28 @@ export default function Root() {
         </div>
       </div>
 
-      <CustomAudioProvider>
 
-        {/* Main Content */}
-        <main className="flex-1 overflow-auto pt-24 px-4 pb-4 lg:p-4 mb-10">
-          {/**
+
+      {/* Main Content */}
+      <main className="flex-1 overflow-auto pt-24 px-4 pb-4 lg:p-4 mb-10">
+        {/**
          * tu 0 - 1024 > : padding 4
          * tu 0 - 640 > : padding top 20 va padding left right 4
          */}
-          <Outlet />
-        </main>
+        <Outlet />
+      </main>
 
-        {/* audio phải nằm ngoài layour, sử dụng position fixed */}
-        <div className="fixed bottom-0 left-0 right-0 z-50">
-          <SinglePlayerQueue />
-        </div>
-      </CustomAudioProvider>
+      {/* audio phải nằm ngoài layour, sử dụng position fixed, nếu onl ine thì phải hiển thị nếu ko online thì ko hiển thị */}
+      {
+        showPlayer === true && location.pathname !== '/portal/aboutme' ? (
+          <div className="fixed bottom-0 left-0 right-0 z-50">
+            <SinglePlayerQueue />
+          </div>
+        ) : (
+          <div>
+          </div>
+        )
+      }
 
     </div>
   )

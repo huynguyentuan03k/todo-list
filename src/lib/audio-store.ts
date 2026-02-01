@@ -1,13 +1,17 @@
-import { create } from "zustand";
-import { persist, subscribeWithSelector } from "zustand/middleware";
-import { $htmlAudio, type Track } from "@/lib/html-audio";
+import { create } from 'zustand';
+import { persist, subscribeWithSelector } from 'zustand/middleware';
+import { $htmlAudio, type Track } from '@/lib/html-audio';
 
-type RepeatMode = "none" | "one" | "all";
-type InsertMode = "first" | "last" | "after";
+type RepeatMode = 'none' | 'one' | 'all';
+type InsertMode = 'first' | 'last' | 'after';
 
 type AudioStore = {
   // State
   currentTrack: Track | null;
+  // custom
+  showPlayer: boolean;
+  togglePlayer: () => void;
+
   queue: Track[];
   isPlaying: boolean;
   isLoading: boolean;
@@ -64,11 +68,7 @@ type AudioStore = {
 };
 
 function canUseDOM() {
-  return !!(
-    typeof window !== "undefined" &&
-    window.document &&
-    window.document.createElement
-  );
+  return !!(typeof window !== 'undefined' && window.document && window.document.createElement);
 }
 
 type QueueNavigationParams = {
@@ -106,15 +106,14 @@ type CalculateQueueIndexParams = QueueNavigationParams & {
  * Calculates the next or previous index in the queue based on direction
  */
 const calculateQueueIndex = (params: CalculateQueueIndexParams): number => {
-  const { queue, currentQueueIndex, shuffleEnabled, repeatMode, direction } =
-    params;
+  const { queue, currentQueueIndex, shuffleEnabled, repeatMode, direction } = params;
 
   if (queue.length === 0) {
     return -1;
   }
 
   if (shuffleEnabled) {
-    const singleTrackIndex = repeatMode === "none" ? -1 : 0;
+    const singleTrackIndex = repeatMode === 'none' ? -1 : 0;
     return queue.length === 1
       ? singleTrackIndex
       : getRandomShuffleIndex({
@@ -128,11 +127,11 @@ const calculateQueueIndex = (params: CalculateQueueIndexParams): number => {
   const isAtStart = newIndex < 0;
 
   if (isAtEnd) {
-    return repeatMode === "all" ? 0 : -1;
+    return repeatMode === 'all' ? 0 : -1;
   }
 
   if (isAtStart) {
-    return repeatMode === "all" ? queue.length - 1 : -1;
+    return repeatMode === 'all' ? queue.length - 1 : -1;
   }
 
   return newIndex;
@@ -183,8 +182,7 @@ const loadAndPlayTrack = (params: LoadAndPlayTrackParams): void => {
   const { track, queueIndex, set, get } = params;
   // Check if it's a live stream using track.live property or duration
   const isLiveStream =
-    track.live === true ||
-    (track.duration !== undefined && $htmlAudio.isLive(track.duration));
+    track.live === true || (track.duration !== undefined && $htmlAudio.isLive(track.duration));
 
   set({
     currentTrack: track,
@@ -219,16 +217,25 @@ const useAudioStore = create<AudioStore>()(
       volume: 1,
       isMuted: false,
       playbackRate: 1,
-      repeatMode: "none",
+      repeatMode: 'none',
       shuffleEnabled: false,
       currentTime: 0,
       duration: 0,
       progress: 0,
       bufferedTime: 0,
-      insertMode: "last",
+      insertMode: 'last',
       isError: false,
       errorMessage: null,
       currentQueueIndex: -1,
+
+      // custom
+      showPlayer: false,
+
+      // chỉ cần gọi đến hàm này mặc đính set lại state ko cần truyền tham số
+      togglePlayer: () => {
+        // Chỉ làm việc, không trả nợ (return)
+        set((state) => ({ showPlayer: !state.showPlayer }));
+      },
 
       // Playback Actions (state only - provider handles actual audio control)
       play() {
@@ -293,9 +300,7 @@ const useAudioStore = create<AudioStore>()(
         const prevTrack = state.queue[prevIndex];
         if (prevIndex === -1 || !prevTrack) {
           if (prevIndex !== -1) {
-            console.error(
-              "Inconsistency: previous index is valid but track not found"
-            );
+            console.error('Inconsistency: previous index is valid but track not found');
           }
           set({ isLoading: false, isPlaying: false, isBuffering: false });
           return;
@@ -312,8 +317,7 @@ const useAudioStore = create<AudioStore>()(
       seek(time: number) {
         const state = get();
         const duration = state.duration;
-        const validTime =
-          duration > 0 ? Math.max(0, Math.min(time, duration)) : time;
+        const validTime = duration > 0 ? Math.max(0, Math.min(time, duration)) : time;
         const newProgress = duration > 0 ? (validTime / duration) * 100 : 0;
         set({ currentTime: validTime, progress: newProgress });
       },
@@ -321,7 +325,7 @@ const useAudioStore = create<AudioStore>()(
       setQueueAndPlay(songs: Track[], startIndex: number) {
         const targetTrack = songs[startIndex];
         if (!targetTrack) {
-          console.error("[Playback] Invalid startIndex for setQueueAndPlay");
+          console.error('[Playback] Invalid startIndex for setQueueAndPlay');
           get().clearQueue();
           set({
             isPlaying: false,
@@ -360,7 +364,7 @@ const useAudioStore = create<AudioStore>()(
         return get().currentQueueIndex;
       },
 
-      addToQueue(track: Track, mode = "last") {
+      addToQueue(track: Track, mode = 'last') {
         const state = get();
         if (!state.currentTrack) {
           set({
@@ -372,13 +376,13 @@ const useAudioStore = create<AudioStore>()(
         }
 
         switch (mode) {
-          case "first":
+          case 'first':
             set({
               queue: [track, ...state.queue],
               currentQueueIndex: state.currentQueueIndex + 1,
             });
             break;
-          case "after":
+          case 'after':
             set({
               queue: [
                 ...state.queue.slice(0, state.currentQueueIndex + 1),
@@ -403,9 +407,7 @@ const useAudioStore = create<AudioStore>()(
         set({
           queue: newQueue,
           currentQueueIndex:
-            index < state.currentQueueIndex
-              ? state.currentQueueIndex - 1
-              : state.currentQueueIndex,
+            index < state.currentQueueIndex ? state.currentQueueIndex - 1 : state.currentQueueIndex,
         });
       },
 
@@ -431,9 +433,7 @@ const useAudioStore = create<AudioStore>()(
 
         const state = get();
         const currentQueueIds = new Set(state.queue.map((s) => s.id));
-        const newTracks = tracksToAdd.filter(
-          (track) => !currentQueueIds.has(track.id)
-        );
+        const newTracks = tracksToAdd.filter((track) => !currentQueueIds.has(track.id));
 
         if (newTracks.length > 0) {
           set({ queue: [...state.queue, ...newTracks] });
@@ -462,7 +462,7 @@ const useAudioStore = create<AudioStore>()(
       },
 
       changeRepeatMode() {
-        const modes: RepeatMode[] = ["none", "one", "all"];
+        const modes: RepeatMode[] = ['none', 'one', 'all'];
         const currentIndex = modes.indexOf(get().repeatMode);
         const newMode = modes[(currentIndex + 1) % modes.length];
         set({ repeatMode: newMode });
@@ -478,20 +478,12 @@ const useAudioStore = create<AudioStore>()(
 
       shuffle() {
         const state = get();
-        if (
-          !state.queue.length ||
-          state.queue.length < 2 ||
-          !state.currentTrack
-        ) {
+        if (!state.queue.length || state.queue.length < 2 || !state.currentTrack) {
           return;
         }
 
-        const remainingQueue = state.queue.filter(
-          (_, index) => index !== state.currentQueueIndex
-        );
-        const shuffledRemaining = remainingQueue.sort(
-          () => Math.random() - 0.5
-        );
+        const remainingQueue = state.queue.filter((_, index) => index !== state.currentQueueIndex);
+        const shuffledRemaining = remainingQueue.sort(() => Math.random() - 0.5);
         const newQueue = [state.currentTrack, ...shuffledRemaining];
 
         set({
@@ -565,7 +557,7 @@ const useAudioStore = create<AudioStore>()(
       },
     })),
     {
-      name: "audio:ui:store",
+      name: 'audio:ui:store',
       partialize: (state) => ({
         currentTrack: state.currentTrack,
         queue: state.queue,

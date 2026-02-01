@@ -1,7 +1,13 @@
-import { Search } from "lucide-react";
+import { ExternalLink, Search } from "lucide-react";
 import { Form } from "react-router-dom"
 import { RegisterDialog } from "./RegisterUserDialog";
+import { useAudioStore } from "@/lib/audio-store";
+import { Button } from "@/components/ui/button";
+
 export default function SearchBox() {
+
+  const togglePlayer = useAudioStore((state) => state.togglePlayer)
+
   return (
     <Form method="post" className="flex items-center">
       <div className="relative flex-1">
@@ -16,6 +22,13 @@ export default function SearchBox() {
         />
       </div>
       <RegisterDialog />
+      <Button
+        type="button"
+        className="ml-1 hover:bg-green-500 hover:text-white"
+        onClick={() => togglePlayer()}
+      >
+        <ExternalLink className="text-white" />
+      </Button>
     </Form>
   );
 }

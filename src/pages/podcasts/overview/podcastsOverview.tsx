@@ -9,8 +9,10 @@ import { Button } from "@/components/ui/button"
 import { Link } from "react-router-dom"
 import Breadcrumbs from "@/pages/components/custom/breadcrumbs"
 import { Input } from "@/components/ui/input"
-import { useEffect, useMemo, useRef } from "react"
-import { Card, CardTitle } from "@/components/ui/card"
+import { useEffect, useMemo, useRef, useContext } from "react"
+
+// zustand
+import useCounterState from "@/lib/app-store"
 
 
 const getPodcasts = (
@@ -79,7 +81,6 @@ export default function PodcastsOverview() {
     </div>
   }
 
-
   return (
     <div className="container mx-auto py-10">
       <div className="flex justify-between">
@@ -118,11 +119,8 @@ export default function PodcastsOverview() {
             }
           }}
         />
-        <div className="ml-4">
-          <Button>tottochan</Button>
-        </div>
-      </div>
 
+      </div>
 
       <DataTable
         columns={columns}

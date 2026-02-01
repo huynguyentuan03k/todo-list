@@ -117,38 +117,37 @@ export default function SinglePlayerQueue() {
 
 
   return (
-    <AudioProvider>
-      <TooltipProvider>
-        <div onClick={unlockAudio}>
-          <AudioPlayer>
-            <AudioPlayerControlBar variant="stacked">
-              <AudioPlayerControlGroup>
-                <AudioPlayerTimeDisplay />
-                <AudioPlayerSeekBar />
-                <AudioPlayerTimeDisplay remaining />
-              </AudioPlayerControlGroup>
+    <TooltipProvider>
+      <div onClick={unlockAudio}>
+        <AudioPlayer>
+          <AudioPlayerControlBar variant="stacked">
+            <AudioPlayerControlGroup>
+              <AudioPlayerTimeDisplay />
+              <AudioPlayerSeekBar />
+              <AudioPlayerTimeDisplay remaining />
+            </AudioPlayerControlGroup>
+
+            <AudioPlayerControlGroup>
 
               <AudioPlayerControlGroup>
-
-                <AudioPlayerControlGroup>
-                  <AudioPlayerSkipBack />
-                  <AudioPlayerPlay />
-                  <AudioPlayerSkipForward />
-                </AudioPlayerControlGroup>
-
-                <AudioPlaybackSpeed />
-                <AudioQueueShuffle />
-                {/* <AudioQueueRepeatMode /> */}
-                <AudioQueuePreferences />
-                <AudioPlayerVolume />
-                <AudioQueue />
-
+                <AudioPlayerSkipBack />
+                <AudioPlayerPlay />
+                <AudioPlayerSkipForward />
               </AudioPlayerControlGroup>
 
-            </AudioPlayerControlBar>
-          </AudioPlayer>
-        </div>
-      </TooltipProvider>
-    </AudioProvider>
+              <AudioPlaybackSpeed />
+              <AudioQueueShuffle />
+              {/* <AudioQueueRepeatMode /> */}
+              <AudioQueuePreferences />
+              <AudioPlayerVolume />
+              <AudioQueue />
+
+            </AudioPlayerControlGroup>
+
+          </AudioPlayerControlBar>
+        </AudioPlayer>
+      </div>
+    </TooltipProvider>
+
   );
 }
