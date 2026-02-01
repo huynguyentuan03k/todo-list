@@ -24,7 +24,7 @@ export default function ValidationUrlAudio({ url, onChange }: Props) {
       const checkAudioPromise = new Promise<'valid' | 'invalid'>((resolve) => {
         const audio = new Audio()
         audio.src = url
-        console.log('src ', audio.src)
+
         audio.preload = 'metadata'
 
         audio.onloadedmetadata = () => {

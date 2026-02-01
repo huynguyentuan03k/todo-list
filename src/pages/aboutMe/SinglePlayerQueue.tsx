@@ -75,10 +75,6 @@ export default function SinglePlayerQueue() {
     } catch { }
   };
 
-  // console.log("demo ", document.querySelector('audio'))
-  // const audio = document.querySelector('audio')
-  // console.log(audio?.src, audio?.error)
-
   if ("mediaSession" in navigator) {
     navigator.mediaSession.metadata = new MediaMetadata({
       title: "Những ký ức không phai",
