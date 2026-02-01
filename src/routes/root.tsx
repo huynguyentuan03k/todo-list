@@ -216,7 +216,7 @@ function SidebarContent({
       {/* Header with Search */}
       {!isCollapsed && (
         <div className="p-4 border-b">
-          <SearchBox isOpenAudio />
+          <SearchBox />
         </div>
       )}
 
