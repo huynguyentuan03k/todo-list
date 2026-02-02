@@ -31,7 +31,6 @@ import { useQuery } from '@tanstack/react-query';
 // ko dùng destructering và type khi làm việc với hook nhận giá trị trược tiếp : {podcastId}:Props
 
 export default function usePodcastQueue(podcastId: number) {
-
   const { data } = useQuery<Podcast | undefined>({
     queryKey: ['podcasts', podcastId],
     queryFn: async () => (await http.get<{ data: Podcast }>(`/podcasts/${podcastId}`)).data.data,
@@ -39,24 +38,24 @@ export default function usePodcastQueue(podcastId: number) {
 
   const enqueue = async () => {
     if (!data?.episodes) return;
+
     console.log(data);
+    
     const filterData: Track[] = data?.episodes?.map((item) => ({
       id: item.id,
-      url: item.audio_path,
-      title: item.title,
+      url: item.audio_path ?? '',
+      title: item.title ?? '',
       artist: 'demo',
-      images: item.cover_image,
+      images: item.cover_image?.split(',') ?? undefined,
       genre: 'demo',
+      key: item.id,
     }));
     useAudioStore.getState().setQueue(filterData, 0);
 
     return true;
   };
 
-  const enquueueSortAble = () => {
-
-
-  };
+  const enquueueSortAble = () => {};
 
   return { enqueue, enquueueSortAble };
 }
