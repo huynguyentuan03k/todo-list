@@ -1,6 +1,8 @@
 import { z } from 'zod';
 import { PublisherSchema } from '../publishers/shema';
 import { CategoriesSchema } from '../categories/shema';
+import { EpisodesSchema } from '../episodes/shema';
+import { AuthorsSchema } from '../authors/shema';
 
 export type Meta = {
   current_page: number;
@@ -31,6 +33,8 @@ export const PodcastSchema = z.object({
   created_at: z.string().nullable(),
   updated_at: z.string().nullable(),
   categories: CategoriesSchema,
+  episodes: EpisodesSchema.nullable(),
+  authors: AuthorsSchema,
 });
 
 export const PodcastsSchema = z.array(PodcastSchema);

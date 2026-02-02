@@ -23,11 +23,17 @@ import { useToast } from "@/components/ui/hooks/use-toast";
 import { Podcast } from "../schema";
 import { IconCircleX, IconEdit, IconEye, IconTrash } from "@tabler/icons-react";
 import { Button } from "@/components/ui/button";
+import { RotateCw } from "lucide-react";
+import { useState } from "react";
+import usePodcastQueue from "@/hooks/usePodcastQueue";
 
 export function ActionsCell({ podcast }: { podcast: Podcast }) {
   const navigate = useNavigate()
   const queryClient = useQueryClient()
   const { toast } = useToast()
+  const [isSpinning, setIsSpinning] = useState(false);
+
+  const { enqueue } = usePodcastQueue(podcast.id)
 
   function deletePodcast(id: number | string) {
 
@@ -49,8 +55,32 @@ export function ActionsCell({ podcast }: { podcast: Podcast }) {
       console.error("Delete failed ", err)
     }
   })
+
+  const handleSnap = async (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (isSpinning) return;
+    console.log("po ", podcast.id)
+    await enqueue()
+
+    setIsSpinning(true);
+
+    setTimeout(() => {
+      setIsSpinning(false);
+    }, 10000); // 10 giây
+  };
+
   return (
     <div className="flex gap-2" onClick={(e) => e.stopPropagation()}>
+
+      {/* section icon snap podcast */}
+      <RotateCw
+        size={20}
+        className={`cursor-pointer transition-all duration-700 ${isSpinning
+          ? "animate-spin-slow-10s"
+          : "text-black hover:text-blue-500"
+          }`}
+        onClick={handleSnap}
+      />
 
       {/* section icon Preview Content */}
       <AlertDialog>
@@ -184,6 +214,7 @@ export function ActionsCell({ podcast }: { podcast: Podcast }) {
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
+
 
     </div >
 

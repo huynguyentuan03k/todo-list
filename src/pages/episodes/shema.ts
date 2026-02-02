@@ -21,7 +21,7 @@ export const EpisodeSchema = z.object({
   description: z.string().nullable(),
   slug: z.string().nullable(),
   podcast_id: z.number().nullable().optional(),
-  audio_path: z.string().nullable().optional(),
+  audio_path: z.string().nullable(),
   duration: z.number().nullable().optional(),
   file_size: z.number().nullable().optional(),
   mime_type: z.string().nullable().optional(),

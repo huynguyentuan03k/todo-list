@@ -9,11 +9,7 @@ import { Button } from "@/components/ui/button"
 import { Link } from "react-router-dom"
 import Breadcrumbs from "@/pages/components/custom/breadcrumbs"
 import { Input } from "@/components/ui/input"
-import { useEffect, useMemo, useRef, useContext } from "react"
-
-// zustand
-import useCounterState from "@/lib/app-store"
-
+import { useEffect, useMemo, useRef } from "react"
 
 const getPodcasts = (
   page: number | string = 1,
