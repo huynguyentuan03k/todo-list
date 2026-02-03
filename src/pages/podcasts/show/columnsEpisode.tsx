@@ -22,7 +22,7 @@ export const columnsEpisode: ColumnDef<Episode>[] = [
     accessorKey: "Cover Image",
     header: "Cover Image",
     cell: ({ row }) => (
-      <div>{row.getValue("cover_image")}</div>
+      <div>{row.getValue("cover_image") ?? ''}</div>
     ),
   },
   {

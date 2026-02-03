@@ -81,7 +81,6 @@ export default function PodcastShow() {
             <div className="flex flex-col col-span-1 lg:col-span-3 md:col-span-4">
               <Label>TinyMVC</Label>
               <div
-
                 dangerouslySetInnerHTML={{ __html: podcast.content ?? "" }}
               >
 
@@ -120,7 +119,7 @@ export default function PodcastShow() {
            * HÃY ĐỌC KỸ DÒNG NÀY : type của zod khác với type của typescript
             EpisodesSchema.parse là kiểm tra xem dữ liệu có đúng như vậy ko, đúng với shape ko ?
             dữ liệu backend trả về podcast.episodes mặc định có type dự vào cấu hình nhưng phải parse lại bằng zod để kiểm tra shape
-            khi đã parse thành công biến episodes mặc định có type 
+            khi đã parse thành công biến episodes mặc định có type
             */
           data={episodes}
         />

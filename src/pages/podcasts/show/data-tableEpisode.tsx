@@ -22,6 +22,7 @@ import { Episodes, Episode, Meta } from "@/pages/episodes/shema"
 import { useNavigate } from "react-router-dom"
 import { PaginationServer } from "@/components/ui/pagination/pagination-server"
 import { useSearchParams } from "react-router-dom"
+import { PaginationClient } from "@/components/ui/pagination/pagination-client"
 
 type props = {
   data: Episodes
@@ -47,11 +48,8 @@ export function DataTableEpisode({ data, columns, meta }: props) {
 
     // pagination client
     getPaginationRowModel: getPaginationRowModel(),
-    manualPagination: true,
-    rowCount: meta?.total,
     onPaginationChange: setPagination, // updat the pagination state when internal APIs mutate the pagination state
-    autoResetPageIndex: false,
-    autoResetAll: false,
+
     state: {
       pagination
     },
@@ -114,7 +112,7 @@ export function DataTableEpisode({ data, columns, meta }: props) {
           </TableBody>
         </Table>
       </div>
-      <PaginationServer table={table} />
+      <PaginationClient table={table} />
     </div>
   )
 }
