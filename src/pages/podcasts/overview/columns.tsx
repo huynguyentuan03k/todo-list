@@ -108,6 +108,13 @@ export const columns: ColumnDef<Podcast>[] = [
     ),
   },
   {
+    accessorKey: "total episodes",
+    header: 'total Episode',
+    cell: ({ row }) => (
+      <div> {row.original.episodes?.length}</div>
+    )
+  },
+  {
     // header: "Actions",
     header: () => <div className="text-blue-500">Actions</div>,
     id: "actions",
