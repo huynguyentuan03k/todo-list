@@ -5,12 +5,15 @@ import { useNavigate, useParams } from "react-router-dom"
 import { useQuery } from "@tanstack/react-query"
 import http from "@/utils/http"
 import { Podcast, PodcastSchema } from "../schema"
+import { EpisodesSchema } from "@/pages/episodes/shema"
 import { SpinnerLoading } from "@/pages/components/custom/SpinnerLoading"
 import { Link } from "react-router-dom"
 import Breadcrumbs from "@/pages/components/custom/breadcrumbs"
 import { IconEdit } from "@tabler/icons-react"
 import { ImageIcon } from "lucide-react"
 import { ImagePreview } from "@/pages/components/custom/ImagePreview"
+import { DataTableEpisode } from "./data-tableEpisode"
+import { columnsEpisode } from "./columnsEpisode"
 
 export default function PodcastShow() {
   const navigate = useNavigate()
@@ -28,6 +31,8 @@ export default function PodcastShow() {
   }
 
   const podcast = PodcastSchema.parse(data?.data.data)
+
+  const episodes = EpisodesSchema.parse(podcast.episodes)
 
   return (
     <div>
@@ -73,6 +78,16 @@ export default function PodcastShow() {
               </Link>
             </div>
 
+            <div className="flex flex-col col-span-1 lg:col-span-3 md:col-span-4">
+              <Label>TinyMVC</Label>
+              <div
+
+                dangerouslySetInnerHTML={{ __html: podcast.content ?? "" }}
+              >
+
+              </div>
+            </div>
+
             <div className="flex flex-col col-span-1 lg:col-span-1 md:col-span-2">
               <div className="flex flex-col gap-2">
                 <Label>Cover Image</Label>
@@ -92,6 +107,25 @@ export default function PodcastShow() {
           </div>
         </CardContent>
       </Card>
+
+      {/* data table episode */}
+      <div className="flex items-end mt-6">
+        <Button variant="default" className="ml-auto bg-blue-500 hover:bg-blue-700" onClick={() => navigate(`/portal/episodes/create`)}>New</Button>
+      </div>
+
+      <Card className="mt-2">
+        <DataTableEpisode
+          columns={columnsEpisode}
+          /**
+           * HÃY ĐỌC KỸ DÒNG NÀY : type của zod khác với type của typescript
+            EpisodesSchema.parse là kiểm tra xem dữ liệu có đúng như vậy ko, đúng với shape ko ?
+            dữ liệu backend trả về podcast.episodes mặc định có type dự vào cấu hình nhưng phải parse lại bằng zod để kiểm tra shape
+            khi đã parse thành công biến episodes mặc định có type 
+            */
+          data={episodes}
+        />
+      </Card>
+
     </div >
   )
 }

@@ -53,7 +53,7 @@ export default function EpisodeCreate() {
         title: "create episode successfully",
         description: "episode has been store.",
       });
-      navigate('/portal/episodes')
+      navigate(-1)
     },
     onError: (error: AxiosError<LaravelValidationError>) => { // axios faild luon tra ra AxiosError<T>
       const backendMessage = error?.response?.data?.message || "Something went wrong";
