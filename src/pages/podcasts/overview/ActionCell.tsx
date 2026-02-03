@@ -59,7 +59,7 @@ export function ActionsCell({ podcast }: { podcast: Podcast }) {
   const handleSnap = async (e: React.MouseEvent) => {
     e.stopPropagation();
     if (isSpinning) return;
-    console.log("po ", podcast.id)
+
     await enqueue()
 
     setIsSpinning(true);
@@ -73,14 +73,19 @@ export function ActionsCell({ podcast }: { podcast: Podcast }) {
     <div className="flex gap-2" onClick={(e) => e.stopPropagation()}>
 
       {/* section icon snap podcast */}
-      <RotateCw
-        size={20}
-        className={`cursor-pointer transition-all duration-700 ${isSpinning
-          ? "animate-spin-slow-10s"
-          : "text-black hover:text-blue-500"
-          }`}
-        onClick={handleSnap}
-      />
+
+      {/* Fallback về mảng rỗng , ?? trả về mảng rỗng */}
+      {(podcast?.episodes ?? []).length > 0 && (
+        <RotateCw
+          size={20}
+          className={`cursor-pointer transition-all duration-700 ${isSpinning
+            ? "animate-spin-slow-10s"
+            : "text-black hover:text-blue-500"
+            }`}
+          onClick={handleSnap}
+        />
+      )}
+
 
       {/* section icon Preview Content */}
       <AlertDialog>

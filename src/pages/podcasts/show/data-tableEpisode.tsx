@@ -20,7 +20,6 @@ import {
 } from "@/components/ui/table"
 import { Episodes, Episode, Meta } from "@/pages/episodes/shema"
 import { useNavigate } from "react-router-dom"
-import { PaginationServer } from "@/components/ui/pagination/pagination-server"
 import { useSearchParams } from "react-router-dom"
 import { PaginationClient } from "@/components/ui/pagination/pagination-client"
 

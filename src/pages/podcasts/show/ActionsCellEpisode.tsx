@@ -22,27 +22,27 @@ import { useNavigate } from "react-router-dom";
 import http from "@/utils/http";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useToast } from "@/components/ui/hooks/use-toast";
+import { useRef } from "react";
 export default function ActionsCellEpisode({ episode }: { episode: Episode }) {
 
   const navigate = useNavigate()
   const queryClient = useQueryClient()
   const { toast } = useToast()
+  const podcatIdRef = useRef<number | null>(null)
 
   function deleteEpisode(id: number | string) {
-
+    podcatIdRef.current = episode.podcast_id
     return http.delete(`/episodes/${id}`)
   };
 
   const mutation = useMutation({
     mutationFn: (id: number) => deleteEpisode(id),
     onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: ['podcasts']
-      });
-      navigate(`portal/podcasts/${episode.podcast_id}/show`)
+      queryClient.invalidateQueries({ queryKey: ['podcasts', podcatIdRef] });
       toast({
         title: "delete episodes successfully",
         description: "episodes has been unstore.",
+        variant: 'default'
       })
     },
     onError: (err) => {

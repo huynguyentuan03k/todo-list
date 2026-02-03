@@ -93,7 +93,7 @@ export default function PodcastEdit() {
 
   const mutation = useMutation({
     mutationFn: updatePodcast,
-    onSuccess: (res) => {
+    onSuccess: () => {
       // invalidate cache của podcast này khi đã thành công update
       queryClient.invalidateQueries({
         queryKey: ['podcasts', id]

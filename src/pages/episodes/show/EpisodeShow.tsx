@@ -8,6 +8,7 @@ import { Episode, EpisodeSchema } from "../shema"
 import { SpinnerLoading } from "@/pages/components/custom/SpinnerLoading"
 import Breadcrumbs from "@/pages/components/custom/breadcrumbs"
 import { IconEdit } from "@tabler/icons-react"
+import { Link } from "react-router-dom"
 
 export default function EpisodeShow() {
   const navigate = useNavigate()
@@ -32,7 +33,7 @@ export default function EpisodeShow() {
         <Breadcrumbs />
         <div className="flex gap-2">
           <Button
-            className="bg-blue-500 text-white hover:bg-blue-600 mb-2 " onClick={() => navigate(`/portal/epidoes/${episode.id}/edit`)}>
+            className="bg-blue-500 text-white hover:bg-blue-600 mb-2 " onClick={() => navigate(`/portal/episodes/${episode.id}/edit`)}>
             <IconEdit
               color="white"
               size={20}
@@ -55,20 +56,39 @@ export default function EpisodeShow() {
         </CardHeader>
 
         <CardContent>
-          <div className="grid grid-cols-3 gap-4">
-            <div className="flex flex-col col-span-1">
+          <div className="grid lg:grid-cols-3 md:grid-cols-4 gap-4">
+            <div className="flex flex-col col-span-1 lg:col-span-1 md:col-sapn-2">
               <Label>Title</Label>
-              <p>{episode.title}</p>
+              <p className="break-words w-40" >{episode.title}</p>
             </div>
 
-            <div className="flex flex-col col-span-2">
+            <div className="flex flex-col col-span-1 lg:col-span-1 md:col-sapn-2 ">
               <Label>Description</Label>
-              <p className="whitespace-pre-line">{episode.description}</p>
+              <p className="break-words w-40">{episode.description}</p>
             </div>
 
-          </div>
-        </CardContent>
-      </Card>
-    </div>
+
+            <div className="flex flex-col col-span-1 lg:col-span-1 md:col-sapn-2 ">
+              <Label>Slug</Label>
+              <p className="break-words w-40">{episode.slug}</p>
+            </div>
+
+            <div className="flex flex-col col-span-1 lg:col-span-1 md:col-sapn-2 ">
+              <Label>Podcast Id</Label>
+              <p className="break-words w-40">{episode.podcast_id}</p>
+            </div>
+
+            <div className="flex flex-col col-span-1 lg:col-span-1 md:col-sapn-2 ">
+              <Label>Audio Url</Label>
+              <Link
+                to={episode.audio_path ?? ''}
+                target="_blank"
+                className="  hover:cursor-pointer break-words w-40 text-blue-500">{episode.audio_path}</Link>
+            </div >
+
+          </div >
+        </CardContent >
+      </Card >
+    </div >
   )
 }

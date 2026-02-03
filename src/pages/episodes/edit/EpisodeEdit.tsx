@@ -15,6 +15,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel } from "@/components/
 import { ComboboxSelect } from "@/pages/components/custom/ComboboxSelect"
 import { Podcasts } from "@/pages/podcasts/schema"
 import { MultiSeclectOptions } from "@/pages/components/custom/MultiSelectCustom"
+import ValidationUrlAudio from "@/pages/components/custom/ValidationUrlAudio"
 
 
 export default function EpisodeEdit() {
@@ -29,7 +30,7 @@ export default function EpisodeEdit() {
     queryFn: () => http.get<{ data: Episode }>(`/episodes/${id}`)
   })
 
-  const { data: podcastOptions = [], isLoading: podcastIsLoading } = useQuery<MultiSeclectOptions[] | undefined>({
+  const { data: podcastOptions = [] } = useQuery<MultiSeclectOptions[] | undefined>({
     queryKey: ['podcasts'],
     queryFn: async () => {
       const res = await http.get<{ data: Podcasts }>(`/podcasts`)
@@ -61,6 +62,7 @@ export default function EpisodeEdit() {
         description: episode.description ?? '',
         slug: episode.slug ?? '',
         audio_path: episode.audio_path ?? '',
+        podcast_id: episode.podcast_id
       })
     }
   }, [data, form])
@@ -72,7 +74,7 @@ export default function EpisodeEdit() {
         title: "update episode successfully",
         description: "episode has been store.",
       });
-      navigate('/portal/episodes')
+      navigate(`/portal/episodes/${data?.data.data.id}/show`)
     },
     onError: () => {
       toast({
@@ -108,74 +110,93 @@ export default function EpisodeEdit() {
         <form onSubmit={form.handleSubmit(data => onSubmit(data))} >
           <CardContent>
             <Form {...form}>
-              <div className="grid grid-cols-3 gap-4">
-                <FormField
-                  control={form.control}
-                  name="title"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Title</FormLabel>
-                      <FormControl>
-                        <Input
-                          placeholder="Title of your Podcast"
-                          {...field}
-                        />
-                      </FormControl>
-                    </FormItem>
-                  )}
-                />
-              </div>
-              <div className="col-span-1 lg:col-span-1 md:col-span-2">
-                <FormField
-                  control={form.control}
-                  name="podcast_id"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Podcast Id</FormLabel>
-                      <FormControl>
-                        <ComboboxSelect
-                          {...field}
-                          value={field.value}
-                          options={podcastOptions}
-                        />
-                      </FormControl>
-                    </FormItem>
-                  )}
-                />
-              </div>
-              <div className="col-span-1 lg:col-span-1 md:col-span-2">
-                <FormField
-                  control={form.control}
-                  name="description"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Description</FormLabel>
-                      <FormControl>
-                        <Textarea
-                          placeholder="Description about podcast"
-                          {...field}
-                        />
-                      </FormControl>
-                    </FormItem>
-                  )}
-                />
-              </div>
-              <div className="col-span-1 lg:col-span-1 md:col-span-2">
-                <FormField
-                  control={form.control}
-                  name="slug"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Slug</FormLabel>
-                      <FormControl>
-                        <Input
-                          placeholder="Slug about podcast"
-                          {...field}
-                        />
-                      </FormControl>
-                    </FormItem>
-                  )}
-                />
+              <div className="grid md:grid-cols-4 lg:grid-cols-3 gap-4">
+
+                <div className="lg:col-span-1 md:col-span-2">
+                  <FormField
+                    control={form.control}
+                    name="title"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Title</FormLabel>
+                        <FormControl>
+                          <Input
+                            placeholder="Title of your Podcast"
+                            {...field}
+                          />
+                        </FormControl>
+                      </FormItem>
+                    )}
+                  />
+                </div>
+                <div className="col-span-1 lg:col-span-1 md:col-span-2">
+                  <FormField
+                    control={form.control}
+                    name="description"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Description</FormLabel>
+                        <FormControl>
+                          <Textarea
+                            placeholder="Description about podcast"
+                            {...field}
+                          />
+                        </FormControl>
+                      </FormItem>
+                    )}
+                  />
+                </div>
+                <div className="col-span-1 lg:col-span-1 md:col-span-2">
+                  <FormField
+                    control={form.control}
+                    name="slug"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Slug</FormLabel>
+                        <FormControl>
+                          <Input
+                            placeholder="Slug about podcast"
+                            {...field}
+                          />
+                        </FormControl>
+                      </FormItem>
+                    )}
+                  />
+                </div>
+                <div className="col-span-1 lg:col-span-1">
+                  <FormField
+                    control={form.control}
+                    name="podcast_id"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Podcast Id</FormLabel>
+                        <FormControl>
+                          <ComboboxSelect
+                            {...field}
+                            options={podcastOptions}
+                          />
+                        </FormControl>
+                      </FormItem>
+                    )}
+                  />
+                </div>
+                <div className="col-span-1 lg:col-span-1">
+                  <FormField
+                    control={form.control}
+                    name="audio_path"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Audio Url</FormLabel>
+                        <FormControl>
+                          <ValidationUrlAudio
+                            {...field}
+                            url={field.value}
+                          />
+                        </FormControl>
+                      </FormItem>
+                    )}
+                  />
+                </div>
               </div>
             </Form>
           </CardContent>

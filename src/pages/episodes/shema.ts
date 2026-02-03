@@ -20,7 +20,7 @@ export const EpisodeSchema = z.object({
   title: z.string().nullable(),
   description: z.string().nullable(),
   slug: z.string().nullable(),
-  podcast_id: z.number().nullable().optional(),
+  podcast_id: z.number(),
   audio_path: z.string().nullable(),
   duration: z.number().nullable().optional(),
   file_size: z.number().nullable().optional(),
@@ -49,4 +49,5 @@ export type episodeForm = {
   podcast_id: number;
   slug: string;
   cover_image: File;
+  publisher_id: number;
 };
