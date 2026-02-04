@@ -55,7 +55,7 @@ function DataTableComponent<TData, TValue>({ columns, data, meta, pageIndex, pag
     getCoreRowModel: getCoreRowModel(),
 
     // pagination server side
-    manualPagination: false,  // turn off client-side pagination
+    manualPagination: true,  // turn off client-side pagination
     rowCount: meta?.total,  //  Table KHÔNG tự cắt data
     autoResetPageIndex: false, // Phụ thuộc backend trả total
     onPaginationChange: (updater) => {
@@ -65,7 +65,7 @@ function DataTableComponent<TData, TValue>({ columns, data, meta, pageIndex, pag
       // updater nhận vào state cũ và return ra state mới
 
       if (typeof updater === 'function') {
-
+        console.log("onchange")
         const newState = updater(pagination)
 
         setPagination(newState)
@@ -109,7 +109,7 @@ function DataTableComponent<TData, TValue>({ columns, data, meta, pageIndex, pag
     },
 
   })
-  
+
   return (
     <div>
       <div className="rounded-md border">

@@ -14,7 +14,11 @@ type PaginationServerProps<TData> = {
 }
 
 export function PaginationServer<TData>({ table, pagination }: PaginationServerProps<TData>) {
-  const newPageIndex = pagination.pageIndex + 1
+  const newPageIndex = (pagination.pageIndex) + 1
+
+  console.log("pagination", newPageIndex)
+  console.log('table', (table.getState().pagination.pageIndex) + 1)
+
   return (
     <div className="flex justify-end items-center w-full py-3 px-2">
       <div className="flex items-center gap-2">
