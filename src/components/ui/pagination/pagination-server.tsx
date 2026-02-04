@@ -1,4 +1,4 @@
-import { Table } from "@tanstack/react-table"
+import { PaginationState, Table } from "@tanstack/react-table"
 import {
   ChevronsLeft,
   ChevronLeft,
@@ -7,28 +7,14 @@ import {
 } from "lucide-react"
 import { Select, SelectItem, SelectValue } from "../select"
 import { SelectContent, SelectGroup, SelectLabel, SelectTrigger } from "@radix-ui/react-select"
-import { useSearchParams } from "react-router-dom"
-import { useEffect } from "react"
 
 type PaginationServerProps<TData> = {
-  table: Table<TData>
+  table: Table<TData>,
+  pagination: PaginationState
 }
 
-export function PaginationServer<TData>({ table }: PaginationServerProps<TData>) {
-  const [searchParams, setSearchParams] = useSearchParams();
-  const page = table.getState().pagination.pageIndex + 1
-  const per_page = table.getState().pagination.pageSize
-
-  useEffect(() => {
-    setSearchParams((prev) => {
-      const params = new URLSearchParams(prev)
-    
-      params.set('page', page?.toString())
-      params.set('per_page', per_page?.toString())
-      return params
-    })
-  }, [page, setSearchParams, per_page])
-
+export function PaginationServer<TData>({ table, pagination }: PaginationServerProps<TData>) {
+  const newPageIndex = pagination.pageIndex + 1
   return (
     <div className="flex justify-end items-center w-full py-3 px-2">
       <div className="flex items-center gap-2">
@@ -55,7 +41,7 @@ export function PaginationServer<TData>({ table }: PaginationServerProps<TData>)
         </button>
 
         <span className="text-sm font-medium">
-          Page {table.getState().pagination.pageIndex + 1} of {table.getPageCount()}
+          Page {newPageIndex} of {table.getPageCount()}
         </span>
 
         <button

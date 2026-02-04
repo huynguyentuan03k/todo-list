@@ -3,20 +3,25 @@ import {
   flexRender,
   getCoreRowModel,
   useReactTable,
+
   // import filter state
   ColumnFiltersState,
   getFilteredRowModel,
+
   // import sorting
   SortingState,
-  getSortedRowModel
+  getSortedRowModel,
+
   //pagination server side
+  PaginationState
+
 
 } from "@tanstack/react-table"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { useNavigate, useSearchParams } from "react-router-dom"
 import { PaginationServer } from "../pagination/pagination-server"
 import { Meta } from "@/pages/publishers/shema"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { memo } from "react"
 
 interface DataTableProps<TData, TValue> {
@@ -30,21 +35,54 @@ interface DataTableProps<TData, TValue> {
 }
 
 
-function DataTableComponent<TData, TValue>({ columns, data, meta, fieldTitle, onSortChange, pageIndex, pageSize }: DataTableProps<TData, TValue>) {
+function DataTableComponent<TData, TValue>({ columns, data, meta, pageIndex, pageSize }: DataTableProps<TData, TValue>) {
   const navigate = useNavigate()
+
   const [sorting, setSorting] = useState<SortingState>([])
   const [, setSearchParams] = useSearchParams([])
 
+  /**
+   * pageIndex của TanStack Table LUÔN LUÔN là 0-based
+    KHÔNG BAO GIỜ được khởi tạo = 1
+   */
+  const [pagination, setPagination] = useState<PaginationState>({
+    pageIndex: pageIndex,
+    pageSize
+  })
   const table = useReactTable({
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
 
     // pagination server side
-    manualPagination: true,  // turn off client-side pagination
+    manualPagination: false,  // turn off client-side pagination
     rowCount: meta?.total,  //  Table KHÔNG tự cắt data
     autoResetPageIndex: false, // Phụ thuộc backend trả total
+    onPaginationChange: (updater) => {
+      // pagination nếu là hàm nó sẽ trả ra giá trị number nên khi nó là 1 hàm thì set nó vào hàm SetPagination
+      // demo => tham chiếu hàm
+      // demo() => chạy hàm
+      // updater nhận vào state cũ và return ra state mới
 
+      if (typeof updater === 'function') {
+
+        const newState = updater(pagination)
+
+        setPagination(newState)
+
+        const newPageIndex = (newState.pageIndex) + 1
+
+        setSearchParams((prev) => {
+          const params = new URLSearchParams(prev)
+          params.set('page', newPageIndex.toString())
+          params.set('per_page', newState.pageSize.toString())
+
+          return params
+        })
+
+      }
+
+    },
 
     // sort server side,
     // LƯU Ý ;  updater là 1 type nó sẽ biến thành cái gì ,
@@ -55,27 +93,23 @@ function DataTableComponent<TData, TValue>({ columns, data, meta, fieldTitle, on
           const params = new URLSearchParams(pre)
           const nextSorting = updater(sorting)
           params.set('sort', nextSorting[0].desc === true ? "-id" : 'id')
-          
+
           return params
         })
       }
     },
-
     manualSorting: true,
 
+    // state có nghĩa là table sẽ ko quản lý soring và pagination
+    // đối với server side thì pagination thay đổi phải đi qua hàm onPaginationChange và set lại state
+    // nếu muốn làm theo client thì ko cần hàm onChange nữa mà để State rỗng table tự quản lý sort filter và pagination
     state: {
       sorting,
+      pagination
     },
 
-    initialState: {
-      pagination: {
-        pageIndex: pageIndex,
-        pageSize: pageSize
-      }
-    }
-
   })
-
+  
   return (
     <div>
       <div className="rounded-md border">
@@ -115,7 +149,7 @@ function DataTableComponent<TData, TValue>({ columns, data, meta, fieldTitle, on
         </Table>
       </div>
       <div>
-        <PaginationServer table={table} />
+        <PaginationServer table={table} pagination={pagination} />
       </div>
     </div>
   )

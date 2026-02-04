@@ -1,10 +1,11 @@
-import { DataTable } from "./data-table"
+import { DataTable } from "@/components/ui/data-table/data-table"
 import { columns } from "./columns"
 import { useQuery } from "@tanstack/react-query"
 import { Loader2 } from "lucide-react"
 import { EpisodeResponse, Episodes, EpisodesSchema } from "../shema"
 import http from "@/utils/http"
 import { useSearchParams } from "react-router-dom"
+import { useEffect } from "react"
 
 
 const getEpisodes = (page: number | string = 1, per_page: number | string = 10) => {
@@ -20,7 +21,11 @@ const getEpisodes = (page: number | string = 1, per_page: number | string = 10) 
 export default function EpisodeOverview() {
   const [searchParams] = useSearchParams()
   const page = searchParams.get('page') || 1
-  const per_page = searchParams.get('per_page') || 10
+  const per_page = localStorage.getItem('PER_PAGE') ?? '10'
+
+  useEffect(() => {
+    localStorage.setItem('PER_PAGE', '10')
+  }, [])
 
   const { data, isLoading, error } = useQuery({
     queryKey: ['Episodes', page, per_page],
@@ -47,6 +52,9 @@ export default function EpisodeOverview() {
         columns={columns}
         data={episodes}
         meta={data?.data?.meta}
+        fieldTitle="title"
+        pageIndex={0}
+        pageSize={Number(per_page)}
       />
     </div>
   )

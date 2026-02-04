@@ -1,4 +1,4 @@
-import { DataTable } from "./data-table"
+import { DataTable } from "@/components/ui/data-table/data-table"
 import { columns } from "./columns"
 import { useQuery } from "@tanstack/react-query"
 import { Loader2 } from "lucide-react"
@@ -20,7 +20,7 @@ const getCategories = (page: number | string = 1, per_page: number | string = 10
 export default function CategoryOverview() {
   const [searchParams] = useSearchParams()
   const page = searchParams.get('page') || 1
-  const per_page = searchParams.get('per_page') || 10
+  const per_page = searchParams.get('per_page') || '10'
 
   const { data, isLoading, error } = useQuery({
     queryKey: ['Categories', page, per_page],
@@ -47,6 +47,9 @@ export default function CategoryOverview() {
         columns={columns}
         data={Categories}
         meta={data?.data?.meta}
+        fieldTitle="title"
+        pageIndex={0}
+        pageSize={Number(per_page)}
       />
     </div>
   )

@@ -60,6 +60,7 @@ export default function PodcastsOverview() {
     if (!isLoading && title && useRefInput.current) {
       useRefInput.current?.focus()
     }
+
   }, [title, isLoading])
 
 
