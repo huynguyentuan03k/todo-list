@@ -150,7 +150,7 @@ function DataTableComponent<TData, TValue>({ columns, data, meta, pageIndex, pag
         </Table>
       </div>
       <div>
-        <PaginationServer table={table} pagination={pagination} />
+        <PaginationServer table={table} pagination={pagination} pageCount={pageCount} />
       </div>
     </div>
   )
