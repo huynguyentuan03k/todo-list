@@ -113,7 +113,7 @@ export function DataTable({ data, columns, meta }: props) {
           </TableBody>
         </Table>
       </div>
-      <PaginationServer table={table} />
+      <PaginationServer table={table} pagination={pagination} />
     </div>
   )
 }

@@ -39,8 +39,6 @@ export default function usePodcastQueue(podcastId: number) {
   const enqueue = async () => {
     if (!data?.episodes) return;
 
-    console.log(data);
-    
     const filterData: Track[] = data?.episodes?.map((item) => ({
       id: item.id,
       url: item.audio_path ?? '',
