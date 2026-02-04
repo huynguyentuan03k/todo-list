@@ -49,6 +49,8 @@ function DataTableComponent<TData, TValue>({ columns, data, meta, pageIndex, pag
     pageIndex: pageIndex,
     pageSize
   })
+  const pageCount = Math.ceil((meta?.total ?? 0) / pagination.pageSize)
+
   const table = useReactTable({
     data,
     columns,
@@ -58,6 +60,7 @@ function DataTableComponent<TData, TValue>({ columns, data, meta, pageIndex, pag
     manualPagination: true,  // turn off client-side pagination
     rowCount: meta?.total,  //  Table KHÔNG tự cắt data
     autoResetPageIndex: false, // Phụ thuộc backend trả total
+    pageCount,
     onPaginationChange: (updater) => {
       // pagination nếu là hàm nó sẽ trả ra giá trị number nên khi nó là 1 hàm thì set nó vào hàm SetPagination
       // demo => tham chiếu hàm
@@ -149,7 +152,7 @@ function DataTableComponent<TData, TValue>({ columns, data, meta, pageIndex, pag
         </Table>
       </div>
       <div>
-        <PaginationServer table={table} pagination={pagination} />
+        <PaginationServer table={table} pagination={pagination} pageCount={pageCount} />
       </div>
     </div>
   )

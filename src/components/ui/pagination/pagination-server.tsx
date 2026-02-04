@@ -11,9 +11,10 @@ import { SelectContent, SelectGroup, SelectLabel, SelectTrigger } from "@radix-u
 type PaginationServerProps<TData> = {
   table: Table<TData>,
   pagination: PaginationState
+  pageCount: number
 }
 
-export function PaginationServer<TData>({ table, pagination }: PaginationServerProps<TData>) {
+export function PaginationServer<TData>({ table, pagination, pageCount }: PaginationServerProps<TData>) {
   const newPageIndex = (pagination.pageIndex) + 1
 
   console.log("pagination", newPageIndex)
@@ -45,7 +46,7 @@ export function PaginationServer<TData>({ table, pagination }: PaginationServerP
         </button>
 
         <span className="text-sm font-medium">
-          Page {newPageIndex} of {table.getPageCount()}
+          Page {newPageIndex} of {pageCount}
         </span>
 
         <button
