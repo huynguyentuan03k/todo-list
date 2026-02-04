@@ -67,11 +67,8 @@ function DataTableComponent<TData, TValue>({ columns, data, meta, pageIndex, pag
       // demo() => chạy hàm
       // updater nhận vào state cũ và return ra state mới
 
-      if (typeof updater === 'function') {
-        console.log("onchange")
-        const newState = updater(pagination)
-
-        setPagination(newState)
+      setPagination(objectOld => {
+        const newState = typeof updater === 'function' ? updater(objectOld) : updater
 
         const newPageIndex = (newState.pageIndex) + 1
 
@@ -82,8 +79,9 @@ function DataTableComponent<TData, TValue>({ columns, data, meta, pageIndex, pag
 
           return params
         })
-
-      }
+        // nếu updater không phải là hàm thì trả ra giá trị cũ thôi
+        return objectOld
+      })
 
     },
 
@@ -152,7 +150,7 @@ function DataTableComponent<TData, TValue>({ columns, data, meta, pageIndex, pag
         </Table>
       </div>
       <div>
-        <PaginationServer table={table} pagination={pagination} pageCount={pageCount} />
+        <PaginationServer table={table} pagination={pagination} />
       </div>
     </div>
   )
