@@ -20,7 +20,7 @@ const getEpisodes = (page: number | string = 1, per_page: number | string = 10) 
 
 export default function EpisodeOverview() {
   const [searchParams] = useSearchParams()
-  const page = searchParams.get('page') || 1
+  const page = searchParams.get('page') || '1'
   const per_page = localStorage.getItem('PER_PAGE') ?? '10'
 
   useEffect(() => {
@@ -45,7 +45,7 @@ export default function EpisodeOverview() {
   }
 
   const episodes = EpisodesSchema.parse(data?.data.data ?? [])
-
+  console.log("data-table")
   return (
     <div className="container mx-auto py-10">
       <DataTable
@@ -53,7 +53,7 @@ export default function EpisodeOverview() {
         data={episodes}
         meta={data?.data?.meta}
         fieldTitle="title"
-        pageIndex={0}
+        pageIndex={Number(page) - 1}
         pageSize={Number(per_page)}
       />
     </div>

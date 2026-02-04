@@ -80,7 +80,7 @@ function DataTableComponent<TData, TValue>({ columns, data, meta, pageIndex, pag
           return params
         })
         // nếu updater không phải là hàm thì trả ra giá trị cũ thôi
-        return objectOld
+        return newState
       })
 
     },

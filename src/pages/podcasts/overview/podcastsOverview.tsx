@@ -77,7 +77,7 @@ export default function PodcastsOverview() {
       Failed to load podcasts
     </div>
   }
-
+  console.log("podast overview")
   return (
     <div className="container mx-auto py-10">
       <div className="flex justify-between">
@@ -124,7 +124,7 @@ export default function PodcastsOverview() {
         data={podcasts}
         meta={data?.data.meta}
         fieldTitle="title"
-        pageIndex={0}
+        pageIndex={Number(page) - 1}
         pageSize={per_page}
       />
     </div>

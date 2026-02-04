@@ -15,10 +15,6 @@ type PaginationServerProps<TData> = {
 }
 
 export function PaginationServer<TData>({ table, pagination, pageCount }: PaginationServerProps<TData>) {
-  const newPageIndex = (pagination.pageIndex) + 1
-
-  console.log("pagination", newPageIndex)
-  console.log('table', (table.getState().pagination.pageIndex) + 1)
 
   return (
     <div className="flex justify-end items-center w-full py-3 px-2">
@@ -27,7 +23,7 @@ export function PaginationServer<TData>({ table, pagination, pageCount }: Pagina
         <button
           className="border rounded-md p-1 cursor-pointer"
           onClick={() => table.firstPage()}
-          disabled={!table.getCanPreviousPage()}
+          disabled={pagination.pageIndex === 0}
           aria-label="First page"
         >
           <ChevronsLeft size={18} />
@@ -39,14 +35,14 @@ export function PaginationServer<TData>({ table, pagination, pageCount }: Pagina
             table.previousPage();
 
           }}
-          disabled={!table.getCanPreviousPage()}
+          disabled={pagination.pageIndex === 0}
           aria-label="Previous page"
         >
           <ChevronLeft size={18} />
         </button>
 
         <span className="text-sm font-medium">
-          Page {newPageIndex} of {pageCount}
+          Page {pagination.pageIndex + 1} of {pageCount}
         </span>
 
         <button
