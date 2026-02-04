@@ -33,10 +33,15 @@ export function DataTable({ data, columns, meta }: props) {
   const [searchParams] = useSearchParams()
   const page = Number(searchParams.get('page') ?? 1)
   const per_page = Number(searchParams.get('per_page') ?? 10)
+
+
   const [pagination, setPagination] = React.useState<PaginationState>({
     pageIndex: page - 1,
     pageSize: per_page
   })
+  
+  const pageCount = Math.ceil((meta?.total ?? 0) / pagination.pageSize)
+
   const table = useReactTable({
     data,
     columns,
@@ -113,7 +118,7 @@ export function DataTable({ data, columns, meta }: props) {
           </TableBody>
         </Table>
       </div>
-      <PaginationServer table={table} pagination={pagination} />
+      <PaginationServer table={table} pagination={pagination} pageCount={pageCount} />
     </div>
   )
 }
