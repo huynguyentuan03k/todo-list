@@ -42,7 +42,7 @@ export function PaginationServer<TData>({ table, pagination, pageCount }: Pagina
         </button>
 
         <span className="text-sm font-medium">
-          Page {table.getState().pagination.pageIndex + 1} of {table.getPageCount()}
+          Page {pagination.pageIndex + 1} of {table.getPageCount()}
         </span>
 
         <button
