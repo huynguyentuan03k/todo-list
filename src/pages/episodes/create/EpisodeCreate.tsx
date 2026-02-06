@@ -95,15 +95,15 @@ export default function EpisodeCreate() {
         index === 0 ?
           {
             ...item,
-            slug: `${data.slug} ${index + 1}`,
+            slug: `${data.slug.split('1')[0]}${(index + 2)}`,
             podcast_id: data.podcast_id,
-            title: `${data.title} ${index + 1}`
+            title: `${data.title.split('1')[0]}${index + 2}`
           } :
           {
             ...item,
             podcast_id: data.podcast_id,
-            slug: `${data.slug} ${index + 1}`,
-            title: `${data.title} ${index + 1}`
+            slug: `${data.slug.split('1')[0]}${(index + 2)}`,
+            title: `${data.title.split('1')[0]}${index + 2}`
           }
       )
     }
