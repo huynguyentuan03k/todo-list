@@ -35,7 +35,7 @@ import Dashboard from './pages/dashboard/Dashboard';
 import AboutMe from './pages/aboutMe/AboutMe';
 import { Analytics } from '@vercel/analytics/react';
 import { AudioProvider } from './components/audio/provider';
-
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 
 const queryClient = new QueryClient();
 const router = createBrowserRouter([
@@ -214,6 +214,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
         <Toaster />
         <Analytics />
       </AudioProvider>
+      <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   </React.StrictMode >
 );
