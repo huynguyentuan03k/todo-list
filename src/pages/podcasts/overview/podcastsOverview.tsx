@@ -51,6 +51,7 @@ export default function PodcastsOverview() {
   // Khi gõ vào ô Input (filter): Component render lại, nhưng data từ API vẫn chưa đổi (vì chưa gọi lại API hoặc API chưa trả kết quả mới)
   // -> useMemo không chạy lại -> nó trả về ngay kết quả đã parse ở bước trước.
   const podcasts = useMemo(() => {
+    console.log("podcast overview useMemo")
     return PodcastsSchema.parse(data?.data?.data ?? [])
   }, [data])
 

@@ -16,7 +16,12 @@ import { ComboboxSelect } from "@/pages/components/custom/ComboboxSelect"
 import { Podcasts } from "@/pages/podcasts/schema"
 import { MultiSeclectOptions } from "@/pages/components/custom/MultiSelectCustom"
 import ValidationUrlAudio from "@/pages/components/custom/ValidationUrlAudio"
+import { AxiosError } from "axios"
 
+export type ApiErrorResonse = {
+  message: string,
+  errors:
+}
 
 export default function EpisodeEdit() {
   const { id } = useParams()
@@ -76,10 +81,12 @@ export default function EpisodeEdit() {
       });
       navigate(`/portal/episodes/${data?.data.data.id}/show`)
     },
-    onError: () => {
+    // cần lưu ý rằng vì dùng axios nên data trả về khi lỗi sẽ là type AxiosError và AxiosError có nhận vào generate TYPE ERROR nhớ đính nghĩa ko
+    // đến đoạn err.response.data nó sẽ ko biết data có shape gì 
+    onError: (err: AxiosError<ApiErrorResonse>) => {
       toast({
         title: "update episode error",
-        description: "cannot update episode.",
+        description: err.response?.data?.message,
       })
     },
   })
