@@ -6,7 +6,7 @@ import { useMutation, useQuery } from "@tanstack/react-query"
 import http from "@/utils/http"
 import { Episode, episodeForm } from "../shema"
 import { useToast } from "@/components/ui/hooks/use-toast"
-import { useForm, SubmitHandler } from "react-hook-form"
+import { useForm, SubmitHandler, useFieldArray } from "react-hook-form"
 import { AxiosError } from "axios"
 import { Textarea } from "@/components/ui/textarea"
 import Breadcrumbs from "@/pages/components/custom/breadcrumbs"
@@ -65,19 +65,50 @@ export default function EpisodeCreate() {
     }
   })
 
+
   const form = useForm<episodeForm>({
     defaultValues: {
-      title: "",
-      description: "",
-      audio_path: "",
-      podcast_id: undefined,
-      cover_image: undefined,
-      slug: "",
+      title: '',
+      description: '',
+      audio_path: '',
+      slug: '',
+      episodes: [
+        {
+          audio_path: '', title: '', slug: '', description: ''
+        }
+      ]
+
     }
   })
 
+  const { fields, append, prepend, insert, swap, remove } = useFieldArray({
+    name: 'episodes',
+    control: form.control
+  })
+
   const onSubmit: SubmitHandler<episodeForm> = (data) => {
-    mutation.mutate(data)
+    const fieldsArray = data.episodes
+
+    const payload = {
+      ...data,
+      episodes: fieldsArray.map((item, index) =>
+        index === 0 ?
+          {
+            ...item,
+            slug: `${data.slug} ${index + 1}`,
+            podcast_id: data.podcast_id,
+            title: `${data.title} ${index + 1}`
+          } :
+          {
+            ...item,
+            podcast_id: data.podcast_id,
+            slug: `${data.slug} ${index + 1}`,
+            title: `${data.title} ${index + 1}`
+          }
+      )
+    }
+
+    mutation.mutate(payload)
   }
 
   const { data: podcastOptions } = useQuery<comboboxOption[] | undefined>({
@@ -122,7 +153,7 @@ export default function EpisodeCreate() {
                     name="title"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Title</FormLabel>
+                        <FormLabel>Title 1</FormLabel>
                         <FormControl>
                           <Input
                             // type text luon tra ra string , 'abc', '',
@@ -137,7 +168,6 @@ export default function EpisodeCreate() {
                 </div>
 
                 <div className="lg:col-span-1 md:col-span-2  ">
-
                   <FormField
                     control={form.control}
                     name="description"
@@ -228,10 +258,48 @@ export default function EpisodeCreate() {
                     )}
                   />
                 </div>
-
               </div>
+              <div className="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-3 gap-2 mt-11">
+                {
+                  fields.map((field, index) => (
+                    <div className="lg:col-span-1 md:col-span-2">
+                      <FormField
+                        key={field.id}
+                        control={form.control}
+                        name={`episodes.${index}.audio_path`}
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Audio Url {index === 0 ? 2 : index + 2}</FormLabel>
+                            <FormControl>
+                              <Textarea
+                                {...field}
+                              />
+                            </FormControl>
+                          </FormItem>
+                        )}
+                      />
+                    </div>
+                  ))
+                }
+              </div>
+
             </CardContent>
-            <CardFooter className="flex justify-end">
+            <CardFooter className="flex justify-end gap-2">
+              <Button
+                type="button"
+                onClick={() => append({
+                  title: form.getValues('title'),
+                  description: '',
+                  audio_path: '',
+                  podcast_id: form.getValues('podcast_id'),
+                  slug: form.getValues('slug')
+                })}
+              >append</Button>
+              <Button
+                type="button"
+                // giá trị truyền vào là index của array , tức là index của array episodes
+                onClick={() => remove(fields.length - 1)}
+              >remove</Button>
               <Button
                 type="submit"
                 className="bg-blue-500 text-white hover:bg-blue-600 rounded-lg"

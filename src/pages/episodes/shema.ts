@@ -42,12 +42,17 @@ export type EpisodeResponse<T> = {
 };
 
 export type episodeForm = {
-  id: number;
   title: string;
   description: string;
   audio_path: string;
   podcast_id: number;
   slug: string;
   cover_image: File;
-  publisher_id: number;
+  episodes: {
+    title: string;
+    description: string;
+    audio_path: string;
+    podcast_id: number;
+    slug: string;
+  }[];
 };
