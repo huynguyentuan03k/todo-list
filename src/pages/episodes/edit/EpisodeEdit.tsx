@@ -20,7 +20,11 @@ import { AxiosError } from "axios"
 
 export type ApiErrorResonse = {
   message: string,
-  errors:
+  errors: Record<string, string[]>
+  // hoặc có thể viết  Record<k,v[]> , tức là errors là 1 object trong object này có dạng Record<string, string[]>
+  /**
+   * errors	{ slug: ['slug required'] , audio_url : ['not null'] }
+   */
 }
 
 export default function EpisodeEdit() {
@@ -82,8 +86,9 @@ export default function EpisodeEdit() {
       navigate(`/portal/episodes/${data?.data.data.id}/show`)
     },
     // cần lưu ý rằng vì dùng axios nên data trả về khi lỗi sẽ là type AxiosError và AxiosError có nhận vào generate TYPE ERROR nhớ đính nghĩa ko
-    // đến đoạn err.response.data nó sẽ ko biết data có shape gì 
+    // đến đoạn err.response.data nó sẽ ko biết data có shape gì
     onError: (err: AxiosError<ApiErrorResonse>) => {
+      console.log(err.response?.data)
       toast({
         title: "update episode error",
         description: err.response?.data?.message,
