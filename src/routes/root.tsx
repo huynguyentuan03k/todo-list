@@ -17,6 +17,10 @@ import {
   PanelLeftClose,
   PanelLeft,
   CircleUserRound,
+  UserRoundPen,
+  KeyRound,
+  LockKeyholeOpen,
+  UserRoundCog,
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { ScrollArea } from "@/components/ui/scroll-area"
@@ -34,8 +38,19 @@ const NAV_ITEMS = [
   { path: "/", label: "Dashboard", icon: LayoutDashboard },
   { path: "/portal/publishers", label: "Publishers", icon: Building2 },
   { path: "/portal/categories", label: "Categories", icon: FolderTree },
-  { path: "/portal/authors", label: "Authors", icon: Users },
+  { path: "/portal/authors", label: "Authors", icon: UserRoundPen },
   { path: "/portal/episodes", label: "Episodes", icon: Mic },
+
+  {
+    path: "/portal/accounts",
+    label: "Accounts",
+    icon: UserRoundCog,
+    children: [
+      { path: "/portal/users", label: "Users", icon: Users },
+      { path: "/portal/roles", label: "Roles", icon: KeyRound },
+      { path: "/portal/permissions", label: "Permissions", icon: LockKeyholeOpen },
+    ]
+  },
   {
     path: "/portal/podcasts",
     label: "Podcasts",
