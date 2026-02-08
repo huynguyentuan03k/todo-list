@@ -117,7 +117,7 @@ export const columns: ColumnDef<Podcast>[] = [
     cell: ({ row }) => (
       <div className="capitalize">{row.original.authors.map(item => (
         <div>
-          ${item.name}
+          {item.name}
           <br></br>
         </div>
       ))}</div>

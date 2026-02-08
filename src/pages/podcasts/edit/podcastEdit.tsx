@@ -264,7 +264,7 @@ export default function PodcastEdit() {
                           <MultiSelectCustom
                             options={authorsOptions}
                             {...field}
-                            value={field.value.map(item => `${item}`)}
+                            value={field.value?.map(item => `${item}`)}
                             isLoading={isAuthorLoading}
                           />
                         </FormControl>
@@ -284,7 +284,7 @@ export default function PodcastEdit() {
                           <MultiSelectCustom
                             options={categoriesOptions}
                             {...field}
-                            value={field.value.map(item => `${item}`)}
+                            value={field.value?.map(item => `${item}`)}
                             isLoading={isCategoryLoding}
                           />
                         </FormControl>
