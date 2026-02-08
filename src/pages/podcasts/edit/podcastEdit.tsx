@@ -73,6 +73,8 @@ export default function PodcastEdit() {
       cover_url: data?.data.data.cover_url ?? undefined,
       publisher_id: data?.data.data.publisher?.id ?? undefined,
       content: data?.data.data.content ?? "",
+      author_ids: data?.data.data.categories.map(item => (item.id)) ?? undefined,
+      category_ids: data?.data.data.authors.map(item => (item.id)) ?? undefined,
     }
   })
 
@@ -87,7 +89,9 @@ export default function PodcastEdit() {
         cover_url: podcast.cover_url ?? undefined,
         publisher_id: podcast.publisher?.id ?? undefined,
         cover_image: undefined,
-        content: podcast.content ?? ""
+        content: podcast.content ?? "",
+        author_ids: podcast.authors.map(item => (item.id)) ?? [],
+        category_ids: podcast.categories.map(item => (item.id)) ?? [],
       })
       isInitialized.current = true
     }
@@ -129,8 +133,6 @@ export default function PodcastEdit() {
     }
   )) ?? []
 
-
-
   const { data: authorsOptions = [], isLoading: isAuthorLoading } = useQuery({
     queryKey: ['authors'],
     queryFn: async () => {
@@ -163,6 +165,8 @@ export default function PodcastEdit() {
   if (!data) {
     return <div>No data</div>
   }
+
+  console.log("field.value cua publisher ", data?.data.data.authors.map(item => (item.id)) ?? undefined)
 
   return (
     <div >
@@ -283,9 +287,9 @@ export default function PodcastEdit() {
                         <FormControl>
                           <MultiSelectCustom
                             options={categoriesOptions}
+                            isLoading={isCategoryLoding}
                             {...field}
                             value={field.value?.map(item => `${item}`)}
-                            isLoading={isCategoryLoding}
                           />
                         </FormControl>
                       </FormItem>

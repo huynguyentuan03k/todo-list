@@ -50,7 +50,7 @@ export default function MultiSelectCustom({
                 options?.map(item => (
                   /**
                    * trong react :
-                   * ket : React dùng: Để quản lý danh sách trên DOM
+                   * key : React dùng: Để quản lý danh sách trên DOM
                    * value: Form dùng: Khi click, mảng (mang nay duoc hien thi ra theo kieu nay   contentDisplay = (item) => (item.label) ) kết quả sẽ thêm số 10
                    * Người dùng thấy: Chữ "Nguyễn Văn A" hiển thị trên màn hình tron nguyen van a => lay so 10
                    */
