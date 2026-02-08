@@ -20,9 +20,8 @@ export default function CategoryEdit() {
   const navigate = useNavigate()
   const { toast } = useToast()
 
-  const updateCategory = (category: CategoryForm) => {
-    console.log("update ", category)
-    http.put<CategoryForm>(`/categories/${id}`, category);
+  const updateCategory = async (category: CategoryForm) => {
+    return await http.put<CategoryForm>(`/categories/${id}`, category);
   }
 
   const { data, isLoading } = useQuery({
