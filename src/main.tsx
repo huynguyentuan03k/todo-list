@@ -22,7 +22,7 @@ import SeasonalThemes from './pages/settings/Seasonal-Themes';
 import PodcastsOverview from './pages/podcasts/overview/podcastsOverview';
 import PodcastCreate from './pages/podcasts/create/podcastCreate';
 import PodcastShow from './pages/podcasts/show/PodcastShow';
-import PodcastEdit from './pages/podcasts/edit/podcast-edit';
+import PodcastEdit from './pages/podcasts/edit/podcastEdit';
 import AuthorOverview from './pages/authors/overview/AuthorOverview';
 import AuthorCreate from './pages/authors/create/AuthorCreate';
 import AuthorEdit from './pages/authors/edit/AuthorEdit';

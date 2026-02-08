@@ -101,6 +101,29 @@ export const columns: ColumnDef<Podcast>[] = [
     cell: ({ row }) => <div className="lowercase">{row.getValue("slug")}</div>,
   },
   {
+    accessorKey: "categories",
+    header: "categories",
+    cell: ({ row }) => (
+      <div className="capitalize">{row.original.categories.map(item => (<div>
+        {item.name}
+        <br></br>
+      </div>))
+      }</div >
+    ),
+  },
+  {
+    accessorKey: "author",
+    header: "author",
+    cell: ({ row }) => (
+      <div className="capitalize">{row.original.authors.map(item => (
+        <div>
+          ${item.name}
+          <br></br>
+        </div>
+      ))}</div>
+    ),
+  },
+  {
     accessorKey: "publisher",
     header: "publisher",
     cell: ({ row }) => (

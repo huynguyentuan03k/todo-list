@@ -78,6 +78,28 @@ export default function PodcastShow() {
               </Link>
             </div>
 
+            <div className="flex flex-col col-span-1 lg:col-span-1 md:col-span-2">
+              <Label>Authors</Label>
+              {
+                podcast.authors.map((item) => (
+                  <Link to={`/portal/authors/${item.id}/show`}>
+                    <p className="text-blue-500">{item.name} - ID: {item.id}</p>
+                  </Link>
+                ))
+              }
+            </div>
+
+            <div className="flex flex-col col-span-1 lg:col-span-1 md:col-span-2">
+              <Label>Categories</Label>
+              {
+                podcast.categories.map((item) => (
+                  <Link to={`/portal/categories/${item.id}/show`}>
+                    <p className="text-blue-500">{item.name} - ID: {item.id}</p>
+                  </Link>
+                ))
+              }
+            </div>
+
             <div className="flex flex-col col-span-1 lg:col-span-3 md:col-span-4">
               <Label>TinyMVC</Label>
               <div

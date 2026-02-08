@@ -16,6 +16,10 @@ import { Publishers } from "@/pages/publishers/shema"
 import { SingleFileCover } from "@/pages/components/custom/SingleFileCover"
 import { Textarea } from "@/components/ui/textarea"
 import TinyEditor from "@/pages/components/custom/TinyEditor"
+import { Authors } from "@/pages/authors/shema"
+import MultiSelectCustom from "@/pages/components/custom/MultiSelectCustom"
+import { Categories } from "@/pages/categories/shema"
+
 
 export default function PodcastEdit() {
   const { id } = useParams()
@@ -56,8 +60,6 @@ export default function PodcastEdit() {
     queryFn: () => http.get<{ data: Podcast }>(`/podcasts/${id}`)
   })
 
-
-
   const onSubmit: SubmitHandler<PodcastForm> = (data) => {
     mutation.mutate(data)
   }
@@ -70,7 +72,7 @@ export default function PodcastEdit() {
       cover_image: undefined,
       cover_url: data?.data.data.cover_url ?? undefined,
       publisher_id: data?.data.data.publisher?.id ?? undefined,
-      content: data?.data.data.content ?? ""
+      content: data?.data.data.content ?? "",
     }
   })
 
@@ -126,6 +128,33 @@ export default function PodcastEdit() {
       value: item.id
     }
   )) ?? []
+
+
+
+  const { data: authorsOptions = [], isLoading: isAuthorLoading } = useQuery({
+    queryKey: ['authors'],
+    queryFn: async () => {
+      const res = await http.get<{ data: Authors }>('/authors')
+
+      return res.data.data.map(item => ({
+        value: item.id,
+        label: item.name ?? ''
+      })) ?? []
+    }
+  })
+
+  const { data: categoriesOptions = [], isLoading: isCategoryLoding } = useQuery({
+    queryKey: ['categories'],
+    queryFn: async () => {
+      const res = await http.get<{ data: Categories }>('/categories')
+
+      return res.data.data.map(item => ({
+        value: item.id,
+        label: item.name ?? ''
+      })) ?? []
+    }
+  })
+
 
   if (isLoading) {
     return <SpinnerLoading />
@@ -217,6 +246,44 @@ export default function PodcastEdit() {
                           <ComboboxSelect
                             {...field}
                             options={publisherOptions}
+                          />
+                        </FormControl>
+                      </FormItem>
+                    )}
+                  />
+                </div>
+
+                <div className="col-span-1 lg:col-span-1 md:col-span-2">
+                  <FormField
+                    control={form.control}
+                    name="author_ids"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Authors</FormLabel>
+                        <FormControl>
+                          <MultiSelectCustom
+                            options={authorsOptions}
+                            {...field}
+                            isLoading={isAuthorLoading}
+                          />
+                        </FormControl>
+                      </FormItem>
+                    )}
+                  />
+                </div>
+
+                <div className="col-span-1 lg:col-span-1 md:col-span-2">
+                  <FormField
+                    control={form.control}
+                    name="category_ids"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Categories</FormLabel>
+                        <FormControl>
+                          <MultiSelectCustom
+                            options={categoriesOptions}
+                            {...field}
+                            isLoading={isCategoryLoding}
                           />
                         </FormControl>
                       </FormItem>

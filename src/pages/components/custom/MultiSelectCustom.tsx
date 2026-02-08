@@ -17,10 +17,10 @@ type Props = {
   overflowBehavior?: "wrap-when-open" | "wrap" | "cutoff",
   options: MultiSeclectOptions[],
   onChange: (value: string[]) => void
-  value: string[],
+  value: number[],
   singleSelect?: boolean,
   contentDisplay?: (value: MultiSeclectOptions) => string,
-  isLoading?: boolean,
+  isLoading: boolean,
 }
 
 export default function MultiSelectCustom({
