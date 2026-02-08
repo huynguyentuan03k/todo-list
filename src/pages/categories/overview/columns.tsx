@@ -12,10 +12,17 @@ export const columns: ColumnDef<Category>[] = [
     ),
   },
   {
-    accessorKey: "name",
-    header: "Name",
+    accessorKey: "name.en",
+    header: "Name (en)",
     cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("name")}</div>
+      <div className="capitalize">{row.original.name?.en}</div>
+    ),
+  },
+  {
+    accessorKey: "name.vi",
+    header: "Name (vi)",
+    cell: ({ row }) => (
+      <div className="capitalize">{row.original.name?.vi}</div>
     ),
   },
   {

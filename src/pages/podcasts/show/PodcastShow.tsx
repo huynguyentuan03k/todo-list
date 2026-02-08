@@ -94,7 +94,7 @@ export default function PodcastShow() {
               {
                 podcast.categories.map((item) => (
                   <Link to={`/portal/categories/${item.id}/show`}>
-                    <p className="text-blue-500">{item.name} - ID: {item.id}</p>
+                    <p className="text-blue-500">{item.name?.en} - ID: {item.id}</p>
                   </Link>
                 ))
               }

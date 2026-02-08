@@ -5,13 +5,14 @@ import { Button } from "@/components/ui/button"
 import { useNavigate, useParams } from "react-router-dom"
 import { useMutation, useQuery } from "@tanstack/react-query"
 import http from "@/utils/http"
-import { Category, CategorySchema } from "../shema"
+import { Category, CategoryForm, CategorySchema } from "../shema"
 import { SpinnerLoading } from "@/pages/components/custom/SpinnerLoading"
 import { useForm } from "react-hook-form"
 import { useEffect } from "react"
 import { useToast } from "@/components/ui/hooks/use-toast"
 import { Textarea } from "@/components/ui/textarea"
 import Breadcrumbs from "@/pages/components/custom/breadcrumbs"
+import { Form, FormControl, FormField, FormItem, FormLabel } from "@/components/ui/form"
 
 
 export default function CategoryEdit() {
@@ -19,33 +20,43 @@ export default function CategoryEdit() {
   const navigate = useNavigate()
   const { toast } = useToast()
 
-  const updateCategory = (category: Category) =>
-    http.put<Category>(`/categories/${id}`, category);
-
-  // Initialize useForm with empty defaults first
-  const { register, handleSubmit, watch, formState: { errors }, reset } = useForm<Category>({
-    defaultValues: {
-      name: '',
-      description: ''
-    }
-  })
+  const updateCategory = (category: CategoryForm) => {
+    console.log("update ", category)
+    http.put<CategoryForm>(`/categories/${id}`, category);
+  }
 
   const { data, isLoading } = useQuery({
     queryKey: ['category', id],
     queryFn: () => http.get<{ data: Category }>(`/categories/${id}`)
   })
+
+
+  // Initialize useForm with empty defaults first
+  const form = useForm<CategoryForm>({
+    defaultValues: {
+      name: {
+        en: '',
+        vi: '',
+      }
+    }
+  })
+
+
   // Update form values when data is loaded
   useEffect(() => {
     if (data?.data?.data) {
       const category = CategorySchema.parse(data.data.data)
-      reset({
-        name: category.name,
-        description: category.description,
+      form.reset({
+        name: {
+          en: category.name?.en ?? undefined,
+          vi: category.name?.vi ?? undefined,
+        },
+        description: category.description ?? undefined,
       })
     }
-  }, [data, reset])
+  }, [data, form])
 
-  const newName = watch('name')
+
 
   const mutation = useMutation({
     mutationFn: updateCategory,
@@ -64,7 +75,7 @@ export default function CategoryEdit() {
     },
   })
 
-  function onSubmit(data: Category) {
+  function onSubmit(data: CategoryForm) {
     mutation.mutate(data)
   }
 
@@ -87,26 +98,70 @@ export default function CategoryEdit() {
           <CardTitle>Edit Category</CardTitle>
           <CardDescription>description Edit Category</CardDescription>
         </CardHeader>
-        <form onSubmit={handleSubmit(data => onSubmit(data))} >
-          <CardContent>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <form onSubmit={form.handleSubmit(data => onSubmit(data))} >
 
-              <div className="flex flex-col col-span-1 sm:col-span-1 gap-y-2">
-                <Label htmlFor="name" >Name : {newName}</Label>
-                {errors.name && <span>{errors.name.message}</span>}
-                <Input id="name" {...register('name', { required: "ten ko de trong" })} placeholder="Name of your publisher" />
+          <Form {...form}>
+
+            <CardContent>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+
+                <FormField
+                  control={form.control}
+                  name="name.en"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Name en</FormLabel>
+                      <FormControl>
+                        <Input
+                          placeholder="Name en"
+                          {...field}
+
+                        />
+                      </FormControl>
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="name.vi"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Name vi</FormLabel>
+                      <FormControl>
+                        <Input
+                          placeholder="Name vi"
+                          {...field}
+
+                        />
+                      </FormControl>
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="description"
+                  render={({ field }) => (
+                    <FormItem className="h-15">
+                      <FormLabel>Description</FormLabel>
+                      <FormControl className="d">
+                        <Textarea
+                          className="min-h-[70px]"
+                          placeholder="Bio your here"
+                          {...field}
+                        />
+                      </FormControl>
+                    </FormItem>
+                  )}
+                />
+
               </div>
-
-              <div className="flex flex-col col-span-1 sm:col-span-1 gap-y-2">
-                <Label htmlFor="description">Description</Label>
-                <Textarea className="h-[200px]" id="description" {...register('description')} placeholder="type description here" />
-              </div>
-
-            </div>
-          </CardContent>
-          <CardFooter className="flex justify-end">
-            <Button type="submit" className="bg-blue-500 text-white hover:bg-blue-600">Save</Button>
-          </CardFooter>
+            </CardContent>
+            <CardFooter className="flex justify-end">
+              <Button type="submit" className="bg-blue-500 text-white hover:bg-blue-600">Save</Button>
+            </CardFooter>
+          </Form>
         </form>
       </Card>
     </div>

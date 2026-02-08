@@ -5,12 +5,13 @@ import { Button } from "@/components/ui/button"
 import { useNavigate } from "react-router-dom"
 import { useMutation } from "@tanstack/react-query"
 import http from "@/utils/http"
-import { Category } from "../shema"
+import { CategoryForm } from "../shema"
 import { useToast } from "@/components/ui/hooks/use-toast"
 import { useForm, SubmitHandler } from "react-hook-form"
 import { AxiosError } from "axios"
 import { Textarea } from "@/components/ui/textarea"
 import Breadcrumbs from "@/pages/components/custom/breadcrumbs"
+import { FormControl, FormField, FormItem, FormLabel, Form } from "@/components/ui/form"
 
 /**
  * {
@@ -35,19 +36,27 @@ type LaravelValidationError = {
   errors: Record<string, string[]>;
 };
 
-async function createCategory(data: Category) {
-  return http.post<Category>(`/categories`, data);
+async function createCategory(data: CategoryForm) {
+  return http.post<CategoryForm>(`/categories`, data);
 }
 
 export default function CategoryCreate() {
   const navigate = useNavigate()
   const { toast } = useToast()
 
-  const { register, handleSubmit, formState: { errors } } = useForm<Category>()
-
-  const onSubmit: SubmitHandler<Category> = (data) => {
+  const onSubmit: SubmitHandler<CategoryForm> = (data) => {
     mutation.mutate(data)
   }
+
+  const form = useForm<CategoryForm>({
+    defaultValues: {
+      name: {
+        en: '',
+        vi: '',
+      },
+      description: ''
+    }
+  })
 
   const mutation = useMutation({
     mutationFn: createCategory,
@@ -80,29 +89,74 @@ export default function CategoryCreate() {
           <CardTitle>Create Category</CardTitle>
           <CardDescription>description Create Category</CardDescription>
         </CardHeader>
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <CardContent>
-            <div className="grid grid-cols-3 gap-x-4 gap-y-6">
+        <form onSubmit={form.handleSubmit(onSubmit)}>
 
-              <div className="flex flex-col col-span-1 space-y-2 ">
-                <Label htmlFor="name">Name</Label>
-                <Input {...register('name', { required: true })} id="name" placeholder="Name of your Category" />
-                {errors.name && <span className="text-xs text-red-500">This field is required</span>}
+          <Form {...form}>
+
+            <CardContent>
+              <div className="grid grid-cols-3 gap-x-4 gap-y-6">
+
+
+                <FormField
+                  control={form.control}
+                  name="name.en"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Name en</FormLabel>
+                      <FormControl>
+                        <Input
+                          placeholder="Name en"
+                          {...field}
+
+                        />
+                      </FormControl>
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="name.vi"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Name vi</FormLabel>
+                      <FormControl>
+                        <Input
+                          placeholder="Name vi"
+                          {...field}
+
+                        />
+                      </FormControl>
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="description"
+                  render={({ field }) => (
+                    <FormItem className="h-15">
+                      <FormLabel>Description</FormLabel>
+                      <FormControl className="d">
+                        <Textarea
+                          className="min-h-[70px]"
+                          placeholder="Bio your here"
+                          {...field}
+                        />
+                      </FormControl>
+                    </FormItem>
+                  )}
+                />
+
               </div>
-
-              <div className="flex flex-col col-span-2 space-y-2 ">
-                <Label htmlFor="description">Description</Label>
-                <Textarea {...register('description')} placeholder="Type your description here." />
-              </div>
-
-            </div>
-          </CardContent>
-          <CardFooter className="flex justify-end">
-            <Button
-              type="submit"
-              className="bg-blue-500 text-white hover:bg-blue-600 rounded-lg"
-            >Save</Button>
-          </CardFooter>
+            </CardContent>
+            <CardFooter className="flex justify-end">
+              <Button
+                type="submit"
+                className="bg-blue-500 text-white hover:bg-blue-600 rounded-lg"
+              >Save</Button>
+            </CardFooter>
+          </Form>
         </form>
       </Card>
     </div >

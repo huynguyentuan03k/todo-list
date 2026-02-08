@@ -90,7 +90,7 @@ export default function PodcastCreate() {
     queryKey: ['categories'],
     queryFn: async () => {
       const res = await http.get<{ data: Categories }>('/categories')
-      return res.data.data.map(item => ({ value: item.id, label: item.name ?? "Unkown" })) ?? []
+      return res.data.data.map(item => ({ value: item.id, label: item.name?.en ?? "Unkown" })) ?? []
     }
   })
 

@@ -17,7 +17,12 @@ export type Links = {
 };
 export const CategorySchema = z.object({
   id: z.number(),
-  name: z.string().nullable(),
+  name: z
+    .object({
+      en: z.string().nullable().optional(),
+      vi: z.string().nullable().optional(),
+    })
+    .nullable(),
   description: z.string().nullable(),
   created_at: z.union([z.date(), z.string(), z.date()]).nullable(),
   updated_at: z.union([z.date(), z.string()]).nullable(),
@@ -32,4 +37,12 @@ export type CategoryResponse<T> = {
   data: T;
   meta: Meta;
   links: Links;
+};
+
+export type CategoryForm = {
+  name: {
+    vi: string;
+    en: string;
+  };
+  description: string;
 };

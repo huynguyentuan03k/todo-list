@@ -57,7 +57,6 @@ export default function PodcastEdit() {
       formData.append('category_ids[]', String(id))
     })
 
-    console.log("formData ", formData)
     return http.post<Podcast>(`/podcasts/${id}`, formData, {
       headers: {
         "Content-Type": "Multipart/form-data",
@@ -162,7 +161,7 @@ export default function PodcastEdit() {
 
       return res.data.data.map(item => ({
         value: item.id,
-        label: item.name ?? ''
+        label: item.name?.en ?? ''
       })) ?? []
     }
   })

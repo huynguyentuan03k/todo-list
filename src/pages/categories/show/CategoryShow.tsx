@@ -56,9 +56,15 @@ export default function CategoryShow() {
 
         <CardContent>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+
             <div className="flex flex-col col-span-1 sm:col-span-1">
-              <Label>Name</Label>
-              <p>{category.name}</p>
+              <Label>Name(en)</Label>
+              <p>{category.name?.en}</p>
+            </div>
+
+            <div className="flex flex-col col-span-1 sm:col-span-1">
+              <Label>Name(vi)</Label>
+              <p>{category.name?.vi}</p>
             </div>
 
             <div className="flex flex-col col-span-1 sm:col-span-1">
