@@ -17,7 +17,7 @@ type Props = {
   overflowBehavior?: "wrap-when-open" | "wrap" | "cutoff",
   options: MultiSeclectOptions[],
   onChange: (value: string[]) => void
-  value: number[],
+  value: string[],
   singleSelect?: boolean,
   contentDisplay?: (value: MultiSeclectOptions) => string,
   isLoading: boolean,
