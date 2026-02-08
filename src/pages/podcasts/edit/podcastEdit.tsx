@@ -19,6 +19,8 @@ import TinyEditor from "@/pages/components/custom/TinyEditor"
 import { Authors } from "@/pages/authors/shema"
 import MultiSelectCustom from "@/pages/components/custom/MultiSelectCustom"
 import { Categories } from "@/pages/categories/shema"
+import { ApiErrorResonse } from "@/pages/episodes/edit/EpisodeEdit"
+import { AxiosError } from "axios"
 
 
 export default function PodcastEdit() {
@@ -33,7 +35,6 @@ export default function PodcastEdit() {
 
   const updatePodcast = (podcast: PodcastForm) => {
     // trong formData chi chap nhan , string , Blob
-
     const formData = new FormData();
 
     if (podcast.cover_image) {
@@ -47,7 +48,16 @@ export default function PodcastEdit() {
 
     formData.append('publisher_id', podcast.publisher_id?.toString() ?? "")
 
+    // lưu ý là từ string[] nó sẽ chuyền thành ['1','2','3'] => '1,2,3'
 
+    podcast.author_ids?.forEach(id => {
+      formData.append('author_ids[]', String(id))
+    })
+    podcast.category_ids?.forEach(id => {
+      formData.append('category_ids[]', String(id))
+    })
+
+    console.log("formData ", formData)
     return http.post<Podcast>(`/podcasts/${id}`, formData, {
       headers: {
         "Content-Type": "Multipart/form-data",
@@ -110,10 +120,10 @@ export default function PodcastEdit() {
       });
       navigate(`/portal/podcasts/${data?.data.data.id}/show`);
     },
-    onError: () => {
+    onError: (error: AxiosError<ApiErrorResonse>) => {
       toast({
         title: "update podcast error",
-        description: "cannot update podcast .",
+        description: error.response?.data.message,
       })
     },
   })
