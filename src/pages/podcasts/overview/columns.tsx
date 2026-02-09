@@ -28,7 +28,6 @@ export const columns: ColumnDef<Podcast>[] = [
       )
     }),
     cell: ({ row }) => (
-
       <div className="capitalize">{row.getValue("id")}</div>
     ),
   },

@@ -36,6 +36,8 @@ import AboutMe from './pages/aboutMe/AboutMe';
 import { Analytics } from '@vercel/analytics/react';
 import { AudioProvider } from './components/audio/provider';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
+import ActivityOverview from './pages/activities/overview/ActivityOverview';
+import ActivityShow from './pages/activities/show/ActivityShow';
 
 const queryClient = new QueryClient();
 const router = createBrowserRouter([
@@ -157,6 +159,19 @@ const router = createBrowserRouter([
           {
             path: ':id/delete',
           }
+        ]
+      },
+      {
+        path: '/portal/activities',
+        children: [
+          {
+            index: true,
+            element: <ActivityOverview />
+          },
+          {
+            path: ':id/show',
+            element: <ActivityShow />
+          },
         ]
       },
       {

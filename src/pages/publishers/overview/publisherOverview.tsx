@@ -11,7 +11,7 @@ import Breadcrumbs from "@/pages/components/custom/breadcrumbs"
 import { useEffect } from "react"
 
 
-const getPublishers = (page: number | string = 1, per_page: number | string = 10) => {
+const getPublishers = (page: number | string, per_page: number | string) => {
 
   const response = http.get<PublisherResponse<Publishers>>("/publishers", {
     params: { page, per_page },
@@ -24,10 +24,12 @@ const getPublishers = (page: number | string = 1, per_page: number | string = 10
 export default function PublishersOverview() {
 
   useEffect(() => {
-    localStorage.setItem('PER_PAGE', '10')
+    if (!localStorage.getItem('PER_PAGE')) {
+      localStorage.setItem('PER_PAGE', '10')
+    }
   }, [])
 
-  const per_page = Number(localStorage.getItem('PER_PAGE')) | 10
+  const per_page = Number(localStorage.getItem('PER_PAGE')) || 10
 
   const [searchParams] = useSearchParams()
   const page = searchParams.get('page') || 1
@@ -71,7 +73,7 @@ export default function PublishersOverview() {
         data={publishers}
         meta={data?.data.meta}
         fieldTitle="name"
-        pageIndex={0}
+        pageIndex={Number(page) - 1}
         pageSize={per_page}
       />
     </div>

@@ -24,7 +24,9 @@ export default function AuthorOverview() {
   const per_page = localStorage.getItem('PER_PAGE') ?? '10'
 
   useEffect(() => {
-    localStorage.setItem('PER_PAGE', '10')
+    if (!localStorage.getItem('PER_PAGE')) {
+      localStorage.setItem('PER_PAGE', '10')
+    }
   }, [])
 
   const { data, isLoading, error } = useQuery({

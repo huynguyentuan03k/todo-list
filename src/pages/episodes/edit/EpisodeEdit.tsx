@@ -88,7 +88,6 @@ export default function EpisodeEdit() {
     // cần lưu ý rằng vì dùng axios nên data trả về khi lỗi sẽ là type AxiosError và AxiosError có nhận vào generate TYPE ERROR nhớ đính nghĩa ko
     // đến đoạn err.response.data nó sẽ ko biết data có shape gì
     onError: (err: AxiosError<ApiErrorResonse>) => {
-      console.log(err.response?.data)
       toast({
         title: "update episode error",
         description: err.response?.data?.message,

@@ -19,9 +19,10 @@ const getPodcasts = (
     title?: string,
     description?: string,
   },
+  sort: string | "-id",
 ) => {
   const response = http.get<PodcastResponse<Podcasts>>("/podcasts", {
-    params: { page, per_page, filter: filters },
+    params: { page, per_page, filter: filters, sort },
     // tuc la khi response luon tra ve kieu nay : type PublisherResponse<Publishers>
   })
 
@@ -35,15 +36,13 @@ export default function PodcastsOverview() {
   const [searchParams, setSearchParams] = useSearchParams()
   const useRefInput = useRef<HTMLInputElement>(null)
 
-  const sortBy = searchParams.get("sortBy") ?? "sort_by"
+  const sort = searchParams.get("sort") ?? "-id"
   const title = searchParams.get('title') ?? ""
   const page = searchParams.get('page') || 1
 
   const { data, isLoading, error } = useQuery({
-    queryKey: ['podcasts', page, per_page, title, sortBy],
-    queryFn: () => getPodcasts(page, per_page, {
-      title: title || undefined
-    }),
+    queryKey: ['podcasts', page, per_page, title, sort],
+    queryFn: () => getPodcasts(page, per_page, { title }, sort),
   })
 
   // useMemo : giúp giữ nguyên địa chỉ cho biến podcasts
@@ -52,19 +51,20 @@ export default function PodcastsOverview() {
   // Khi gõ vào ô Input (filter): Component render lại, nhưng data từ API vẫn chưa đổi (vì chưa gọi lại API hoặc API chưa trả kết quả mới)
   // -> useMemo không chạy lại -> nó trả về ngay kết quả đã parse ở bước trước.
   const podcasts = useMemo(() => {
-    console.log("podcast overview useMemo")
     return PodcastsSchema.parse(data?.data?.data ?? [])
   }, [data])
 
   // chi can chay 1 lan khi component re-render
   useEffect(() => {
-    localStorage.setItem('PER_PAGE', '10')
-    if (!isLoading && title && useRefInput.current) {
-      useRefInput.current?.focus()
+
+    if (!localStorage.getItem('PER_PAGE')) {
+      localStorage.setItem('PER_PAGE', '10')
+      if (!isLoading && title && useRefInput.current) {
+        useRefInput.current?.focus()
+      }
     }
-
+    
   }, [title, isLoading])
-
 
   if (isLoading) {
     return (
@@ -79,7 +79,7 @@ export default function PodcastsOverview() {
       Failed to load podcasts
     </div>
   }
-  console.log("podast overview")
+
   return (
     <div className="container mx-auto py-10">
       <div className="flex justify-between">
@@ -118,7 +118,6 @@ export default function PodcastsOverview() {
             }
           }}
         />
-
       </div>
 
       <DataTable

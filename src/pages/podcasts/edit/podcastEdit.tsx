@@ -175,8 +175,6 @@ export default function PodcastEdit() {
     return <div>No data</div>
   }
 
-  console.log("field.value cua publisher ", data?.data.data.authors.map(item => (item.id)) ?? undefined)
-
   return (
     <div >
       <div className="flex justify-between">

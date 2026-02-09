@@ -24,7 +24,9 @@ export default function EpisodeOverview() {
   const per_page = localStorage.getItem('PER_PAGE') ?? '10'
 
   useEffect(() => {
-    localStorage.setItem('PER_PAGE', '10')
+    if (!localStorage.getItem('PER_PAGE')) {
+      localStorage.setItem('PER_PAGE', '10')
+    }
   }, [])
 
   const { data, isLoading, error } = useQuery({
@@ -45,7 +47,6 @@ export default function EpisodeOverview() {
   }
 
   const episodes = EpisodesSchema.parse(data?.data.data ?? [])
-  console.log("data-table")
   return (
     <div className="container mx-auto py-10">
       <DataTable

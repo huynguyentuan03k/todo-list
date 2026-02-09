@@ -21,6 +21,7 @@ import {
   KeyRound,
   LockKeyholeOpen,
   UserRoundCog,
+  Search,
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { ScrollArea } from "@/components/ui/scroll-area"
@@ -36,10 +37,7 @@ import { useAudioStore } from "@/lib/audio-store"
 const NAV_ITEMS = [
   { path: "/portal/aboutme", label: "About Me", icon: CircleUserRound },
   { path: "/", label: "Dashboard", icon: LayoutDashboard },
-  { path: "/portal/publishers", label: "Publishers", icon: Building2 },
-  { path: "/portal/categories", label: "Categories", icon: FolderTree },
-  { path: "/portal/authors", label: "Authors", icon: UserRoundPen },
-  { path: "/portal/episodes", label: "Episodes", icon: Mic },
+  { path: "/portal/activities", label: "Activities", icon: Search },
 
   {
     path: "/portal/accounts",
@@ -54,10 +52,13 @@ const NAV_ITEMS = [
   {
     path: "/portal/podcasts",
     label: "Podcasts",
-    icon: Radio,
+    icon: List,
     children: [
-      { path: "/portal/podcasts", label: "All Podcasts", icon: List },
-      { path: "/portal/podcasts/create", label: "Create New", icon: Plus },
+      { path: "/portal/publishers", label: "Publishers", icon: Building2 },
+      { path: "/portal/categories", label: "Categories", icon: FolderTree },
+      { path: "/portal/authors", label: "Authors", icon: UserRoundPen },
+      { path: "/portal/episodes", label: "Episodes", icon: Mic },
+      { path: "/portal/podcasts", label: "Podcasts", icon: Radio },
     ]
   },
   { path: "/epub", label: "Epub", icon: BookOpen },
