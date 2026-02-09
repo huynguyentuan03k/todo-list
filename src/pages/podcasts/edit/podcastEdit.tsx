@@ -161,7 +161,7 @@ export default function PodcastEdit() {
 
       return res.data.data.map(item => ({
         value: item.id,
-        label: item.name?.en ?? ''
+        label: `${item.name?.en}-${item.name?.vi}`
       })) ?? []
     }
   })
