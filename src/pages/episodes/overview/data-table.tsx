@@ -39,7 +39,7 @@ export function DataTable({ data, columns, meta }: props) {
     pageIndex: page - 1,
     pageSize: per_page
   })
-  
+
   const pageCount = Math.ceil((meta?.total ?? 0) / pagination.pageSize)
 
   const table = useReactTable({
@@ -118,7 +118,7 @@ export function DataTable({ data, columns, meta }: props) {
           </TableBody>
         </Table>
       </div>
-      <PaginationServer table={table} pagination={pagination} pageCount={pageCount} />
+      <PaginationServer table={table} pagination={pagination} pageCount={pageCount} setPagination={setPagination} />
     </div>
   )
 }
