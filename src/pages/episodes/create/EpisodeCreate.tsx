@@ -14,6 +14,8 @@ import { Form, FormControl, FormField, FormItem, FormLabel } from "@/components/
 import { comboboxOption, ComboboxSelect } from "@/pages/components/custom/ComboboxSelect"
 import { Podcasts } from "@/pages/podcasts/schema"
 import ValidationUrlAudio from "@/pages/components/custom/ValidationUrlAudio"
+import { InputOTP, InputOTPGroup, InputOTPSlot } from "@/components/ui/input-otp"
+import React from "react"
 
 /**
  * {
@@ -45,6 +47,7 @@ async function createEpisode(data: episodeForm) {
 export default function EpisodeCreate() {
   const navigate = useNavigate()
   const { toast } = useToast()
+  const [value, setValue] = React.useState("")
 
   const mutation = useMutation({
     mutationFn: createEpisode,
@@ -88,26 +91,28 @@ export default function EpisodeCreate() {
 
   const onSubmit: SubmitHandler<episodeForm> = (data) => {
     const fieldsArray = data.episodes
-
     const payload = {
       ...data,
+      title: `${data.title}  ${value}`,
+      slug: `${data.slug} ${value}`,
       episodes: fieldsArray.map((item, index) =>
         index === 0 ?
           {
             ...item,
-            slug: `${data.slug.split('1')[0]}${(index + 2)}`,
+            slug: `${data.slug} ${(Number(value) + index + 1)}`,
             podcast_id: data.podcast_id,
-            title: `${data.title.split('1')[0]}${index + 2}`
+            title: `${data.title} ${Number(value) + index + 1}`
           } :
           {
             ...item,
             podcast_id: data.podcast_id,
-            slug: `${data.slug.split('1')[0]}${(index + 2)}`,
-            title: `${data.title.split('1')[0]}${index + 2}`
+            slug: `${data.slug} ${(Number(value) + index + 1)}`,
+            title: `${data.title} ${Number(value) + index + 1}`
           }
       )
     }
 
+    console.log('debug ', payload)
     mutation.mutate(payload)
   }
 
@@ -121,7 +126,7 @@ export default function EpisodeCreate() {
       })) ?? []
     }
   })
-
+  console.log("re-render ", value)
   return (
     <div>
       <div className="flex justify-between">
@@ -146,14 +151,13 @@ export default function EpisodeCreate() {
                 */}
               <div className="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-3 gap-x-4 gap-y-6">
 
-
                 <div className="lg:col-span-1 md:col-span-2 ">
                   <FormField
                     control={form.control}
                     name="title"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Title 1</FormLabel>
+                        <FormLabel>Title</FormLabel>
                         <FormControl>
                           <Input
                             // type text luon tra ra string , 'abc', '',
@@ -162,6 +166,16 @@ export default function EpisodeCreate() {
                             {...field}
                           />
                         </FormControl>
+                        <div>
+                          <InputOTP maxLength={2} defaultValue="01"
+                            onChange={(value) => setValue(value)}
+                          >
+                            <InputOTPGroup>
+                              <InputOTPSlot index={0} />
+                              <InputOTPSlot index={1} />
+                            </InputOTPGroup>
+                          </InputOTP>
+                        </div>
                       </FormItem>
                     )}
                   />
@@ -269,7 +283,7 @@ export default function EpisodeCreate() {
                         name={`episodes.${index}.audio_path`}
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Audio Url {index === 0 ? 2 : index + 2}</FormLabel>
+                            <FormLabel>Audio Url {(Number(value) + index + 1)}</FormLabel>
                             <FormControl>
                               <Textarea
                                 {...field}
