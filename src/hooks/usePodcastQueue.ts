@@ -31,15 +31,27 @@ import { useQuery } from '@tanstack/react-query';
 // ko dùng destructering và type khi làm việc với hook nhận giá trị trược tiếp : {podcastId}:Props
 
 export default function usePodcastQueue(podcastId: number) {
-  const { data } = useQuery<Podcast | undefined>({
+  // khi component mount cũng ko gọi api chỉ gọi khi click vì đùng refetch
+  const { refetch } = useQuery<Podcast | undefined>({
     queryKey: ['podcasts', podcastId],
     queryFn: async () => (await http.get<{ data: Podcast }>(`/podcasts/${podcastId}`)).data.data,
+    /**
+ * - KHÔNG tự chạy
+- Không chạy khi mount
+- Không chạy khi queryKey đổi
+- Không chạy khi focus window
+- Chỉ chạy khi gọi refetch()
+ */
+    enabled: false,
   });
 
   const enqueue = async () => {
-    if (!data?.episodes) return;
+    const result = await refetch();
+    const podcast = result.data;
 
-    const filterData: Track[] = data?.episodes?.map((item) => ({
+    if (!podcast?.episodes) return;
+
+    const filterData: Track[] = podcast.episodes?.map((item) => ({
       id: item.id,
       url: item.audio_path ?? '',
       title: item.title ?? '',
