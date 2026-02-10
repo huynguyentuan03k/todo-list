@@ -93,8 +93,8 @@ export default function EpisodeCreate() {
     const fieldsArray = data.episodes
     const payload = {
       ...data,
-      title: `${data.title}  ${value}`,
-      slug: `${data.slug} ${value}`,
+      title: `${data.title}  ${Number(value)}`,
+      slug: `${data.slug} ${Number(value)}`,
       episodes: fieldsArray.map((item, index) =>
         index === 0 ?
           {
