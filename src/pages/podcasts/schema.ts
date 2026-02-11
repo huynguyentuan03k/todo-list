@@ -34,7 +34,7 @@ export const PodcastSchema = z.object({
   updated_at: z.string().nullable(),
   categories: CategoriesSchema,
   authors: AuthorsSchema,
-  episodes_count: z.number().nullable(),
+  episode_count: z.number(),
 });
 
 export const PodcastShowSchema = PodcastSchema.extend({
@@ -45,6 +45,9 @@ export const PodcastsSchema = z.array(PodcastSchema);
 
 export type Podcast = z.infer<typeof PodcastSchema>;
 export type Podcasts = z.infer<typeof PodcastsSchema>;
+
+export type PodcastShow = z.infer<typeof PodcastShowSchema>;
+
 export type PodcastResponse<T> = {
   data: T;
   meta: Meta;

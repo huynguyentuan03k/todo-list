@@ -75,7 +75,7 @@ export function ActionsCell({ podcast }: { podcast: Podcast }) {
       {/* section icon snap podcast */}
 
       {/* Fallback về mảng rỗng , ?? trả về mảng rỗng */}
-      {(podcast?.episodes ?? []).length > 0 && (
+      {(podcast?.episode_count <= 0) && (
         <RotateCw
           size={20}
           className={`cursor-pointer transition-all duration-700 ${isSpinning

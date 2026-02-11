@@ -1,6 +1,6 @@
 import { useAudioStore } from '@/lib/audio-store';
 import { Track } from '@/lib/html-audio';
-import { Podcast } from '@/pages/podcasts/schema';
+import { PodcastShow } from '@/pages/podcasts/schema';
 import http from '@/utils/http';
 import { useQuery } from '@tanstack/react-query';
 
@@ -32,9 +32,10 @@ import { useQuery } from '@tanstack/react-query';
 
 export default function usePodcastQueue(podcastId: number) {
   // khi component mount cũng ko gọi api chỉ gọi khi click vì đùng refetch
-  const { refetch } = useQuery<Podcast | undefined>({
+  const { refetch } = useQuery<PodcastShow | undefined>({
     queryKey: ['podcasts', podcastId],
-    queryFn: async () => (await http.get<{ data: Podcast }>(`/podcasts/${podcastId}`)).data.data,
+    queryFn: async () =>
+      (await http.get<{ data: PodcastShow }>(`/podcasts/${podcastId}`)).data.data,
     /**
  * - KHÔNG tự chạy
 - Không chạy khi mount
