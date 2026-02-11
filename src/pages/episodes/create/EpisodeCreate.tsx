@@ -112,7 +112,6 @@ export default function EpisodeCreate() {
       )
     }
 
-    console.log('debug ', payload)
     mutation.mutate(payload)
   }
 
@@ -126,7 +125,7 @@ export default function EpisodeCreate() {
       })) ?? []
     }
   })
-  console.log("re-render ", value)
+
   return (
     <div>
       <div className="flex justify-between">

@@ -33,8 +33,12 @@ export const PodcastSchema = z.object({
   created_at: z.string().nullable(),
   updated_at: z.string().nullable(),
   categories: CategoriesSchema,
-  episodes: EpisodesSchema.nullable(),
   authors: AuthorsSchema,
+  episodes_count: z.number().nullable(),
+});
+
+export const PodcastShowSchema = PodcastSchema.extend({
+  episodes: EpisodesSchema.nullable(),
 });
 
 export const PodcastsSchema = z.array(PodcastSchema);

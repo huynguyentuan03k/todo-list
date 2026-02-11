@@ -133,7 +133,7 @@ export const columns: ColumnDef<Podcast>[] = [
     accessorKey: "total episodes",
     header: 'total Episode',
     cell: ({ row }) => (
-      <div> {row.original.episodes?.length}</div>
+      <div> {row.original.episodes_count}</div>
     )
   },
   {

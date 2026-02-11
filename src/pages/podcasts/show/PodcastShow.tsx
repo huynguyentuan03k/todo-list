@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button"
 import { useNavigate, useParams } from "react-router-dom"
 import { useQuery } from "@tanstack/react-query"
 import http from "@/utils/http"
-import { Podcast, PodcastSchema } from "../schema"
+import { Podcast, PodcastShowSchema } from "../schema"
 import { EpisodesSchema } from "@/pages/episodes/shema"
 import { SpinnerLoading } from "@/pages/components/custom/SpinnerLoading"
 import { Link } from "react-router-dom"
@@ -30,7 +30,7 @@ export default function PodcastShow() {
     return <SpinnerLoading />
   }
 
-  const podcast = PodcastSchema.parse(data?.data.data)
+  const podcast = PodcastShowSchema.parse(data?.data.data)
 
   const episodes = EpisodesSchema.parse(podcast.episodes)
 
