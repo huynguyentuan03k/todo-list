@@ -69,22 +69,26 @@ export function ActionsCell({ podcast }: { podcast: Podcast }) {
     }, 10000); // 10 giây
   };
 
+  const episodes_count = podcast.episodes_count ?? 0
+
   return (
     <div className="flex gap-2" onClick={(e) => e.stopPropagation()}>
 
       {/* section icon snap podcast */}
 
       {/* Fallback về 0 number , ?? trả về 0 number*/}
-      {(podcast?.episodes_count ?? 0 > 0) && (
-        <RotateCw
-          size={20}
-          className={`cursor-pointer transition-all duration-700 ${isSpinning
-            ? "animate-spin-slow-10s"
-            : "text-black hover:text-blue-500"
-            }`}
-          onClick={handleSnap}
-        />
-      )}
+      {
+        episodes_count > 0 ? (
+          <RotateCw
+            size={20}
+            className={`cursor-pointer transition-all duration-700 ${isSpinning
+              ? "animate-spin-slow-10s"
+              : "text-black hover:text-blue-500"
+              }`}
+            onClick={handleSnap}
+          />
+        ) : ''
+      }
 
 
       {/* section icon Preview Content */}

@@ -35,7 +35,7 @@ export const columns: ColumnDef<Podcast>[] = [
     accessorKey: "cover_url",
     header: "Cover Image",
     cell: ({ row }) => (
-      <AspectRatio ratio={1.1 / 1.5} className="bg-muted rounded-none">
+      <AspectRatio ratio={1.1 / 1.5} className="bg-muted rounded-none min-w-[100px] ">
         {
           row.original.cover_url ?
             <img
@@ -56,18 +56,8 @@ export const columns: ColumnDef<Podcast>[] = [
       return (
         <Button
           variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Title
-          {
-            column.getIsSorted() === "asc" ? (
-              <ArrowUp />
-            ) : column.getIsSorted() === "desc" ? (
-              <ArrowDown />
-            ) : (
-              <ArrowUpDown />
-            )
-          }
         </Button>
       )
     }),
@@ -88,13 +78,7 @@ export const columns: ColumnDef<Podcast>[] = [
     accessorKey: "slug",
     header: ({ column }) => {
       return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Slug
-          <ArrowUpDown />
-        </Button>
+        'Slug'
       )
     },
     cell: ({ row }) => <div className="lowercase">{row.getValue("slug")}</div>,
@@ -131,7 +115,23 @@ export const columns: ColumnDef<Podcast>[] = [
   },
   {
     accessorKey: "total episodes",
-    header: 'total Episode',
+    header: ({ column }) => (
+      <Button
+        variant="ghost"
+        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+      >
+        Total Episodes
+        {
+          column.getIsSorted() === "asc" ? (
+            <ArrowUp />
+          ) : column.getIsSorted() === "desc" ? (
+            <ArrowDown />
+          ) : (
+            <ArrowUpDown />
+          )
+        }
+      </Button>
+    ),
     cell: ({ row }) => (
       <div> {row.original.episodes_count}</div>
     )
