@@ -9,7 +9,8 @@ import { Button } from "@/components/ui/button"
 import { Link } from "react-router-dom"
 import Breadcrumbs from "@/pages/components/custom/breadcrumbs"
 import { Input } from "@/components/ui/input"
-import { useEffect, useMemo, useRef } from "react"
+import React, { useEffect, useMemo, useRef } from "react"
+import { useDebounce } from "@/hooks/useDebounce"
 
 
 const getPodcasts = (
@@ -35,13 +36,17 @@ export default function PodcastsOverview() {
 
   const [searchParams, setSearchParams] = useSearchParams()
   const useRefInput = useRef<HTMLInputElement>(null)
+  /**
+   * phải là input state = source of truth , ko nên url = source of truth const title = searchParams.get('title')
+   */
+  const [title, setTitle] = React.useState('')
 
   const sort = searchParams.get("sort") ?? "-id"
-  const title = searchParams.get('title') ?? ""
   const page = searchParams.get('page') || 1
+  const titleDebounced = useDebounce(title, 300)
 
   const { data, isLoading, error } = useQuery({
-    queryKey: ['podcasts', page, per_page, title, sort],
+    queryKey: ['podcasts', page, per_page, titleDebounced, sort],
     queryFn: () => getPodcasts(page, per_page, { title }, sort),
   })
 
@@ -57,14 +62,32 @@ export default function PodcastsOverview() {
   // chi can chay 1 lan khi component re-render
   useEffect(() => {
 
+    // logic 1
     if (!localStorage.getItem('PER_PAGE')) {
       localStorage.setItem('PER_PAGE', '10')
-      if (!isLoading && title && useRefInput.current) {
-        useRefInput.current?.focus()
-      }
     }
 
-  }, [title, isLoading])
+    // logic 2
+    if (!isLoading && useRefInput.current) {
+      useRefInput.current?.focus()
+    }
+
+    // logic 3
+    if (title) {
+      setSearchParams((pre) => {
+        const preNew = new URLSearchParams(pre)
+
+        if (titleDebounced) {
+          preNew.set('title', titleDebounced)
+        } else {
+          preNew.delete('title')
+        }
+
+        return preNew
+      })
+    }
+
+  }, [title, isLoading, setSearchParams, titleDebounced])
 
   if (isLoading) {
     return (
@@ -79,7 +102,7 @@ export default function PodcastsOverview() {
       Failed to load podcasts
     </div>
   }
-
+  console.log("re-render")
   return (
     <div className="container mx-auto py-10">
       <div className="flex justify-between">
@@ -100,17 +123,7 @@ export default function PodcastsOverview() {
           onChange={(e) => {
 
             // không dùng e.target vì TypeScript không đảm bảo target là HTMLInputElement
-            const value = e.currentTarget.value
-
-            setSearchParams((pre) => {
-              const preNew = new URLSearchParams(pre)
-              if (value) {
-                preNew.set('title', value)
-              } else {
-                preNew.delete('title')
-              }
-              return preNew
-            })
+            setTitle(e.currentTarget.value)
 
             // sau khi set state value trong thi auto focus vao the input
             if (useRefInput.current) {
