@@ -13,6 +13,7 @@ export const columns: ColumnDef<Podcast>[] = [
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          className="p-0"
         >
           Id
           {
@@ -35,7 +36,7 @@ export const columns: ColumnDef<Podcast>[] = [
     accessorKey: "cover_url",
     header: "Cover Image",
     cell: ({ row }) => (
-      <AspectRatio ratio={1.1 / 1.5} className="bg-muted rounded-none">
+      <AspectRatio ratio={1.1 / 1.5} className="bg-muted rounded-none ">
         {
           row.original.cover_url ?
             <img
@@ -56,6 +57,7 @@ export const columns: ColumnDef<Podcast>[] = [
       return (
         <Button
           variant="ghost"
+          className="p-0"
         >
           Title
         </Button>
@@ -73,15 +75,6 @@ export const columns: ColumnDef<Podcast>[] = [
       // ko can responsive de max-w la md toan bo ,
       <div className="capitalize max-w-sm line-clamp-4">{row.getValue("description")}</div>
     ),
-  },
-  {
-    accessorKey: "slug",
-    header: ({ column }) => {
-      return (
-        'Slug'
-      )
-    },
-    cell: ({ row }) => <div className="lowercase">{row.getValue("slug")}</div>,
   },
   {
     accessorKey: "categories",
@@ -119,8 +112,9 @@ export const columns: ColumnDef<Podcast>[] = [
       <Button
         variant="ghost"
         onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        className="p-0"
       >
-        Total Episodes
+        Episodes
         {
           column.getIsSorted() === "asc" ? (
             <ArrowUp />
