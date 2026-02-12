@@ -43,7 +43,7 @@ export default function PodcastsOverview() {
 
   const sort = searchParams.get("sort") ?? "-id"
   const page = searchParams.get('page') || 1
-  const titleDebounced = useDebounce(title, 300)
+  const titleDebounced = useDebounce(title, 400)
 
   const { data, isLoading, error } = useQuery({
     queryKey: ['podcasts', page, per_page, titleDebounced, sort],
