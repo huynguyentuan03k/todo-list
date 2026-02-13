@@ -13,7 +13,26 @@ import { useToast } from "@/components/ui/hooks/use-toast"
 import { Textarea } from "@/components/ui/textarea"
 import Breadcrumbs from "@/pages/components/custom/breadcrumbs"
 import { Form, FormControl, FormField, FormItem, FormLabel } from "@/components/ui/form"
+import { AxiosError } from "axios"
 
+/**
+ * {
+  "message": "The given data was invalid.",
+  "errors": {
+    "email": [
+      "The email has already been taken."
+    ],
+    "name": [
+      "The name field is required."
+    ]
+  }
+}
+**/
+
+type ApiResponse = {
+  message: string,
+  errors: Record<string, string[]>,
+}
 
 export default function CategoryEdit() {
   const { id } = useParams()
@@ -66,10 +85,10 @@ export default function CategoryEdit() {
       });
       navigate('/portal/categories')
     },
-    onError: () => {
+    onError: (error: AxiosError<ApiResponse>) => {
       toast({
         title: "update category error",
-        description: "cannot update category .",
+        description: error.response?.data.message,
       })
     },
   })

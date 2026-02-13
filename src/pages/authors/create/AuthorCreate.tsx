@@ -24,6 +24,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
     ]
   }
 }
+
 Record<string, string[]> la kiểu dựng sẵn (utility type) trong TypeScript.
 - errors là một object
 - Key: tên field (vd: "email", "name") → string

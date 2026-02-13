@@ -29,13 +29,13 @@ export default function ActivityOverview() {
       localStorage.setItem('PER_PAGE', '10')
     }
   }, [])
-  
+
   const { data, isLoading, error } = useQuery({
     queryKey: ['Activities', page, per_page],
     queryFn: () => getActivities(page, per_page),
   })
 
-  if (isLoading) {
+  if(isLoading){
     return (
       <div className="flex justify-center py-10">
         <Loader2 className="h-6 w-6 animate-spin" />
@@ -43,7 +43,7 @@ export default function ActivityOverview() {
     )
   }
 
-  if (error) {
+  if(error){
     return <p className="text-red-500">Failed to load episode</p>
   }
 

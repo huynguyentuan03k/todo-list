@@ -16,19 +16,22 @@ export type Links = {
   prev: string | null;
   next: string | null;
 };
-const ActivityPropertiesSchema = z
-  .object({
-    attributes: z.record(z.any(), z.any()).optional(),
-    old: z.record(z.any(), z.any()).optional(),
-  })
-  .nullable()
-  .optional();
+const ActivityPropertiesSchema = z.union([
+  z
+    .object({
+      attributes: z.record(z.any().optional(), z.any().optional()).optional(),
+      old: z.record(z.any().optional(), z.any().optional()).optional(),
+    })
+    .nullable()
+    .optional(),
+  z.array(z.any()),
+]);
 
 export const ActivitySchema = z.object({
   id: z.number(),
   event: z.string().nullable().optional(),
   log_name: z.string().nullable().optional(),
-  subject_type: z.string(),
+  subject_type: z.string().nullable(),
 
   properties: ActivityPropertiesSchema,
 

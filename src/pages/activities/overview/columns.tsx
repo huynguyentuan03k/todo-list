@@ -45,10 +45,5 @@ export const columns: ColumnDef<Activity>[] = [
       <div className="capitalize line-clamp-3">{row.getValue("updated_at")}</div>
     ),
   },
-  {
-    header: "Actions",
-    id: "actions",
-    enableHiding: false,
-    cell: ({ row }) => < ActionsCellAuthor activity={row.original} />
-  },
+
 ]
