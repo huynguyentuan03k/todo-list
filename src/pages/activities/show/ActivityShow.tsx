@@ -145,7 +145,7 @@ Array(5) [ (2) […], (2) […], (2) […], (2) […], (2) […] ]
                       </td>
 
                       {/* old */}
-                      <td scope="row" className="px-6 py-4 font-medium text-heading whitespace-normal break-all line-clamp-6">
+                      <td scope="row" className="px-6 py-4 font-medium text-heading whitespace-normal break-all ">
                         {Array.isArray(value) ? '' : value}
                       </td>
 
