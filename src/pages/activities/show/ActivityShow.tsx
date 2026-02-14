@@ -7,8 +7,6 @@ import http from "@/utils/http"
 import { Activity, ActivitySchema } from "../shema"
 import { SpinnerLoading } from "@/pages/components/custom/SpinnerLoading"
 import Breadcrumbs from "@/pages/components/custom/breadcrumbs"
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible"
-import { ChevronDownIcon } from "lucide-react"
 
 export default function ActivityShow() {
   const navigate = useNavigate()
@@ -138,8 +136,6 @@ Array(5) [ (2) […], (2) […], (2) […], (2) […], (2) […] ]
                 Object.entries(old ?? {}).map(([key, value], index) => {
                   const isLast = index === (Object.entries(old ?? {}).length - 1);
 
-                  const newValue = Object.entries(newData ?? {})[index]?.[1]
-
                   return (
                     <tr className="bg-neutral-primary border-b border-default">
 
@@ -150,58 +146,14 @@ Array(5) [ (2) […], (2) […], (2) […], (2) […], (2) […] ]
 
                       {/* old */}
                       <td scope="row" className="px-6 py-4 font-medium text-heading whitespace-normal break-all line-clamp-6">
-                        {
-                          isLast ? (
-                            <Card className="flex justify-center items-center">
-                              <CardContent>
-                                <Collapsible className="data-[state=open]:bg-muted rounded-md">
-                                  <CollapsibleTrigger asChild>
-                                    <Button variant="ghost" className="group w-full">
-                                      Content details
-                                      <ChevronDownIcon className="ml-auto group-data-[state=open]:rotate-180" />
-                                    </Button>
-                                  </CollapsibleTrigger>
-                                  <CollapsibleContent className="flex flex-col items-start pt-0 text-sm">
-                                    {
-                                      Object.entries(newData ?? {})[index]?.[1]
-                                    }
-                                    <Button size="lg">Learn More</Button>
-                                  </CollapsibleContent>
-                                </Collapsible>
-                              </CardContent>
-                            </Card>
-                          ) : (
-                            Array.isArray(value) ? '' : value
-                          )
-                        }
+                        {Array.isArray(value) ? '' : value}
                       </td>
 
                       {/* new */}
                       {/* tôi muốn phần tử cuối phải có 1 ui riêng */}
                       <td scope="row" className={`px-6 py-4 font-medium text-heading whitespace-normal break-all `}>
                         {
-                          isLast ? (
-                            <Card className="flex justify-center items-center">
-                              <CardContent>
-                                <Collapsible className="data-[state=open]:bg-muted rounded-md">
-                                  <CollapsibleTrigger asChild>
-                                    <Button variant="ghost" className="group w-full">
-                                      Content details
-                                      <ChevronDownIcon className="ml-auto group-data-[state=open]:rotate-180" />
-                                    </Button>
-                                  </CollapsibleTrigger>
-                                  <CollapsibleContent className="flex flex-col items-start  pt-0 text-sm">
-                                    {
-                                      Object.entries(newData ?? {})[index]?.[1]
-                                    }
-                                    <Button size="lg">Learn More</Button>
-                                  </CollapsibleContent>
-                                </Collapsible>
-                              </CardContent>
-                            </Card>
-                          ) : (
-                            newValue
-                          )
+                          Object.entries(newData ?? {})[index][1]
                         }
                       </td>
                     </tr>
