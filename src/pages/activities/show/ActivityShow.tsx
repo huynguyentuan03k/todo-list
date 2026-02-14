@@ -7,6 +7,8 @@ import http from "@/utils/http"
 import { Activity, ActivitySchema } from "../shema"
 import { SpinnerLoading } from "@/pages/components/custom/SpinnerLoading"
 import Breadcrumbs from "@/pages/components/custom/breadcrumbs"
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible"
+import { ChevronDownIcon } from "lucide-react"
 
 export default function ActivityShow() {
   const navigate = useNavigate()
@@ -77,7 +79,6 @@ Array(5) [ (2) […], (2) […], (2) […], (2) […], (2) […] ]
 
 
 */
-
   return (
     <div>
       <div className="flex w-full justify-between">
@@ -109,22 +110,13 @@ Array(5) [ (2) […], (2) […], (2) […], (2) […], (2) […] ]
             </div>
             <div className="flex flex-col col-span-3">
               <Label>Properties</Label>
-              {
-                typeof activity.properties === 'object' ? (
-                  <div>
-                    <span>object</span>
-                  </div>
-
-                ) : (
-                  <span>array</span>
-                )
-              }
             </div>
+
           </div >
         </CardContent >
 
-        <div className="relative overflow-x-auto bg-neutral-primary-soft shadow-xs rounded-base border border-default">
-          <table className="w-full text-sm text-left rtl:text-right text-body">
+        <div className="relative bg-neutral-primary-soft shadow-xs rounded-base border border-default">
+          <table className="w-full text-sm text-left rtl:text-right text-body table-fixed">
             <thead className="text-sm text-body bg-neutral-secondary-soft border-b rounded-base border-default">
               <tr>
                 <th scope="col" className="px-6 py-3 font-medium">
@@ -138,34 +130,85 @@ Array(5) [ (2) […], (2) […], (2) […], (2) […], (2) […] ]
                 </th>
               </tr>
             </thead>
-            <tbody>
+            <tbody className="max-w-full">
               {
                 // lưu ý ở đoạn này dữ liệu lẩy ra destructering ( [key,value],index )
                 // lưu ý logic trong toàn bộ trang này phải hiểu và nhớ , nếu old bị null thì lấy ra attributess tức là dữ liệu mới
 
-                Object.entries(old ?? Object.entries(old ?? {})).map(([key, value], index) => (
-                  <tr className="bg-neutral-primary border-b border-default">
+                Object.entries(old ?? {}).map(([key, value], index) => {
+                  const isLast = index === (Object.entries(old ?? {}).length - 1);
 
-                    {/* name */}
-                    <td scope="row" className="px-6 py-4 font-medium text-heading whitespace-nowrap">
-                      {Array.isArray(value) ? value[0] : key}
-                    </td>
+                  const newValue = Object.entries(newData ?? {})[index]?.[1]
 
-                    {/* old */}
-                    <td scope="row" className="px-6 py-4 font-medium text-heading whitespace-nowrap">
-                      {Array.isArray(value) ? '' : value}
-                    </td>
+                  return (
+                    <tr className="bg-neutral-primary border-b border-default">
 
-                    {/* new */}
-                    <td scope="row" className="px-6 py-4 font-medium text-heading whitespace-nowrap">
-                      {
-                        Object.entries(newData ?? {})[index][1]
-                      }
-                    </td>
-                  </tr>
-                ))
+                      {/* name */}
+                      <td scope="row" className="px-6 py-4 font-medium text-heading whitespace-normal break-all ">
+                        {Array.isArray(value) ? value[0] : key}
+                      </td>
+
+                      {/* old */}
+                      <td scope="row" className="px-6 py-4 font-medium text-heading whitespace-normal break-all line-clamp-6">
+                        {
+                          isLast ? (
+                            <Card className="flex justify-center items-center">
+                              <CardContent>
+                                <Collapsible className="data-[state=open]:bg-muted rounded-md">
+                                  <CollapsibleTrigger asChild>
+                                    <Button variant="ghost" className="group w-full">
+                                      Content details
+                                      <ChevronDownIcon className="ml-auto group-data-[state=open]:rotate-180" />
+                                    </Button>
+                                  </CollapsibleTrigger>
+                                  <CollapsibleContent className="flex flex-col items-start pt-0 text-sm">
+                                    {
+                                      Object.entries(newData ?? {})[index]?.[1]
+                                    }
+                                    <Button size="lg">Learn More</Button>
+                                  </CollapsibleContent>
+                                </Collapsible>
+                              </CardContent>
+                            </Card>
+                          ) : (
+                            Array.isArray(value) ? '' : value
+                          )
+                        }
+                      </td>
+
+                      {/* new */}
+                      {/* tôi muốn phần tử cuối phải có 1 ui riêng */}
+                      <td scope="row" className={`px-6 py-4 font-medium text-heading whitespace-normal break-all `}>
+                        {
+                          isLast ? (
+                            <Card className="flex justify-center items-center">
+                              <CardContent>
+                                <Collapsible className="data-[state=open]:bg-muted rounded-md">
+                                  <CollapsibleTrigger asChild>
+                                    <Button variant="ghost" className="group w-full">
+                                      Content details
+                                      <ChevronDownIcon className="ml-auto group-data-[state=open]:rotate-180" />
+                                    </Button>
+                                  </CollapsibleTrigger>
+                                  <CollapsibleContent className="flex flex-col items-start  pt-0 text-sm">
+                                    {
+                                      Object.entries(newData ?? {})[index]?.[1]
+                                    }
+                                    <Button size="lg">Learn More</Button>
+                                  </CollapsibleContent>
+                                </Collapsible>
+                              </CardContent>
+                            </Card>
+                          ) : (
+                            newValue
+                          )
+                        }
+                      </td>
+                    </tr>
+                  )
+                }
+                )
               }
-
             </tbody>
           </table>
         </div>
