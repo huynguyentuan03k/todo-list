@@ -102,7 +102,7 @@ export default function PodcastShow() {
 
             <div className="flex flex-col col-span-1 lg:col-span-3 md:col-span-4">
               <Label>TinyMVC</Label>
-              <div
+              <div className="max-h-[500px] overflow-y-auto"
                 dangerouslySetInnerHTML={{ __html: podcast.content ?? "" }}
               >
 
