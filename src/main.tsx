@@ -40,6 +40,7 @@ import ActivityOverview from './pages/activities/overview/ActivityOverview';
 import ActivityShow from './pages/activities/show/ActivityShow';
 import LoginPage from '@/pages/login/page';
 import SignupPage from '@/pages/signup/page';
+import ForgotPasswordPage from '@/pages/forgot-password/page';
 
 const queryClient = new QueryClient();
 const router = createBrowserRouter([
@@ -229,6 +230,11 @@ const router = createBrowserRouter([
   {
     path: '/signup',
     element: <SignupPage />,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: '/forgot-password',
+    element: <ForgotPasswordPage />,
     errorElement: <ErrorPage />,
   },
 ])
