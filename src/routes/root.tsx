@@ -13,7 +13,6 @@ import {
   Menu,
   ChevronDown,
   List,
-  Plus,
   PanelLeftClose,
   PanelLeft,
   CircleUserRound,
@@ -324,7 +323,6 @@ export default function Root() {
           </Sheet>
         </div>
       </div>
-
 
 
       {/* Main Content */}

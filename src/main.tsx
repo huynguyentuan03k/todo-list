@@ -4,7 +4,7 @@ import { createBrowserRouter, Navigate, RouterProvider } from 'react-router-dom'
 import 'regenerator-runtime/runtime';
 import './index.css'
 import Root from './routes/root'
-import ErrorPage from './pages/error-page'
+import ErrorPage from './pages/components/custom/error-page'
 import PublishersOverview from './pages/publishers/overview/publisherOverview'
 import PublisherShow from './pages/publishers/show/PublisherShow'
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -38,6 +38,8 @@ import { AudioProvider } from './components/audio/provider';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import ActivityOverview from './pages/activities/overview/ActivityOverview';
 import ActivityShow from './pages/activities/show/ActivityShow';
+import LoginPage from '@/pages/login/page';
+import SignupPage from '@/pages/signup/page';
 
 const queryClient = new QueryClient();
 const router = createBrowserRouter([
@@ -218,6 +220,16 @@ const router = createBrowserRouter([
         ]
       }
     ]
+  },
+  {
+    path: '/login',
+    element: <LoginPage />,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: '/signup',
+    element: <SignupPage />,
+    errorElement: <ErrorPage />,
   },
 ])
 
