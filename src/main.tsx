@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client'
 import { createBrowserRouter, Navigate, RouterProvider } from 'react-router-dom'
 import 'regenerator-runtime/runtime';
 import './index.css'
-import Root from './routes/root'
+import Root from './layout/layout'
 import ErrorPage from './pages/components/custom/error-page'
 import PublishersOverview from './pages/publishers/overview/publisherOverview'
 import PublisherShow from './pages/publishers/show/PublisherShow'
@@ -41,7 +41,7 @@ import ActivityShow from './pages/activities/show/ActivityShow';
 import LoginPage from '@/pages/login/page';
 import SignupPage from '@/pages/signup/page';
 import ForgotPasswordPage from '@/pages/forgot-password/page';
-
+import '../i18n/i18n'
 const queryClient = new QueryClient();
 const router = createBrowserRouter([
   {
