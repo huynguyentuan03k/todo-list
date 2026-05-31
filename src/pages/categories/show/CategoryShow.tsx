@@ -5,8 +5,8 @@ import { useNavigate, useParams } from "react-router-dom"
 import { useQuery } from "@tanstack/react-query"
 import http from "@/utils/http"
 import { Category, CategorySchema } from "../shema"
-import { SpinnerLoading } from "@/pages/components/custom/SpinnerLoading"
-import Breadcrumbs from "@/pages/components/custom/breadcrumbs"
+import { SpinnerLoading } from "@/components/custom/SpinnerLoading"
+import Breadcrumbs from "@/components/custom/breadcrumbs"
 import { IconEdit } from "@tabler/icons-react"
 
 export default function CategoryShow() {

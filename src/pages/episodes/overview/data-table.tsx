@@ -21,7 +21,7 @@ import { Episodes, Episode, Meta } from "../shema"
 import { useNavigate } from "react-router-dom"
 import { PaginationServer } from "@/components/ui/pagination/pagination-server"
 import { useSearchParams } from "react-router-dom"
-import Breadcrumbs from "@/pages/components/custom/breadcrumbs"
+import Breadcrumbs from "@/components/custom/breadcrumbs"
 
 type props = {
   data: Episodes

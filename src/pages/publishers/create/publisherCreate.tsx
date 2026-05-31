@@ -1,7 +1,7 @@
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { PhoneInput } from "../../components/custom/PhoneInput"
+import { PhoneInput } from "../../../components/custom/PhoneInput"
 import { Button } from "@/components/ui/button"
 import { useNavigate } from "react-router-dom"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
@@ -9,7 +9,7 @@ import http from "@/utils/http"
 import { Publisher } from "../shema"
 import { useToast } from "@/components/ui/hooks/use-toast"
 import { useForm, SubmitHandler, Controller } from "react-hook-form"
-import { YearSelect } from "@/pages/components/custom/YearSelect"
+import { YearSelect } from "@/components/custom/YearSelect"
 import { AxiosError } from "axios"
 
 /**
@@ -57,7 +57,7 @@ export default function PublisherCreate() {
         title: "update publisher successfully",
         description: "publisher has been store.",
       });
-      // Xóa cache cũ của nhãn['publishers'] để nó tự động fetch lại ở trang podcast create 
+      // Xóa cache cũ của nhãn['publishers'] để nó tự động fetch lại ở trang podcast create
       queryClient.invalidateQueries({ queryKey: ['publishers'] })
       navigate('/portal/publishers')
     },

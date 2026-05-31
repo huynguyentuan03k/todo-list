@@ -9,8 +9,8 @@ import { useToast } from "@/components/ui/hooks/use-toast"
 import { useForm, SubmitHandler } from "react-hook-form"
 import { AxiosError } from "axios"
 import { Textarea } from "@/components/ui/textarea"
-import Breadcrumbs from "@/pages/components/custom/breadcrumbs"
-import { SingleFileAvatar } from "@/pages/components/custom/SingleFileAvatar"
+import Breadcrumbs from "@/components/custom/breadcrumbs"
+import { SingleFileAvatar } from "@/components/custom/SingleFileAvatar"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 /**
  * {

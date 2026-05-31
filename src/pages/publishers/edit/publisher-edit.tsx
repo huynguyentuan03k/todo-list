@@ -1,17 +1,17 @@
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { PhoneInput } from "../../components/custom/PhoneInput"
+import { PhoneInput } from "../../../components/custom/PhoneInput"
 import { Button } from "@/components/ui/button"
 import { useNavigate, useParams } from "react-router-dom"
 import { useMutation, useQuery } from "@tanstack/react-query"
 import http from "@/utils/http"
 import { Publisher, PublisherSchema } from "../shema"
-import { SpinnerLoading } from "@/pages/components/custom/SpinnerLoading"
+import { SpinnerLoading } from "@/components/custom/SpinnerLoading"
 import { useForm } from "react-hook-form"
 import { useEffect } from "react"
 import { useToast } from "@/components/ui/hooks/use-toast"
-import Breadcrumbs from "@/pages/components/custom/breadcrumbs"
+import Breadcrumbs from "@/components/custom/breadcrumbs"
 
 
 export default function PublisherEdit() {

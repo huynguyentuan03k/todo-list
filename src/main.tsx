@@ -4,13 +4,13 @@ import { createBrowserRouter, Navigate, RouterProvider } from 'react-router-dom'
 import 'regenerator-runtime/runtime';
 import './index.css'
 import Root from './layout/layout'
-import ErrorPage from './pages/components/custom/error-page'
+import ErrorPage from './components/custom/error-page'
 import PublishersOverview from './pages/publishers/overview/publisherOverview'
 import PublisherShow from './pages/publishers/show/PublisherShow'
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import PublisherCreate from './pages/publishers/create/publisherCreate'
 import PublisherEdit from './pages/publishers/edit/publisher-edit'
-import PageEpub from './pages/components/custom/PageEpub'
+import PageEpub from './components/custom/PageEpub'
 import { Toaster } from "@/components/ui/toaster"
 import CategoryOverview from './pages/categories/overview/CategoryOverview';
 import CategoryShow from './pages/categories/show/CategoryShow';

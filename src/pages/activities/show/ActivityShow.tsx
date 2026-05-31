@@ -5,8 +5,8 @@ import { useNavigate, useParams } from "react-router-dom"
 import { useQuery } from "@tanstack/react-query"
 import http from "@/utils/http"
 import { Activity, ActivitySchema } from "../shema"
-import { SpinnerLoading } from "@/pages/components/custom/SpinnerLoading"
-import Breadcrumbs from "@/pages/components/custom/breadcrumbs"
+import { SpinnerLoading } from "@/components/custom/SpinnerLoading"
+import Breadcrumbs from "@/components/custom/breadcrumbs"
 
 export default function ActivityShow() {
   const navigate = useNavigate()

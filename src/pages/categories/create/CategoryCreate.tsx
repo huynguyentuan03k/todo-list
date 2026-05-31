@@ -10,7 +10,7 @@ import { useToast } from "@/components/ui/hooks/use-toast"
 import { useForm, SubmitHandler } from "react-hook-form"
 import { AxiosError } from "axios"
 import { Textarea } from "@/components/ui/textarea"
-import Breadcrumbs from "@/pages/components/custom/breadcrumbs"
+import Breadcrumbs from "@/components/custom/breadcrumbs"
 import { FormControl, FormField, FormItem, FormLabel, Form } from "@/components/ui/form"
 
 /**

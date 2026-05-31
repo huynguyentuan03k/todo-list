@@ -7,7 +7,7 @@ import http from "@/utils/http"
 import { useSearchParams } from "react-router-dom"
 import { Button } from "@/components/ui/button"
 import { Link } from "react-router-dom"
-import Breadcrumbs from "@/pages/components/custom/breadcrumbs"
+import Breadcrumbs from "@/components/custom/breadcrumbs"
 import { useEffect } from "react"
 
 
