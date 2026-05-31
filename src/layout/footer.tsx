@@ -34,7 +34,7 @@ type Props = Partial<Footer2Props>;
 const defaultProps: Footer2Props = {
   logo: {
     url: "https://www.shadcnblocks.com",
-    src: "./logo.webp",
+    src: "/logo.webp",
     alt: "logo",
     title: "Shadcnblocks.com",
   },
