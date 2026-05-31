@@ -1,7 +1,8 @@
 import { Outlet } from "react-router-dom"
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
 import { AppSidebar } from "@/components/ui/app-sidebar"
-import LanguageSelect from "@/components/custom/language-select"
+import { Footer2 } from "@/layout/footer"
+import Header from "@/layout/header"
 
 export default function Layout() {
   return (
@@ -9,10 +10,9 @@ export default function Layout() {
       <AppSidebar />
       <main>
         <SidebarTrigger />
-        <div className="flex items-end justify-end mb-3">
-          <LanguageSelect />
-        </div>
+        <Header />
         <Outlet />
+        <Footer2 />
       </main>
     </SidebarProvider>
   )
