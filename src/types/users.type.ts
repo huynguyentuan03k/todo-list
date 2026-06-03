@@ -1,10 +1,11 @@
 export interface User {
-  id: number;
-  name: string;
-  email: string;
-  email_verified_at: string;
-  created_at: Date;
-  updated_at: Date;
+  id: number
+  name: string
+  email: string
+  password?: string
+  email_verified_at?: string | null
+  created_at?: string | null
+  updated_at?: string | null
 }
 
-export type Users = Pick<User, 'id' | 'email'>[];
+export type Users = User[]

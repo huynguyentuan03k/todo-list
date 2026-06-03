@@ -9,12 +9,16 @@
   "menu.management_title.nav-publishers": "Publishers",
   "menu.management_title.nav-authors": "Authors",
   "menu.management_title.nav-categories": "Categories",
+  "menu.management_title.nav-tags": "Tags",
   "menu.management_title.user": "Users",
+  "menu.management_title.nav-users": "Users",
+  "menu.management_title.nav-activities": "Activities",
   "menu.management_title.settings": "Settings",
   "menu.management_title.nav-keyword-suggestions": "Keyword Suggestions",
   "menu.management_title.nav-seasonal-themes": "Seasonal Themes",
   "page_dashboard.title": "Dashboard",
   "page_my_profile.title": "My Profile",
   "page_setting.title": "Settings",
-  "page_users_overview.title": "Activities"
+  "page_users_overview.title": "Users",
+  "page_activities_overview.title": "Activities"
 }

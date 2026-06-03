@@ -1,19 +1,15 @@
-import { Users, User } from '../types/users.type';
-import http from 'utils/http';
+import http from "utils/http"
+import { User, Users } from "../types/users.type"
 
-export const getUsers = (page: number | string, limit: number | string, signal?: AbortSignal) =>
-  http.get<Users>('Users', {
-    params: {
-      _page: page,
-      _limit: limit,
-    },
-    signal,
-  });
+export const getUsers = (signal?: AbortSignal) =>
+  http.get<{ data: Users }>("/users", { signal })
 
-export const getUser = (id: number | string) => http.get<User>(`Users/${id}`);
+export const getUser = (id: number | string) =>
+  http.get<{ data: User }>(`/users/${id}`)
 
-export const addUser = (User: Omit<User, 'id'>) => http.post<User>('/Users', User);
+export const addUser = (user: Omit<User, "id">) => http.post<User>("/users", user)
 
-export const updateUser = (id: number | string, User: User) => http.put<User>(`Users/${id}`, User);
+export const updateUser = (id: number | string, user: User) =>
+  http.put<User>(`/users/${id}`, user)
 
-export const deleteUser = (id: number | string) => http.delete<{}>(`Users/${id}`);
+export const deleteUser = (id: number | string) => http.delete<{}>(`/users/${id}`)

@@ -17,6 +17,8 @@ import {
   SquareActivityIcon,
   FilePenLineIcon,
   HeadphonesIcon,
+  TagsIcon,
+  UsersRoundIcon,
 } from 'lucide-react'
 import React from 'react'
 
@@ -125,6 +127,13 @@ export const sidelinks: SideLink[] = [
             href: '/portal/categories',
             icon: <BookmarkIcon size={18} />,
             permission: 'ANY'
+          },
+          {
+            title: 'menu.management_title.nav-tags',
+            label: '',
+            href: '/portal/tags',
+            icon: <TagsIcon size={18} />,
+            permission: 'ANY'
           }
         ]
       },
@@ -136,6 +145,13 @@ export const sidelinks: SideLink[] = [
         children: [
           {
             title: 'page_users_overview.title',
+            label: '',
+            href: '/portal/users',
+            icon: <UsersRoundIcon size={18} />,
+            permission: 'ANY'
+          },
+          {
+            title: 'page_activities_overview.title',
             label: '',
             href: '/portal/activities',
             icon: <SquareActivityIcon size={18} />,

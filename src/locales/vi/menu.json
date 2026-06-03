@@ -12,12 +12,16 @@
   "menu.management_title.nav-publishers": "Nhà xuất bản",
   "menu.management_title.nav-authors": "Tác giả",
   "menu.management_title.nav-categories": "Danh mục",
+  "menu.management_title.nav-tags": "Thẻ",
   "menu.management_title.user": "Người dùng",
+  "menu.management_title.nav-users": "Người dùng",
+  "menu.management_title.nav-activities": "Hoạt động",
   "menu.management_title.settings": "Cài đặt",
   "menu.management_title.nav-keyword-suggestions": "Gợi ý từ khóa",
   "menu.management_title.nav-seasonal-themes": "Chủ đề theo mùa",
   "page_dashboard.title": "Bảng điều khiển",
   "page_my_profile.title": "Hồ sơ của tôi",
   "page_setting.title": "Cài đặt",
-  "page_users_overview.title": "Hoạt động"
+  "page_users_overview.title": "Người dùng",
+  "page_activities_overview.title": "Hoạt động"
 }

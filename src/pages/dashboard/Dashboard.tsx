@@ -5,17 +5,24 @@ import { ChartAreaInteractive } from "../../components/custom/ChartAreaInteracti
 
 export default function Dashboard() {
   return (
-    <div >
-      <div>
-        <div>
-          <ChartAreaInteractive />
-        </div>
+    <div className="space-y-6">
+      <section className="rounded-3xl border border-border/70 bg-background/80 p-4 shadow-sm backdrop-blur sm:p-6 lg:p-8">
+        <ChartAreaInteractive />
+      </section>
 
-        <ChartLineLabelCustom />
-        <ChartPieLegend />
-        <ChartBarLabel />
+      <div className="grid gap-6 xl:grid-cols-3">
+        <section className="rounded-3xl border border-border/70 bg-background/80 p-4 shadow-sm backdrop-blur sm:p-6 xl:col-span-2">
+          <ChartLineLabelCustom />
+        </section>
+
+        <section className="rounded-3xl border border-border/70 bg-background/80 p-4 shadow-sm backdrop-blur sm:p-6">
+          <ChartPieLegend />
+        </section>
       </div>
 
+      <section className="rounded-3xl border border-border/70 bg-background/80 p-4 shadow-sm backdrop-blur sm:p-6 lg:p-8">
+        <ChartBarLabel />
+      </section>
     </div>
   )
 }

@@ -12,6 +12,7 @@ import PublisherCreate from './pages/publishers/create/publisherCreate'
 import PublisherEdit from './pages/publishers/edit/publisher-edit'
 import PageEpub from './components/custom/PageEpub'
 import { Toaster } from "@/components/ui/toaster"
+import { ThemeProvider } from "@/components/theme-provider"
 import CategoryOverview from './pages/categories/overview/CategoryOverview';
 import CategoryShow from './pages/categories/show/CategoryShow';
 import CategoryCreate from './pages/categories/create/CategoryCreate';
@@ -31,6 +32,14 @@ import EpisodeOverview from './pages/episodes/overview/EpisodeOverview';
 import EpisodeCreate from './pages/episodes/create/EpisodeCreate';
 import EpisodeEdit from './pages/episodes/edit/EpisodeEdit';
 import EpisodeShow from './pages/episodes/show/EpisodeShow';
+import TagOverview from './pages/tags/overview/TagOverview';
+import TagCreate from './pages/tags/create/TagCreate';
+import TagEdit from './pages/tags/edit/TagEdit';
+import TagShow from './pages/tags/show/TagShow';
+import UserOverview from './pages/users/overview/UserOverview';
+import UserCreate from './pages/users/create/UserCreate';
+import UserEdit from './pages/users/edit/UserEdit';
+import UserShow from './pages/users/show/UserShow';
 import Dashboard from './pages/dashboard/Dashboard';
 import AboutMe from './pages/aboutMe/AboutMe';
 import { Analytics } from '@vercel/analytics/react';
@@ -178,6 +187,26 @@ const router = createBrowserRouter([
         ]
       },
       {
+        path: '/portal/tags',
+        children: [
+          { index: true, element: <TagOverview /> },
+          { path: 'create', element: <TagCreate /> },
+          { path: ':id/edit', element: <TagEdit /> },
+          { path: ':id/show', element: <TagShow /> },
+          { path: ':id/delete' },
+        ]
+      },
+      {
+        path: '/portal/users',
+        children: [
+          { index: true, element: <UserOverview /> },
+          { path: 'create', element: <UserCreate /> },
+          { path: ':id/edit', element: <UserEdit /> },
+          { path: ':id/show', element: <UserShow /> },
+          { path: ':id/delete' },
+        ]
+      },
+      {
         path: '/portal/podcasts',
         children: [
           {
@@ -242,11 +271,13 @@ const router = createBrowserRouter([
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
-      <AudioProvider>
-        <RouterProvider router={router} />
-        <Toaster />
-        <Analytics />
-      </AudioProvider>
+      <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+        <AudioProvider>
+          <RouterProvider router={router} />
+          <Toaster />
+          <Analytics />
+        </AudioProvider>
+      </ThemeProvider>
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   </React.StrictMode >
