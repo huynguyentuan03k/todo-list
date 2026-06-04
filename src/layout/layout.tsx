@@ -16,7 +16,7 @@ export default function Layout() {
           </div>
 
           <div className="flex-1 py-6">
-            <div className="mx-auto w-full max-w-[1440px]">
+            <div className="mx-auto w-full max-w-[1680px]">
               <Outlet />
             </div>
           </div>
