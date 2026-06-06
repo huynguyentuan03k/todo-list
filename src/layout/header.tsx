@@ -148,9 +148,9 @@ export default function Header() {
 
     queryClient.clear()
 
-    ;["PER_PAGE", "counter-storage"].forEach((key) => {
-      localStorage.removeItem(key)
-    })
+      ;["PER_PAGE", "counter-storage"].forEach((key) => {
+        localStorage.removeItem(key)
+      })
 
     sessionStorage.clear()
 
@@ -163,7 +163,7 @@ export default function Header() {
   return (
     <TooltipProvider>
       <div className="flex flex-wrap items-center justify-end gap-2">
-        <HeaderIcon href="/swagger" label="Swagger">
+        <HeaderIcon href="https://huynguyen-nginx.io.vn/api/documentation" label="Swagger">
           <SwaggerIcon className="h-4 w-4" />
         </HeaderIcon>
 

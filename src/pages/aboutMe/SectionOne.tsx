@@ -156,6 +156,40 @@ export default function SectionOne() {
             </CardContent>
           </Card>
         </Link>
+        {/* ===== SENTRY ===== */}
+        <Link
+          to="https://sentry.io/welcome/"
+          target="_blank"
+        >
+          <Card className="h-full">
+            <CardContent className="p-4 flex items-center justify-center">
+              <div className="w-full aspect-[16/9]">
+                <img
+                  src="/sentry.jpg"
+                  alt="Sentry"
+                  className="w-full h-full object-contain"
+                />
+              </div>
+            </CardContent>
+          </Card>
+        </Link>
+        {/* ===== GOOGLE CLOUD PLATFORM ===== */}
+        <Link
+          to="https://console.cloud.google.com"
+          target="_blank"
+        >
+          <Card className="h-full">
+            <CardContent className="p-4 flex items-center justify-center">
+              <div className="w-full aspect-[16/9]">
+                <img
+                  src="/google-cloud-platform.webp"
+                  alt="google-cloud-platform.webp"
+                  className="w-full h-full object-contain"
+                />
+              </div>
+            </CardContent>
+          </Card>
+        </Link>
       </div>
 
     </div >
