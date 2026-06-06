@@ -156,23 +156,38 @@ export default function SectionOne() {
             </CardContent>
           </Card>
         </Link>
-        {/* ===== SENTRY ===== */}
-        <Link
-          to="https://sentry.io/welcome/"
-          target="_blank"
-        >
-          <Card className="h-full">
-            <CardContent className="p-4 flex items-center justify-center">
-              <div className="w-full aspect-[16/9]">
-                <img
-                  src="/sentry.jpg"
-                  alt="Sentry"
-                  className="w-full h-full object-contain"
-                />
-              </div>
-            </CardContent>
-          </Card>
-        </Link>
+        {/* ===== SENTRY and mailtrap ===== */}
+        <div className="grid grid-cols-2 gap-4">
+          <Link to="https://sentry.io/welcome/" target="_blank">
+            <Card className="h-full">
+              <CardContent className="p-3 flex items-center justify-center">
+                <div className="w-full aspect-square">
+                  <img
+                    src="/sentry.jpg"
+                    alt="sentry"
+                    className="w-full h-full object-contain"
+                  />
+                </div>
+              </CardContent>
+            </Card>
+          </Link>
+
+          <Link to="https://mailtrap.io/" target="_blank">
+            <Card className="h-full">
+              <CardContent className="p-3 flex items-center justify-center">
+                <div className="w-full aspect-square">
+                  <img
+                    src="/mailtrap.png"
+                    alt="mailtrap"
+                    className="w-full h-full object-contain"
+                  />
+                </div>
+              </CardContent>
+            </Card>
+          </Link>
+        </div>
+
+
         {/* ===== GOOGLE CLOUD PLATFORM ===== */}
         <Link
           to="https://console.cloud.google.com"
