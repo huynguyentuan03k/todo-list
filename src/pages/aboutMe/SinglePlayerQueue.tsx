@@ -13,7 +13,6 @@ import { AudioPlaybackSpeed } from "@/components/audio/playback-speed";
 import {
   AudioQueue,
   AudioQueuePreferences,
-  AudioQueueRepeatMode,
   AudioQueueShuffle,
 } from "@/components/audio/queue";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -37,7 +36,9 @@ export default function SinglePlayerQueue() {
       audio.pause();
       unlockedRef.current = true;
       console.log(" Audio unlocked");
-    } catch { }
+    } catch { 
+      console.log('error')
+    }
   };
 
   if ("mediaSession" in navigator) {
@@ -76,7 +77,6 @@ export default function SinglePlayerQueue() {
     });
   }
 
-  console.log("re-render media")
   return (
     <TooltipProvider>
       <div onClick={unlockAudio}>
@@ -98,7 +98,6 @@ export default function SinglePlayerQueue() {
 
               <AudioPlaybackSpeed />
               <AudioQueueShuffle />
-              {/* <AudioQueueRepeatMode /> */}
               <AudioQueuePreferences />
               <AudioPlayerVolume />
               <AudioQueue />
